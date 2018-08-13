@@ -11,11 +11,17 @@
     "php": ">=5.6",
     "guzzlehttp/guzzle": "~6.0"
   },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "3.*"
+  },
   "license": "MIT",
   "minimum-stability": "stable",
   "autoload": {
     "psr-0": {
       "Ploi": "src/"
     }
+  },
+  "scripts": {
+    "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src"
   }
 }
