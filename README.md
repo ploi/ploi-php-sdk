@@ -26,6 +26,29 @@ $ploi->setApiToken($token);
 
 ```
 
+### Responses
+When calling a resource, it will return an array containing decoded JSON as well as the original response from the Guzzle client.
+
+```php
+[
+     "json" => {
+       +"id": 123,
+       +"name": "server-name",
+       +"ip_address": "XXX.XXX.XXX.XXX",
+       +"php_version": 7.1,
+       +"mysql_version": 5.7,
+       +"sites_count": 3,
+       +"status": "Server active",
+       +"created_at": "2018-01-01 08:00:00",
+     },
+     "response" => GuzzleHttp\Psr7\Response,
+   ]
+```
+
+## Resources
+
+Resources are what you call to access a feature or function. 
+
 ### Servers
 
 Get all servers
