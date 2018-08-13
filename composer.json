@@ -1,0 +1,21 @@
+{
+  "name": "ploi/ploi-php-sdk",
+  "description": "Ploi.io for easy site deployments",
+  "authors": [
+    {
+      "name": "Dennis Smink",
+      "email": "info@ploi.io"
+    }
+  ],
+  "require": {
+    "php": ">=5.6",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-0": {
+      "Ploi": "src/"
+    }
+  }
+}
