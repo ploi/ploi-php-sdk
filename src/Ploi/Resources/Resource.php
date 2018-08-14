@@ -35,8 +35,6 @@ class Resource
      */
     private $id;
 
-    private $resource;
-
     /**
      * Resource constructor.
      *
@@ -127,15 +125,5 @@ class Resource
     public function getEndpoint(): ?string
     {
         return $this->endpoint;
-    }
-
-    /**
-     * Return the resource
-     *
-     * @return mixed
-     */
-    public function getResource()
-    {
-        return $this->resource;
     }
 }

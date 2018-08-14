@@ -1,0 +1,52 @@
+<?php
+
+namespace Tests\Ploi\Traits;
+
+use Ploi\Resources\Resource;
+use Tests\BaseTest;
+
+/**
+ * Class HistoryTest
+ *
+ * @package Tests\Ploi\Traits
+ */
+class HistoryTest extends BaseTest
+{
+    /**
+     * @var Resource
+     */
+    private $resource;
+
+    public function setup()
+    {
+        parent::setup();
+
+        $this->resource = $this->getPloi()->server();
+    }
+
+    public function testGetHistory()
+    {
+        $this->assertInternalType('array', $this->resource->getHistory());
+    }
+
+    public function testAddHistory()
+    {
+        $newHistory ='Adding to the history';
+        $this->resource->addHistory($newHistory);
+
+        $this->assertContains($newHistory, $this->resource->getHistory());
+    }
+
+    public function testSetHistory()
+    {
+        $newHistory = [
+            'New History'
+        ];
+
+        // Set the history
+        $this->resource->setHistory($newHistory);
+
+        $this->assertEquals(1, count($this->resource->getHistory()));
+        $this->assertEquals($newHistory, $this->resource->getHistory());
+    }
+}
