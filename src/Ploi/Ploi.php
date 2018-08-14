@@ -57,7 +57,7 @@ class Ploi
      * @param $token
      * @return Ploi
      */
-    private function setApiToken($token): self
+    public function setApiToken($token): self
     {
         // Set the token
         $this->apiToken = $token;

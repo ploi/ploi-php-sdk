@@ -17,7 +17,9 @@
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "3.*",
-    "psy/psysh": "@stable"
+    "psy/psysh": "@stable",
+    "phpunit/phpunit": "^7",
+    "vlucas/phpdotenv": "^2.5"
   },
   "license": "MIT",
   "minimum-stability": "stable",
@@ -26,7 +28,16 @@
       "Ploi": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-0": {
+      "Ploi": "src/"
+    },
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "scripts": {
-    "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src"
+    "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src",
+    "test": "./vendor/bin/phpunit tests"
   }
 }

@@ -9,4 +9,6 @@ before_script:
 - composer self-update
 - composer install --dev
 
-script: composer standards
+script:
+  - composer standards
+  - composer test
