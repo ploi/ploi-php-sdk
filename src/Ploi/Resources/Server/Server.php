@@ -14,13 +14,13 @@ use Psr\Http\Message\ResponseInterface;
 
 class Server extends Resource
 {
-    const ENDPOINT = "servers";
+    private $endpoint = 'servers';
 
     public function __construct(Ploi $ploi = null, int $id = null)
     {
         parent::__construct($ploi, $id);
 
-        $this->setEndpoint(self::ENDPOINT);
+        $this->setEndpoint($this->endpoint);
     }
 
     /**
@@ -42,7 +42,7 @@ class Server extends Resource
 
         if ($this->getId()) {
             // Get the specific resource
-            $this->setEndpoint(self::ENDPOINT . '/' . $this->getId());
+            $this->setEndpoint($this->endpoint . '/' . $this->getId());
         }
 
         return $this->getPloi()->makeAPICall($this->getEndpoint());
@@ -70,8 +70,17 @@ class Server extends Resource
             throw new RequiresId("No server ID set");
         }
 
-        $this->setEndpoint(self::ENDPOINT . '/' . $this->getId() . '/logs');
+        $this->setEndpoint($this->endpoint . '/' . $this->getId() . '/logs');
 
         return $this->getPloi()->makeAPICall($this->getEndpoint());
+    }
+
+    /**
+     * @param null $id
+     * @return Site
+     */
+    public function site($id = null): Site
+    {
+        return new Site($this, $id);
     }
 }

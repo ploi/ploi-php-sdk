@@ -60,7 +60,7 @@ class Resource
      * @param int $id
      * @return Resource
      */
-    public function setId(int $id): self
+    public function setId(int $id = null): self
     {
         $this->id = $id;
 

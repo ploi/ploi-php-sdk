@@ -70,10 +70,10 @@ class Response
     /**
      * Sets the decoded JSON
      *
-     * @param stdClass $json
+     * @param null|stdClass $json
      * @return Response
      */
-    public function setJson(stdClass $json): self
+    public function setJson(stdClass $json = null): self
     {
         $this->json = $json;
 
