@@ -2,6 +2,8 @@
 
 # Ploi PHP SDK 🚀
 
+[![Build Status](https://travis-ci.org/Sekonda/ploi-php-sdk.svg?branch=master)](https://travis-ci.org/Sekonda/ploi-php-sdk)  [![codecov](https://codecov.io/gh/Sekonda/ploi-php-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/Sekonda/ploi-php-sdk)
+
 The future is now - so stop the hassle, you’re running behind. Quick and easy site deployment with Ploi. Awesome features for awesome developers. Check it out at www.ploi.io
 
 This SDK is ment for PHP applications to be able to communicate with our API.
