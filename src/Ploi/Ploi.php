@@ -134,8 +134,10 @@ class Ploi
                 break;
         }
 
+        $json = json_decode($response->getBody());
+
         return [
-            'json'     => json_decode($response->getBody())->data,
+            'json'     => !empty($json) ? $json : false,
             'response' => $response,
         ];
     }

@@ -19,6 +19,6 @@ class NotFound extends Exception
      */
     public function __construct(string $message = "Endpoint not found")
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message);
     }
 }
