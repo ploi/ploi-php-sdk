@@ -102,5 +102,4 @@ class Response
             'response' => $this->getResponse(),
         ];
     }
-
 }
