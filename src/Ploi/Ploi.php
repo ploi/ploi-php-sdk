@@ -10,6 +10,7 @@ use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Http\PerformingMaintenance;
 use Ploi\Exceptions\Http\TooManyAttempts;
 use Ploi\Exceptions\Http\Unauthenticated;
+use Ploi\Http\Response;
 use Ploi\Resources\Server\Server;
 use Psr\Http\Message\ResponseInterface;
 
@@ -90,7 +91,7 @@ class Ploi
      * @param string $url
      * @param string $method
      * @param array  $options
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Ploi\Http\Response
      * @throws NotFound
      * @throws TooManyAttempts
      * @throws PerformingMaintenance
@@ -98,7 +99,7 @@ class Ploi
      * @throws NotValid
      * @throws Exception
      */
-    public function makeAPICall(string $url, string $method = "get", array $options = []): ?array
+    public function makeAPICall(string $url, string $method = "get", array $options = []): ?Response
     {
         if (!in_array($method, ['get', 'post', 'patch', 'delete'])) {
             throw new Exception("Invalid method type");
@@ -134,12 +135,7 @@ class Ploi
                 break;
         }
 
-        $json = json_decode($response->getBody());
-
-        return [
-            'json'     => !empty($json) ? $json : false,
-            'response' => $response,
-        ];
+        return new Response($response);
     }
 
     /**
