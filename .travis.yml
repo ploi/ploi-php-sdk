@@ -10,5 +10,8 @@ before_script:
 - composer install --dev
 
 script:
-  - composer standards
-  - composer test
+  # Check the standards
+  - ./vendor/bin/phpcs --standard=PSR2 --colors src
+  # Tests
+  - cp tests/.env.sample tests/.env
+  - ./vendor/bin/phpunit tests
