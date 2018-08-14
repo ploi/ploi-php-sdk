@@ -22,7 +22,7 @@ install:
 # Create a storage folder for coverage report
 before_script:
     - mkdir -p build/logs
-    - ls -al
+    - cp tests/.env.sample tests/.env
 
 # Testing the app (see phpunit.xml) for configs, generating Code Coverage report
 script:
