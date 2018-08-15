@@ -141,8 +141,28 @@ class SiteTest extends BaseTest
 
         try {
             $this->server->site()->delete(1);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceOf(NotFound::class, $e);
+        }
+    }
+
+    public function testLogs()
+    {
+        $resource = $this->server->site();
+        $sites = $resource->get();
+
+        if (!empty($sites->getJson()->data[0])) {
+            $siteId = $sites->getJson()->data[0]->id;
+
+            $logs = $resource->logs($siteId);
+
+            $this->assertInternalType('array', $logs);
+
+            if (!empty($logs[0])) {
+                $this->assertInstanceOf(stdClass::class, $logs[0]);
+                $this->assertEquals($siteId, $logs[0]->site_id);
+                $this->assertEquals($resource->getServer()->getId(), $logs[0]->server_id);
+            }
         }
     }
 }

@@ -7,9 +7,8 @@ use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Http\PerformingMaintenance;
 use Ploi\Exceptions\Http\TooManyAttempts;
+use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
-use Ploi\Http\Response;
-use Ploi\Ploi;
 use Ploi\Resources\Resource;
 use stdClass;
 
@@ -28,7 +27,7 @@ class Site extends Resource
     /**
      * Site constructor.
      *
-     * @param Server   $server
+     * @param Server $server
      * @param int|null $id
      */
     public function __construct(Server $server, int $id = null)
@@ -103,7 +102,20 @@ class Site extends Resource
         return $this;
     }
 
-    public function create($domain, $webDirectory = '/public', $projectRoot = '/')
+    /**
+     * Creates a new website
+     *
+     * @param string $domain
+     * @param string $webDirectory
+     * @param string $projectRoot
+     * @return \Exception|NotValid
+     * @throws DomainAlreadyExists
+     * @throws InternalServerError
+     * @throws NotFound
+     * @throws PerformingMaintenance
+     * @throws TooManyAttempts
+     */
+    public function create(string $domain, string $webDirectory = '/public', string $projectRoot = '/'): stdClass
     {
         // Remove the id
         $this->setId(null);
@@ -111,9 +123,9 @@ class Site extends Resource
         // Set the options
         $options = [
             'body' => json_encode([
-                'root_domain'   => $domain,
+                'root_domain' => $domain,
                 'web_directory' => $webDirectory,
-                'project_root'  => $projectRoot,
+                'project_root' => $projectRoot,
             ]),
         ];
 
@@ -142,6 +154,8 @@ class Site extends Resource
     }
 
     /**
+     * Deletes a site
+     *
      * @param int|null $id
      * @return stdClass
      * @throws InternalServerError
@@ -166,5 +180,39 @@ class Site extends Resource
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns the logs as an array for a site
+     *
+     * @param int|null $id
+     * @return array
+     * @throws InternalServerError
+     * @throws NotFound
+     * @throws NotValid
+     * @throws PerformingMaintenance
+     * @throws RequiresId
+     * @throws TooManyAttempts
+     */
+    public function logs(int $id = null): array
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId("No Site ID set");
+        }
+
+        $this->setEndpoint($this->buildEndpoint()->getEndpoint() . '/log');
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint());
+
+        // Wrap the logs if they're not already wrapped
+        if (!is_array($response->getJson()->data)) {
+            return [$response->getJson()->data];
+        }
+
+        return $response->getJson()->data;
     }
 }
