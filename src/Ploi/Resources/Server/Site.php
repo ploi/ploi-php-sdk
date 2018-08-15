@@ -134,6 +134,10 @@ class Site extends Resource
             return $exception;
         }
 
+        // Set the id of the site
+        $this->setId($response->getJson()->data->id);
+
+        // Return the data
         return $response->getJson()->data;
     }
 
