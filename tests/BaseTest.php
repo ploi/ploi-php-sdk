@@ -1,0 +1,57 @@
+<?php
+declare(strict_types=1);
+
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use Ploi\Ploi;
+
+/**
+ * Class BaseTest
+ * @package Tests
+ */
+class BaseTest extends TestCase
+{
+    /**
+     * @var Ploi
+     */
+    private $ploi;
+
+    /**
+     * Returns the Ploi Client
+     *
+     * @return Ploi
+     */
+    public function getPloi()
+    {
+        return $this->ploi;
+    }
+
+    protected function setup()
+    {
+        $this->ploi = new Ploi(getenv('API_TOKEN'));
+
+        parent::setup();
+    }
+
+    /**
+     * Load the environment file
+     */
+    public static function setUpBeforeClass()
+    {
+        // Load the test environment
+        $dotenv = new \Dotenv\Dotenv(__DIR__);
+        $dotenv->load();
+
+        parent::setUpBeforeClass();
+    }
+
+    /**
+     * Base test to make sure it's running
+     */
+    public function testTrue()
+    {
+        $this->assertTrue(true);
+    }
+
+}

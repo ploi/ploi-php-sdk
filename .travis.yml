@@ -1,13 +1,48 @@
+# Config file for https://travis-ci.org/
+# Validate this file here - http://lint.travis-ci.org/
+
 language: php
 
+# Define the php versions against we want to test our code
 php:
-- 5.6
-- 7.0
-- 7.1
-- 7.2
+  - 7.1
+  - 7.2
 
+# Note: Code coverage requires php-xDebug extension enabled on CI server
+
+install:
+  # Install composer packages
+  - travis_retry composer install --no-interaction --no-suggest
+  # Install coveralls.phar
+  - wget -c -nc --retry-connrefused --tries=0 https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar -O coveralls.phar
+  - chmod +x coveralls.phar
+  - php coveralls.phar --version
+
+# Create a storage folder for coverage report
 before_script:
-- composer self-update
-- composer install --dev
+    - mkdir -p build/logs
+    - cp tests/.env.sample tests/.env
 
-script: composer standards
+# Testing the app (see phpunit.xml) for configs, generating Code Coverage report
+script:
+  - ./vendor/bin/phpcs --standard=PSR2 src
+  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+#after_script:
+after_success:
+# Submit coverage report to Coveralls servers, see .coveralls.yml
+ - travis_retry php coveralls.phar -v
+# Submit coverage report to codecov.io
+ - bash <(curl -s https://codecov.io/bash)
+
+#after_failure:
+
+# Tell Travis CI to monitor only 'master' branch
+branches:
+  only: master
+
+# You can delete the cache using travis-ci web interface
+cache:
+  directories:
+  - vendor
+  - $HOME/.cache/composer
