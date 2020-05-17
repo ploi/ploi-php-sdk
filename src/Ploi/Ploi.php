@@ -55,8 +55,8 @@ class Ploi
     }
 
     /**
-     * @param $token
-     * @return Ploi
+     * @param string $token
+     * @return self
      */
     public function setApiToken($token): self
     {
@@ -90,8 +90,8 @@ class Ploi
     /**
      * @param string $url
      * @param string $method
-     * @param array  $options
-     * @return \Ploi\Http\Response
+     * @param array<string, mixed> $options
+     * @return Response
      * @throws NotFound
      * @throws TooManyAttempts
      * @throws PerformingMaintenance
@@ -99,10 +99,10 @@ class Ploi
      * @throws NotValid
      * @throws Exception
      */
-    public function makeAPICall(string $url, string $method = "get", array $options = []): ?Response
+    public function makeAPICall(string $url, string $method = 'get', array $options = []): Response
     {
         if (!in_array($method, ['get', 'post', 'patch', 'delete'])) {
-            throw new Exception("Invalid method type");
+            throw new Exception('Invalid method type');
         }
 
         /**
@@ -110,29 +110,23 @@ class Ploi
          * know that we're getting a response back, so we manually
          * tell it what is returned.
          *
-         * @var $response ResponseInterface
+         * @var ResponseInterface $response
          */
         $response = $this->guzzle->{$method}($url, $options);
 
         switch ($response->getStatusCode()) {
             case 401:
                 throw new Unauthenticated($response->getBody());
-                break;
             case 404:
                 throw new NotFound($response->getBody());
-                break;
             case 422:
                 throw new NotValid($response->getBody());
-                break;
             case 429:
                 throw new TooManyAttempts($response->getBody());
-                break;
             case 500:
                 throw new InternalServerError($response->getBody());
-                break;
             case 503:
                 throw new PerformingMaintenance($response->getBody());
-                break;
         }
 
         return new Response($response);

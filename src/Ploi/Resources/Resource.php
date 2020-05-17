@@ -24,14 +24,14 @@ class Resource
     /**
      * The API endpoint for the resource
      *
-     * @var string
+     * @var null|string
      */
     private $endpoint;
 
     /**
      * The ID of the resource
      *
-     * @var integer
+     * @var integer|null
      */
     private $id;
 
@@ -57,8 +57,8 @@ class Resource
     /**
      * Sets the ID of the resource
      *
-     * @param int $id
-     * @return Resource
+     * @param int|null $id
+     * @return self
      */
     public function setId(int $id = null): self
     {
@@ -83,7 +83,7 @@ class Resource
      * Set the Ploi instance
      *
      * @param Ploi $ploi
-     * @return Resource
+     * @return self
      */
     public function setPloi(Ploi $ploi): self
     {
@@ -108,7 +108,7 @@ class Resource
      * Sets the endpoint
      *
      * @param string $endpoint
-     * @return Resource
+     * @return self
      */
     public function setEndpoint(string $endpoint): self
     {
@@ -120,7 +120,7 @@ class Resource
     /**
      * Returns the endpoint
      *
-     * @return string
+     * @return null|string
      */
     public function getEndpoint(): ?string
     {
