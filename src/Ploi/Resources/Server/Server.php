@@ -8,12 +8,16 @@ use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Http\PerformingMaintenance;
 use Ploi\Exceptions\Http\TooManyAttempts;
 use Ploi\Exceptions\Resource\RequiresId;
+use Ploi\Http\Response;
 use Ploi\Ploi;
 use Ploi\Resources\Resource;
 use Psr\Http\Message\ResponseInterface;
 
 class Server extends Resource
 {
+    /**
+     * @var string
+     */
     private $endpoint = 'servers';
 
     public function __construct(Ploi $ploi = null, int $id = null)
@@ -27,14 +31,14 @@ class Server extends Resource
      * Gets all or a specific server Id
      *
      * @param int|null $id ID of the server
-     * @return ResponseInterface
+     * @return Response
      * @throws InternalServerError
      * @throws NotFound
      * @throws NotValid
      * @throws PerformingMaintenance
      * @throws TooManyAttempts
      */
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -52,7 +56,7 @@ class Server extends Resource
      * Returns the logs for a server
      *
      * @param int|null $id ID of the server
-     * @return ResponseInterface
+     * @return Response
      * @throws InternalServerError
      * @throws NotFound
      * @throws NotValid
@@ -60,7 +64,7 @@ class Server extends Resource
      * @throws RequiresId
      * @throws TooManyAttempts
      */
-    public function logs(int $id = null)
+    public function logs(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);

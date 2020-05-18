@@ -10,14 +10,14 @@ namespace Ploi\Traits;
 trait HasHistory
 {
     /**
-     * @var array
+     * @var array<int, string>
      */
     private $history;
 
     /**
      * Returns the history of a resource
      *
-     * @return array
+     * @return array<int, string>
      */
     public function getHistory(): array
     {
@@ -28,7 +28,7 @@ trait HasHistory
      * Allows the history to be overridden by setting a
      * new history.
      *
-     * @param array $history
+     * @param array<int, string> $history
      * @return self
      */
     public function setHistory(array $history): self
@@ -41,10 +41,10 @@ trait HasHistory
     /**
      * Adds an item to the history
      *
-     * @param $history
-     * @return $this
+     * @param string $history
+     * @return self
      */
-    public function addHistory($history): self
+    public function addHistory(string $history): self
     {
         $this->history[] = $history;
 

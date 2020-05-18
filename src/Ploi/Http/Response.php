@@ -13,7 +13,7 @@ use stdClass;
 class Response
 {
     /**
-     * @var stdClass|array
+     * @var stdClass|null
      */
     private $json;
 
@@ -37,6 +37,7 @@ class Response
      * Sets the Response from the Guzzle Client
      *
      * @param ResponseInterface $response
+     * @return self
      */
     private function setResponse(ResponseInterface $response): self
     {
@@ -58,7 +59,7 @@ class Response
     /**
      * Recodes the body from the response
      *
-     * @return Response
+     * @return self
      */
     private function decodeJson(): self
     {
@@ -70,8 +71,8 @@ class Response
     /**
      * Sets the decoded JSON
      *
-     * @param null|stdClass $json
-     * @return Response
+     * @param stdClass|null $json
+     * @return self
      */
     public function setJson(stdClass $json = null): self
     {
@@ -93,7 +94,7 @@ class Response
     /**
      * Returns the JSON and Response as an array
      *
-     * @return array
+     * @return array{json: ?stdClass, response: ResponseInterface}
      */
     public function toArray(): array
     {

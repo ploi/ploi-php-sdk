@@ -108,7 +108,7 @@ class Site extends Resource
      * @param string $domain
      * @param string $webDirectory
      * @param string $projectRoot
-     * @return \Exception|NotValid
+     * @return stdClass
      * @throws DomainAlreadyExists
      * @throws InternalServerError
      * @throws NotFound
@@ -143,7 +143,7 @@ class Site extends Resource
                 throw new DomainAlreadyExists($domain . ' already exists!');
             }
 
-            return $exception;
+            throw $exception;
         }
 
         // Set the id of the site
@@ -157,7 +157,7 @@ class Site extends Resource
      * Deletes a site
      *
      * @param int|null $id
-     * @return stdClass
+     * @return bool
      * @throws InternalServerError
      * @throws NotFound
      * @throws NotValid
@@ -165,7 +165,7 @@ class Site extends Resource
      * @throws TooManyAttempts
      * @throws \Exception
      */
-    public function delete(int $id = null): ?bool
+    public function delete(int $id = null): bool
     {
         if ($id) {
             $this->setId($id);
@@ -175,18 +175,14 @@ class Site extends Resource
 
         $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
 
-        if ($response->getResponse()->getStatusCode() === 200) {
-            return true;
-        } else {
-            return false;
-        }
+        return $response->getResponse()->getStatusCode() === 200;
     }
 
     /**
      * Returns the logs as an array for a site
      *
      * @param int|null $id
-     * @return array
+     * @return array<int, string>
      * @throws InternalServerError
      * @throws NotFound
      * @throws NotValid
