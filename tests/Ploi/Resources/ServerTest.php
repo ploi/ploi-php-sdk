@@ -2,10 +2,10 @@
 
 namespace Tests\Ploi\Resources;
 
-use Ploi\Exceptions\Resource\RequiresId;
+use Tests\BaseTest;
 use Ploi\Http\Response;
 use Ploi\Resources\Server\Server;
-use Tests\BaseTest;
+use Ploi\Exceptions\Resource\RequiresId;
 
 /**
  * Class ServerTest

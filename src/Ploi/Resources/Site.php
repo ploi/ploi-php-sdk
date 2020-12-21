@@ -1,35 +1,20 @@
 <?php
 
-namespace Ploi\Resources\Server;
+namespace Ploi\Resources;
 
-use Ploi\Exceptions\Http\InternalServerError;
-use Ploi\Exceptions\Http\NotFound;
-use Ploi\Exceptions\Http\NotValid;
-use Ploi\Exceptions\Http\PerformingMaintenance;
-use Ploi\Exceptions\Http\TooManyAttempts;
-use Ploi\Exceptions\Resource\RequiresId;
-use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
-use Ploi\Resources\Resource;
 use stdClass;
+use Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
 
 /**
  * Class Site
  *
- * @package Ploi\Resources\Server
+ * @package Services\Ploi\resources\Server
  */
 class Site extends Resource
 {
-    /**
-     * @var Server
-     */
     private $server;
 
-    /**
-     * Site constructor.
-     *
-     * @param Server $server
-     * @param int|null $id
-     */
     public function __construct(Server $server, int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
@@ -40,17 +25,6 @@ class Site extends Resource
         $this->buildEndpoint();
     }
 
-    /**
-     * Returns either a single site or an array of sites
-     *
-     * @param int|null $id
-     * @return null|\Ploi\Http\Response
-     * @throws \Ploi\Exceptions\Http\InternalServerError
-     * @throws \Ploi\Exceptions\Http\NotFound
-     * @throws \Ploi\Exceptions\Http\NotValid
-     * @throws \Ploi\Exceptions\Http\PerformingMaintenance
-     * @throws \Ploi\Exceptions\Http\TooManyAttempts
-     */
     public function get(int $id = null)
     {
         if ($id) {
@@ -63,34 +37,18 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    /**
-     * Gets the server
-     *
-     * @return Server
-     */
     public function getServer(): Server
     {
         return $this->server;
     }
 
-    /**
-     * Sets the server
-     *
-     * @param Server $server
-     * @return Site
-     */
-    public function setServer(Server $server): self
+    public function setServer(Server $server)
     {
         $this->server = $server;
 
         return $this;
     }
 
-    /**
-     * Builds the endpoint out based over the server's endpoint and id
-     *
-     * @return Site
-     */
     public function buildEndpoint(): self
     {
         $this->setEndpoint($this->getServer()->getEndpoint() . '/' . $this->getServer()->getId() . '/sites');
@@ -102,21 +60,14 @@ class Site extends Resource
         return $this;
     }
 
-    /**
-     * Creates a new website
-     *
-     * @param string $domain
-     * @param string $webDirectory
-     * @param string $projectRoot
-     * @return stdClass
-     * @throws DomainAlreadyExists
-     * @throws InternalServerError
-     * @throws NotFound
-     * @throws PerformingMaintenance
-     * @throws TooManyAttempts
-     */
-    public function create(string $domain, string $webDirectory = '/public', string $projectRoot = '/'): stdClass
-    {
+    public function create(
+        string $domain,
+        string $webDirectory = '/public',
+        string $projectRoot = '/',
+        string $systemUser = 'ploi',
+        string $systemUserPassword = null
+    ): stdClass {
+
         // Remove the id
         $this->setId(null);
 
@@ -126,6 +77,8 @@ class Site extends Resource
                 'root_domain' => $domain,
                 'web_directory' => $webDirectory,
                 'project_root' => $projectRoot,
+                'system_user' => $systemUser,
+                'system_user_password' => $systemUserPassword
             ]),
         ];
 
@@ -139,7 +92,7 @@ class Site extends Resource
             $errors = json_decode($exception->getMessage())->errors;
 
             if (!empty($errors->root_domain)
-                && $errors->root_domain[0] === "The root domain has already been taken.") {
+                && $errors->root_domain[0] === 'The root domain has already been taken.') {
                 throw new DomainAlreadyExists($domain . ' already exists!');
             }
 
@@ -150,21 +103,9 @@ class Site extends Resource
         $this->setId($response->getJson()->data->id);
 
         // Return the data
-        return $response->getJson()->data;
+        return $response->getJson();
     }
 
-    /**
-     * Deletes a site
-     *
-     * @param int|null $id
-     * @return bool
-     * @throws InternalServerError
-     * @throws NotFound
-     * @throws NotValid
-     * @throws PerformingMaintenance
-     * @throws TooManyAttempts
-     * @throws \Exception
-     */
     public function delete(int $id = null): bool
     {
         if ($id) {
@@ -178,18 +119,6 @@ class Site extends Resource
         return $response->getResponse()->getStatusCode() === 200;
     }
 
-    /**
-     * Returns the logs as an array for a site
-     *
-     * @param int|null $id
-     * @return array<int, string>
-     * @throws InternalServerError
-     * @throws NotFound
-     * @throws NotValid
-     * @throws PerformingMaintenance
-     * @throws RequiresId
-     * @throws TooManyAttempts
-     */
     public function logs(int $id = null): array
     {
         if ($id) {
@@ -197,7 +126,7 @@ class Site extends Resource
         }
 
         if (!$this->getId()) {
-            throw new RequiresId("No Site ID set");
+            throw new RequiresId('No Site ID set');
         }
 
         $this->setEndpoint($this->buildEndpoint()->getEndpoint() . '/log');
@@ -210,5 +139,61 @@ class Site extends Resource
         }
 
         return $response->getJson()->data;
+    }
+
+    public function phpVersion($version = '7.4') :stdClass
+    {
+        // Set the options
+        $options = [
+            'body' => json_encode([
+                'php_version' => $version,
+            ]),
+        ];
+
+        // Build the endpoint
+        $this->buildEndpoint();
+
+        // Make the request
+        try {
+            $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/php-version', 'post', $options);
+        } catch (NotValid $exception) {
+            return json_decode($exception->getMessage());
+        }
+
+        // Set the id of the site
+        $this->setId($response->getJson()->data->id);
+
+        // Return the data
+        return $response->getJson();
+    }
+
+    public function redirects($id = null): Redirect
+    {
+        return new Redirect($this->getServer(), $this, $id);
+    }
+
+    public function certificates($id = null): Certificate
+    {
+        return new Certificate($this->getServer(), $this, $id);
+    }
+
+    public function repository($id = null): Repository
+    {
+        return new Repository($this->getServer(), $this, $id);
+    }
+
+    public function queues($id = null): Queue
+    {
+        return new Queue($this->getServer(), $this, $id);
+    }
+
+    public function deployment($id = null): Deployment
+    {
+        return new Deployment($this->getServer(), $this, $id);
+    }
+
+    public function app($id = null): App
+    {
+        return new App($this->getServer(), $this, $id);
     }
 }

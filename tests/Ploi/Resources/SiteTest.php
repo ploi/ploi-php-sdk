@@ -2,12 +2,12 @@
 
 namespace Tests\Ploi\Resources;
 
-use Ploi\Exceptions\Http\NotFound;
-use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
-use Ploi\Http\Response;
-use Ploi\Resources\Server\Server;
 use stdClass;
 use Tests\BaseTest;
+use Ploi\Http\Response;
+use Ploi\Resources\Server\Server;
+use Ploi\Exceptions\Http\NotFound;
+use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
 
 /**
  * Class SiteTest

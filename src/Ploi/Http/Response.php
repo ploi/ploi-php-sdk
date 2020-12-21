@@ -2,8 +2,8 @@
 
 namespace Ploi\Http;
 
-use Psr\Http\Message\ResponseInterface;
 use stdClass;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Response
@@ -92,6 +92,16 @@ class Response
     }
 
     /**
+     * Gets the 'data' key from the json object
+     *
+     * @return null|stdClass|array
+     */
+    public function getData()
+    {
+        return object_get($this->getJson(), 'data');
+    }
+
+    /**
      * Returns the JSON and Response as an array
      *
      * @return array{json: ?stdClass, response: ResponseInterface}
@@ -99,7 +109,7 @@ class Response
     public function toArray(): array
     {
         return [
-            'json'     => $this->getJson(),
+            'json' => $this->getJson(),
             'response' => $this->getResponse(),
         ];
     }

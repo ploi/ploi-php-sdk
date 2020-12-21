@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase;
 use Ploi\Ploi;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class BaseTest
@@ -53,5 +53,4 @@ class BaseTest extends TestCase
     {
         $this->assertTrue(true);
     }
-
 }

@@ -1,43 +1,43 @@
 {
-  "name": "ploi/ploi-php-sdk",
-  "description": "Ploi.io for easy site deployments",
-  "authors": [
-    {
-      "name": "Dennis Smink",
-      "email": "info@ploi.io"
+    "name": "ploi/ploi-php-sdk",
+    "description": "Ploi.io for easy site deployments",
+    "authors": [
+        {
+            "name": "Dennis Smink",
+            "email": "info@ploi.io"
+        },
+        {
+            "name": "Simon White",
+            "email": "simondotwhite@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0.1"
     },
-    {
-      "name": "Simon White",
-      "email": "simondotwhite@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=7.0",
-    "guzzlehttp/guzzle": "~6.0"
-  },
-  "require-dev": {
-    "squizlabs/php_codesniffer": "3.*",
-    "psy/psysh": "@stable",
-    "phpunit/phpunit": "^6",
-    "vlucas/phpdotenv": "^2.5"
-  },
-  "license": "MIT",
-  "minimum-stability": "stable",
-  "autoload": {
-    "psr-0": {
-      "Ploi": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Ploi": "src/"
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*",
+        "psy/psysh": "@stable",
+        "phpunit/phpunit": "^6",
+        "vlucas/phpdotenv": "^2.5"
     },
-    "psr-4": {
-      "Tests\\": "tests/"
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": {
+            "Ploi": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Ploi": "src/"
+        },
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src",
+        "test": "./vendor/bin/phpunit tests"
     }
-  },
-  "scripts": {
-    "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src",
-    "test": "./vendor/bin/phpunit tests"
-  }
 }

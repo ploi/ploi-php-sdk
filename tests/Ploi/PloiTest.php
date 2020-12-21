@@ -3,9 +3,9 @@
 namespace Tests\Ploi;
 
 use Exception;
+use Tests\BaseTest;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\Unauthenticated;
-use Tests\BaseTest;
 
 /**
  * Class PloiTest
@@ -13,7 +13,6 @@ use Tests\BaseTest;
  */
 class PloiTest extends BaseTest
 {
-
     public function testCanGetAPiToken()
     {
         $this->assertEquals(getenv('API_TOKEN'), $this->getPloi()->getApiToken());
@@ -35,7 +34,6 @@ class PloiTest extends BaseTest
         foreach ($methods as $method) {
             $response = $this->getPloi()->makeAPICall('servers', $method);
             $this->assertNotInstanceOf(Exception::class, $response);
-
         }
     }
 

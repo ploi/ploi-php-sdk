@@ -1,9 +1,4 @@
-## :warning: NOT READY FOR PRODUCTION YET
-
 # Ploi PHP SDK :rocket:
-
-[![Build Status](https://travis-ci.org/ploi-deploy/ploi-php-sdk.svg?branch=master)](https://travis-ci.org/ploi-deploy/ploi-php-sdk)
-[![codecov](https://codecov.io/gh/ploi-deploy/ploi-php-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/ploi-deploy/ploi-php-sdk)
 
 The future is now - so stop the hassle, you’re running behind. Quick and easy site deployment with Ploi. Awesome features for awesome developers. Check it out at www.ploi.io
 
@@ -21,8 +16,6 @@ composer require ploi/ploi-php-sdk
 First you need to call a new Ploi instance
 
 ```php
-<?php
-
 $ploi = new \Ploi\Ploi($apiToken);
 // or
 $ploi = new \Ploi\Ploi();
@@ -32,11 +25,9 @@ $ploi->setApiToken($token);
 ### Responses
 When calling a resource, it will return an array containing decoded JSON as well as the original response from the Guzzle client.
 
-```php
-<?php
-
+```json
 [
-    "json" => {
+    "json" : {
         "id": 123,
         "name": "server-name",
         "ip_address": "XXX.XXX.XXX.XXX",
@@ -46,7 +37,7 @@ When calling a resource, it will return an array containing decoded JSON as well
         "status": "Server active",
         "created_at": "2018-01-01 08:00:00",
      },
-     "response" => GuzzleHttp\Psr7\Response,
+     "response" : GuzzleHttp\Psr7\Response,
 ]
 ```
 
@@ -59,16 +50,12 @@ Resources are what you call to access a feature or function.
 Get all servers
 
 ```php
-<?php
-
 $ploi->server()->get();
 ```
 
 Get a specific server
 
 ```php
-<?php
-
 $ploi->server(123)->get();
 // or
 $ploi->server()->get(123);
@@ -77,8 +64,6 @@ $ploi->server()->get(123);
 Get a servers deployment logs
 
 ```php
-<?php
-
 $ploi->server(123)->logs();
 // or
 $ploi->server()->logs(123);

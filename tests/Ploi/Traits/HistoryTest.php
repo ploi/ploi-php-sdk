@@ -2,8 +2,8 @@
 
 namespace Tests\Ploi\Traits;
 
-use Ploi\Resources\Resource;
 use Tests\BaseTest;
+use Ploi\Resources\Resource;
 
 /**
  * Class HistoryTest

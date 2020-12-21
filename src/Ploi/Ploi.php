@@ -4,15 +4,16 @@ namespace Ploi;
 
 use Exception;
 use GuzzleHttp\Client;
-use Ploi\Exceptions\Http\InternalServerError;
+use Ploi\Http\Response;
+use Ploi\Resources\User;
+use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\NotValid;
-use Ploi\Exceptions\Http\PerformingMaintenance;
+use Psr\Http\Message\ResponseInterface;
 use Ploi\Exceptions\Http\TooManyAttempts;
 use Ploi\Exceptions\Http\Unauthenticated;
-use Ploi\Http\Response;
-use Ploi\Resources\Server\Server;
-use Psr\Http\Message\ResponseInterface;
+use Ploi\Exceptions\Http\InternalServerError;
+use Ploi\Exceptions\Http\PerformingMaintenance;
 
 /**
  * Class Ploi
@@ -33,7 +34,7 @@ class Ploi
      *
      * @var string
      */
-    private $url = 'https://ploi.io/api/';
+    private $url = 'http://ploi.test/api/';
 
     /**
      * The API token
@@ -141,5 +142,10 @@ class Ploi
     public function server(int $id = null)
     {
         return new Server($this, $id);
+    }
+
+    public function user()
+    {
+        return new User($this);
     }
 }
