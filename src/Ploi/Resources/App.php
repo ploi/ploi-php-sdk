@@ -4,7 +4,7 @@ namespace Ploi\Resources;
 
 use stdClass;
 use Illuminate\Support\Arr;
-use App\Services\Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Http\NotValid;
 
 class App extends Resource
 {

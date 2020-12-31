@@ -3,7 +3,7 @@
 namespace Ploi\Resources;
 
 use stdClass;
-use App\Services\Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Http\NotValid;
 
 class NetworkRule extends Resource
 {

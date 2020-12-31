@@ -4,6 +4,7 @@ namespace Ploi\Resources;
 
 use stdClass;
 use Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
 
 /**
