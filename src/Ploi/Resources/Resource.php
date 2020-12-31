@@ -10,6 +10,7 @@ abstract class Resource
     use HasHistory;
 
     private $ploi;
+    private $action;
     private $endpoint;
     private $id;
     private $server;
@@ -88,5 +89,17 @@ abstract class Resource
         $this->server = $server;
 
         return $this;
+    }
+
+    public function setAction(string $action): self
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    public function getAction(): ?string
+    {
+        return $this->action;
     }
 }

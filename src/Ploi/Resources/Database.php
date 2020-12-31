@@ -26,6 +26,10 @@ class Database extends Resource
             $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
         }
 
+        if ($this->getAction()) {
+            $this->setEndpoint($this->getEndpoint() . '/' . $this->getAction());
+        }
+
         return $this;
     }
 
@@ -77,6 +81,54 @@ class Database extends Resource
         if ($id) {
             $this->setId($id);
         }
+
+        $this->buildEndpoint();
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
+
+        return $response->getResponse()->getStatusCode() === 200;
+    }
+
+    public function acknowledge(string $name): stdClass
+    {
+        // Remove the id
+        $this->setId(null);
+
+        // Set the action
+        $this->setAction('acknowledge');
+
+        // Set the options
+        $options = [
+            'body' => json_encode([
+                'name' => $name,
+            ]),
+        ];
+
+        // Build the endpoint
+        $this->buildEndpoint();
+
+        // Make the request
+        try {
+            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
+        } catch (NotValid $exception) {
+            return json_decode($exception->getMessage());
+        }
+
+        // Set the id of the site
+        //$this->setId($response->getJson()->data->id);
+
+        // Return the data
+        return $response->getJson()->data;
+    }
+
+    public function forget(int $id): bool
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        // Set the action
+        $this->setAction('forget');
 
         $this->buildEndpoint();
 

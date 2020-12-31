@@ -34,7 +34,7 @@ class Ploi
      *
      * @var string
      */
-    private $url = 'http://ploi.test/api/';
+    private $url = 'https://ploi.io/api/';
 
     /**
      * The API token
