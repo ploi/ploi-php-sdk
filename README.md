@@ -1,6 +1,6 @@
 # Ploi PHP SDK :rocket:
 
-The future is now - so stop the hassle, you’re running behind. Quick and easy site deployment with Ploi. Awesome features for awesome developers. Check it out at www.ploi.io
+The future is now - so stop the hassle, you’re running behind. Quick and easy site deployment with Ploi. Awesome features for awesome developers. Check it out at https://ploi.io
 
 This SDK is ment for PHP applications to be able to communicate with our API.
 You can find our documentation at https://developers.ploi.io
@@ -41,30 +41,43 @@ When calling a resource, it will return an array containing decoded JSON as well
 ]
 ```
 
+You can also only retrieve the JSON, use the `getJson()` method to only get the JSON back:
+
+`$ploi->user()->get()->getJson()`
+
+However, when you want to only get the data, use the `getData()` method:
+
+`$ploi->user()->get()->getData()`
+
 ## Resources
 
 Resources are what you call to access a feature or function. 
 
 ### Servers
 
-Get all servers
 
 ```php
 $ploi->server()->get();
 ```
 
-Get a specific server
-
 ```php
+// Get specific server
 $ploi->server(123)->get();
 // or
 $ploi->server()->get(123);
+
+// Get server logs
+$ploi->server(123)->logs()->getJson();
+// or
+$ploi->server()->logs(123)->getJson();
 ```
 
-Get a servers deployment logs
+### Sites
 
 ```php
-$ploi->server(123)->logs();
-// or
-$ploi->server()->logs(123);
+// Get all sites
+$ploi->server(123)->sites()->get();
+
+// Get specific site
+$ploi->server(123)->sites(123)->get();
 ```
