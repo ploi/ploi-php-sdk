@@ -3,7 +3,6 @@
 namespace Ploi\Resources;
 
 use stdClass;
-use Illuminate\Support\Arr;
 use Ploi\Exceptions\Http\NotValid;
 
 class App extends Resource
@@ -52,7 +51,7 @@ class App extends Resource
         // Set the options
         $options = [
             'body' => json_encode([
-                'create_database' => Arr::get($options, 'create_database', false)
+                'create_database' => $options['create_database'] ?? false
             ]),
         ];
 

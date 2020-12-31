@@ -14,8 +14,7 @@
     "require": {
         "php": ">=7.2",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^6.0|^7.0.1",
-        "illuminate/support": "^8.20"
+        "guzzlehttp/guzzle": "^6.0|^7.0.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",
