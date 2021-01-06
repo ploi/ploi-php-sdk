@@ -4,7 +4,7 @@ namespace Tests\Ploi\Resources;
 
 use Tests\BaseTest;
 use Ploi\Http\Response;
-use Ploi\Resources\Server\Server;
+use Ploi\Resources\Server;
 use Ploi\Exceptions\Resource\RequiresId;
 
 /**

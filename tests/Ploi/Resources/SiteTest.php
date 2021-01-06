@@ -5,7 +5,7 @@ namespace Tests\Ploi\Resources;
 use stdClass;
 use Tests\BaseTest;
 use Ploi\Http\Response;
-use Ploi\Resources\Server\Server;
+use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
 
@@ -34,7 +34,7 @@ class SiteTest extends BaseTest
 
     public function testGetAllSites()
     {
-        $resource = $this->server->site();
+        $resource = $this->server->sites();
 
         $sites = $resource->get();
 
@@ -51,7 +51,7 @@ class SiteTest extends BaseTest
      */
     public function testGetSingleSite()
     {
-        $resource = $this->server->site();
+        $resource = $this->server->sites();
         $sites = $resource->get();
 
         if (!empty($sites->getJson()->data[0])) {
@@ -59,8 +59,8 @@ class SiteTest extends BaseTest
 
             $resource->setId($siteId);
             $methodOne = $resource->get();
-            $methodTwo = $this->server->site($siteId)->get();
-            $methodThree = $this->server->site()->get($siteId);
+            $methodTwo = $this->server->sites($siteId)->get();
+            $methodThree = $this->server->sites()->get($siteId);
 
             $this->assertInstanceOf(stdClass::class, $methodOne->getJson()->data);
             $this->assertEquals($siteId, $methodOne->getJson()->data->id);
@@ -72,7 +72,7 @@ class SiteTest extends BaseTest
     public function testCreateExampleDotCom()
     {
         try {
-            $response = $this->server->site()->create('example.com');
+            $response = $this->server->sites()->create('example.com');
 
             $this->assertInstanceOf(stdClass::class, $response);
             $this->assertNotEmpty($response->id);
@@ -81,7 +81,7 @@ class SiteTest extends BaseTest
         } catch (\Exception $e) {
             $this->assertInstanceOf(DomainAlreadyExists::class, $e);
 
-            $allSites = $this->server->site()->get();
+            $allSites = $this->server->sites()->get();
             $foundSite = false;
             foreach ($allSites->getJson()->data as $site) {
                 if ($foundSite) {
@@ -89,7 +89,7 @@ class SiteTest extends BaseTest
                 }
 
                 if ($site->domain === 'example.com') {
-                    $this->server->site($site->id)->delete();
+                    $this->server->sites($site->id)->delete();
 
                     $this->testCreateExampleDotCom();
                 }
@@ -103,11 +103,11 @@ class SiteTest extends BaseTest
     public function testCreateDuplicateSite($site)
     {
         try {
-            $this->server->site()->create('example.com');
+            $this->server->sites()->create('example.com');
         } catch (\Exception $e) {
             $this->assertInstanceOf(DomainAlreadyExists::class, $e);
 
-            $allSites = $this->server->site()->get();
+            $allSites = $this->server->sites()->get();
             $foundSite = false;
             foreach ($allSites->getJson()->data as $site) {
                 if ($foundSite) {
@@ -129,18 +129,18 @@ class SiteTest extends BaseTest
     public function testDeleteSite($site)
     {
         if (!empty($site)) {
-            $deleted = $this->server->site($site->id)->delete();
+            $deleted = $this->server->sites($site->id)->delete();
             $this->assertTrue($deleted);
         }
     }
 
     public function testDeleteInvalidSite()
     {
-        $deleted = $this->server->site(0)->delete();
+        $deleted = $this->server->sites(0)->delete();
         $this->assertFalse($deleted);
 
         try {
-            $this->server->site()->delete(1);
+            $this->server->sites()->delete(1);
         } catch (\Exception $e) {
             $this->assertInstanceOf(NotFound::class, $e);
         }
@@ -148,7 +148,7 @@ class SiteTest extends BaseTest
 
     public function testLogs()
     {
-        $resource = $this->server->site();
+        $resource = $this->server->sites();
         $sites = $resource->get();
 
         if (!empty($sites->getJson()->data[0])) {

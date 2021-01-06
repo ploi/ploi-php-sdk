@@ -2,7 +2,7 @@
 
 The future is now - so stop the hassle, you’re running behind. Quick and easy site deployment with Ploi. Awesome features for awesome developers. Check it out at https://ploi.io
 
-This SDK is ment for PHP applications to be able to communicate with our API.
+This SDK is meant for PHP applications to be able to communicate with our API.
 You can find our documentation at https://developers.ploi.io
 
 ## Installation

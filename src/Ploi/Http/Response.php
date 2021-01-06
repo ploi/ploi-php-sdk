@@ -98,7 +98,7 @@ class Response
      */
     public function getData()
     {
-        return object_get($this->getJson(), 'data');
+        return $this->getJson()->data ?? null;
     }
 
     /**
