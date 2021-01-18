@@ -144,7 +144,8 @@ class Database extends Resource
         string $table_exclusions = null,
         string $locations = null,
         string $path = null
-    ): stdClass {
+    ): stdClass
+    {
 
         if ($id) {
             $this->setId($id);
@@ -154,11 +155,11 @@ class Database extends Resource
         // Set the options
         $options = [
             'body' => json_encode([
-                'interval'=>$interval,
-                'type'=>$type,
-                'table_exclusions'=>$table_exclusions,
-                'locations'=>$locations,
-                'path'=>$path
+                'interval' => $interval,
+                'type' => $type,
+                'table_exclusions' => $table_exclusions,
+                'locations' => $locations,
+                'path' => $path
             ]),
         ];
 
@@ -168,16 +169,14 @@ class Database extends Resource
         // Make the request
         try {
             $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
+        } catch
+        (NotValid $exception) {
+            $errors = json_decode($exception->getMessage())->errors;
+
+            dd($errors);
+
+            throw $exception;
         }
-
-catch
-(NotValid $exception) {
-    $errors = json_decode($exception->getMessage())->errors;
-
-    dd($errors);
-
-    throw $exception;
-}
 
         // Return the data
         return $response->getData();
