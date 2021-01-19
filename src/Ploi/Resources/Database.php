@@ -137,61 +137,8 @@ class Database extends Resource
         return $response->getResponse()->getStatusCode() === 200;
     }
 
-    public function createBackup(
-        int $id,
-        int $interval,
-        string $type,
-        string $table_exclusions = null,
-        string $locations = null,
-        string $path = null
-    ): stdClass
+    public function backups($id = null): DatabaseBackup
     {
-
-        if ($id) {
-            $this->setId($id);
-        }
-
-
-        // Set the options
-        $options = [
-            'body' => json_encode([
-                'interval' => $interval,
-                'type' => $type,
-                'table_exclusions' => $table_exclusions,
-                'locations' => $locations,
-                'path' => $path
-            ]),
-        ];
-
-        $this->setAction('backups');
-        $this->buildEndpoint();
-
-        // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch
-        (NotValid $exception) {
-            $errors = json_decode($exception->getMessage())->errors;
-
-            dd($errors);
-
-            throw $exception;
-        }
-
-        // Return the data
-        return $response->getData();
-    }
-
-    public function getBackups(int $id = null)
-    {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        $this->setAction('backups');
-        $this->buildEndpoint();
-
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint());
-        return $response->getData();
+        return new DatabaseBackup($this->getServer(),$this,$id);
     }
 }

@@ -13,6 +13,7 @@ abstract class Resource
     private $action;
     private $endpoint;
     private $id;
+    private $database;
     private $server;
     private $site;
 
@@ -75,6 +76,18 @@ abstract class Resource
     public function setSite(Site $site): self
     {
         $this->site = $site;
+
+        return $this;
+    }
+
+    public function getDatabase(): Database
+    {
+        return $this->database;
+    }
+
+    public function setDatabase(Database $database)
+    {
+        $this->database = $database;
 
         return $this;
     }
