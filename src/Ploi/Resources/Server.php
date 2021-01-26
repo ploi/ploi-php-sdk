@@ -110,7 +110,6 @@ class Server extends Resource
     {
         return new Database($this, $id);
     }
-
     public function cronjobs($id = null): Cronjob
     {
         return new Cronjob($this, $id);

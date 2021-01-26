@@ -136,4 +136,9 @@ class Database extends Resource
 
         return $response->getResponse()->getStatusCode() === 200;
     }
+
+    public function backups($id = null): DatabaseBackup
+    {
+        return new DatabaseBackup($this->getServer(),$this,$id);
+    }
 }
