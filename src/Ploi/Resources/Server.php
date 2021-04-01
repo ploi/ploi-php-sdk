@@ -152,6 +152,23 @@ class Server extends Resource
         return $response->getJson();
     }
 
+    public function phpVersions(int $id = null): stdClass
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
+
+        $this->setEndpoint($this->endpoint . '/' . $this->getId());
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/php/versions', 'get');
+
+        return $response->getJson();
+    }
+
     public function sites($id = null): Site
     {
         return new Site($this, $id);
