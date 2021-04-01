@@ -9,6 +9,7 @@ use Ploi\Resources\User;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Http\NotAllowed;
 use Psr\Http\Message\ResponseInterface;
 use Ploi\Exceptions\Http\TooManyAttempts;
 use Ploi\Exceptions\Http\Unauthenticated;
@@ -94,6 +95,7 @@ class Ploi
      * @param array<string, mixed> $options
      * @return Response
      * @throws NotFound
+     * @throws NotAllowed
      * @throws TooManyAttempts
      * @throws PerformingMaintenance
      * @throws InternalServerError
@@ -120,6 +122,8 @@ class Ploi
                 throw new Unauthenticated($response->getBody());
             case 404:
                 throw new NotFound($response->getBody());
+            case 405:
+                throw new NotAllowed($response->getBody());
             case 422:
                 throw new NotValid($response->getBody());
             case 429:
