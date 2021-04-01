@@ -174,6 +174,11 @@ class Server extends Resource
         return new Site($this, $id);
     }
 
+    public function services(string $serviceName = null): Service
+    {
+        return new Service($this, $serviceName);
+    }
+
     public function databases($id = null): Database
     {
         return new Database($this, $id);
