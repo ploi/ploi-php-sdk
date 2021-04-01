@@ -168,6 +168,23 @@ class Site extends Resource
         return $response->getJson();
     }
 
+    public function testDomain(int $id = null): stdClass
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No Site ID set');
+        }
+
+        $this->buildEndpoint();
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'get');
+
+        return $response->getJson();
+    }
+
     public function enableTestDomain(int $id = null): stdClass
     {
         if ($id) {
