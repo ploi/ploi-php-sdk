@@ -101,6 +101,57 @@ class Server extends Resource
         return $response->getData();
     }
 
+    public function refreshOpcache(int $id = null): stdClass
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
+
+        $this->setEndpoint($this->endpoint . '/' . $this->getId());
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/refresh-opcache', 'post');
+
+        return $response->getJson();
+    }
+
+    public function enableOpcache(int $id = null): stdClass
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
+
+        $this->setEndpoint($this->endpoint . '/' . $this->getId());
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/enable-opcache', 'post');
+
+        return $response->getJson();
+    }
+
+    public function disableOpcache(int $id = null): stdClass
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
+
+        $this->setEndpoint($this->endpoint . '/' . $this->getId());
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/disable-opcache', 'delete');
+
+        return $response->getJson();
+    }
+
     public function sites($id = null): Site
     {
         return new Site($this, $id);
