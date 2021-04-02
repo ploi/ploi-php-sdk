@@ -67,7 +67,7 @@ class Script extends Resource
         return $response->getJson();
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id = null): bool
     {
         if ($id) {
             $this->setId($id);
@@ -83,7 +83,7 @@ class Script extends Resource
         return $response->getResponse()->getStatusCode() === 200;
     }
 
-    public function run(int $id, array $serverIds): stdClass
+    public function run(int $id = null, array $serverIds = []): stdClass
     {
         if ($id) {
             $this->setId($id);
