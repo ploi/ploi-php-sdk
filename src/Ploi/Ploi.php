@@ -5,6 +5,7 @@ namespace Ploi;
 use Exception;
 use GuzzleHttp\Client;
 use Ploi\Http\Response;
+use Ploi\Resources\Script;
 use Ploi\Resources\User;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
@@ -146,6 +147,11 @@ class Ploi
     public function server(int $id = null)
     {
         return new Server($this, $id);
+    }
+
+    public function scripts(int $id = null): Script
+    {
+        return new Script($this, $id);
     }
 
     public function user()
