@@ -144,9 +144,14 @@ class Ploi
      * @param int|null $id
      * @return Server
      */
-    public function server(int $id = null)
+    public function server(int $id = null): Server
     {
         return new Server($this, $id);
+    }
+
+    public function servers(int $id = null): Server
+    {
+        return $this->server($id);
     }
 
     public function scripts(int $id = null): Script
