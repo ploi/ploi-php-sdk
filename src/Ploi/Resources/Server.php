@@ -103,9 +103,61 @@ class Server extends Resource
         return $response->getData();
     }
 
-    public function createCustom(): stdClass
+    public function createCustom(string $ip, array $options): stdClass
     {
         $endpoint = $this->getEndpoint() . '/custom';
+
+        $defaults = [
+            'ip' => $ip,
+            'type' => 'server',
+            'database_type' => 'mysql',
+            'php_version' => '7.4',
+        ];
+
+        $options = [
+            'body' => json_encode(array_merge($defaults, $options)),
+        ];
+
+        $response = $this->getPloi()->makeAPICall($endpoint, 'post', $options);
+
+        $data = $response->getJson();
+        $this->setId($data->id);
+
+        return $data;
+    }
+
+    public function startInstallation(string $url = null)
+    {
+        $id = $this->getId();
+
+        if (!$url && !$id) {
+            throw new RequiresId("This endpoint requires an ID. Supply an ID or a valid installation url.");
+        }
+
+        $endpoint = $url ?: $this->getEndpoint() . "/custom/{$id}/start";
+
+        $response = $this->getPloi()->makeAPICall($endpoint, 'post');
+
+        $data = $response->getJson();
+
+        return $data;
+    }
+
+    public function sshKeys(int $id = null): array
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
+
+        $this->setEndpoint($this->endpoint . '/' . $this->getId());
+
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/ssh-keys');
+
+        return $response->getData();
     }
 
     public function refreshOpcache(int $id = null): stdClass
