@@ -27,7 +27,7 @@ class BaseTest extends TestCase
         return $this->ploi;
     }
 
-    protected function setup()
+    protected function setup(): void
     {
         $this->ploi = new Ploi(getenv('API_TOKEN'));
 
@@ -37,7 +37,7 @@ class BaseTest extends TestCase
     /**
      * Load the environment file
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         // Load the test environment
         $dotenv = new \Dotenv\Dotenv(__DIR__);
