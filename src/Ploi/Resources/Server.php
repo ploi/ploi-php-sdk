@@ -62,34 +62,36 @@ class Server extends Resource
     public function create(
         string $name,
         int $provider,
-        int $region,
-        int $plan
+        $region,
+        $plan,
+        array $options = []
     ): stdClass {
 
         // Remove the id
         $this->setId(null);
 
+        $defaults = [
+            'name' => $name,
+            'plan' => $plan,
+            'region' => $region,
+            'credential' => $provider,
+            'type' => 'server',
+            'database_type' => 'mysql',
+            'webserver_type' => 'nginx',
+            'php_version' => '7.4'
+        ];
+
         // Set the options
         $options = [
-            'body' => json_encode([
-                'name' => $name,
-                'plan' => $plan,
-                'region' => $region,
-                'credential' => $provider,
-                'type' => 'server',
-                'database_type' => 'mysql',
-                'webserver_type' => 'nginx',
-                'php_version' => '7.4'
-            ]),
+            'body' => json_encode(array_merge($defaults, $options)),
         ];
 
         // Make the request
         try {
             $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
         } catch (NotValid $exception) {
-            $errors = json_decode($exception->getMessage())->errors;
-
-            dd($errors);
+            // $errors = json_decode($exception->getMessage())->errors;
+            // dd($errors);
 
             throw $exception;
         }
@@ -99,6 +101,11 @@ class Server extends Resource
 
         // Return the data
         return $response->getData();
+    }
+
+    public function createCustom(): stdClass
+    {
+        $endpoint = $this->getEndpoint() . '/custom';
     }
 
     public function refreshOpcache(int $id = null): stdClass
