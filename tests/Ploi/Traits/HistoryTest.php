@@ -17,7 +17,7 @@ class HistoryTest extends BaseTest
      */
     private $resource;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 
