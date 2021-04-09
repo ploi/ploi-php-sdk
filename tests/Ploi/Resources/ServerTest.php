@@ -19,6 +19,18 @@ class ServerTest extends BaseTest
         $this->assertInstanceOf(Server::class, $this->getPloi()->server());
     }
 
+    public function testBuildsUrlCorrectly()
+    {
+        $server = $this->getPloi()->server();
+
+        $this->assertEquals('servers', $server->buildEndpoint());
+
+        $server->setId(1);
+        $this->assertEquals('servers/1', $server->buildEndpoint());
+        $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('endpoint'));
+        $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('/endpoint'));
+    }
+
     /**
      * @throws \Ploi\Exceptions\Http\InternalServerError
      * @throws \Ploi\Exceptions\Http\NotFound
