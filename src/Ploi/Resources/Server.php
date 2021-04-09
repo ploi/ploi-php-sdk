@@ -46,13 +46,7 @@ class Server extends Resource
 
     public function logs(int $id = null)
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId() . '/logs');
 
@@ -145,13 +139,7 @@ class Server extends Resource
 
     public function sshKeys(int $id = null): array
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId());
 
@@ -162,13 +150,7 @@ class Server extends Resource
 
     public function refreshOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId());
 
@@ -179,13 +161,7 @@ class Server extends Resource
 
     public function enableOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId());
 
@@ -196,13 +172,7 @@ class Server extends Resource
 
     public function disableOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId());
 
@@ -213,13 +183,7 @@ class Server extends Resource
 
     public function phpVersions(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->endpoint . '/' . $this->getId());
 

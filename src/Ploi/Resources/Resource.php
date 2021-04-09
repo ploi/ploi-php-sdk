@@ -2,6 +2,7 @@
 
 namespace Ploi\Resources;
 
+use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Ploi;
 use Ploi\Traits\HasHistory;
 
@@ -33,6 +34,19 @@ abstract class Resource
         $this->id = $id;
 
         $this->addHistory('Resource ID set to ' . $id);
+
+        return $this;
+    }
+
+    public function setIdOrFail(int $id = null): self
+    {
+        if ($id) {
+            $this->setId($id);
+        }
+
+        if (!$this->getId()) {
+            throw new RequiresId('No server ID set');
+        }
 
         return $this;
     }
