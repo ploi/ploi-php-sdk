@@ -150,14 +150,6 @@ class Server extends Resource
             ->getJson();
     }
 
-    public function sshKeys(int $id = null): array
-    {
-        $this->setIdOrFail($id);
-
-        return $this->callApi('ssh-keys')
-            ->getData();
-    }
-
     public function refreshOpcache(int $id = null): stdClass
     {
         $this->setIdOrFail($id);
