@@ -18,17 +18,38 @@ class Server extends Resource
         $this->setEndpoint($this->endpoint);
     }
 
+    public function buildEndpoint(string $path = null): string
+    {
+        if (!$this->getId()) {
+            return 'servers';
+        }
+
+        $base = "servers/{$this->getId()}";
+
+        if (!$path) {
+            return $base;
+        }
+
+        if (strpos($path, '/') === 0) {
+            return $base . $path;
+        }
+
+        return "{$base}/{$path}";
+    }
+
+    public function callApi(string $path = null, string $method = 'get', array $options = [])
+    {
+        return $this->getPloi()
+            ->makeAPICall($this->buildEndpoint($path), $method, $options);
+    }
+
     public function get(int $id = null)
     {
         if ($id) {
             $this->setId($id);
         }
 
-        if ($this->getId()) {
-            $this->setEndpoint($this->endpoint . '/' . $this->getId());
-        }
-
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return $this->callApi();
     }
 
     public function delete(int $id = null)
@@ -37,26 +58,15 @@ class Server extends Resource
             $this->setId($id);
         }
 
-        if ($this->getId()) {
-            $this->setEndpoint($this->endpoint . '/' . $this->getId());
-        }
-
-        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
+        return $this->callApi(null, 'delete');
     }
 
     public function logs(int $id = null)
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
-
-        $this->setEndpoint($this->endpoint . '/' . $this->getId() . '/logs');
-
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return $this->callApi('logs')
+            ->getJson();
     }
 
     public function create(
@@ -88,7 +98,7 @@ class Server extends Resource
 
         // Make the request
         try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
+            $response = $this->callApi(null, 'post', $options);
         } catch (NotValid $exception) {
             // $errors = json_decode($exception->getMessage())->errors;
             // dd($errors);
@@ -103,77 +113,73 @@ class Server extends Resource
         return $response->getData();
     }
 
-    public function createCustom(): stdClass
+    public function createCustom(string $ip, array $options): stdClass
     {
-        $endpoint = $this->getEndpoint() . '/custom';
+        $this->setId(null);
+        $defaults = [
+            'ip' => $ip,
+            'type' => 'server',
+            'database_type' => 'mysql',
+            'php_version' => '7.4',
+        ];
+
+        $options = [
+            'body' => json_encode(array_merge($defaults, $options)),
+        ];
+
+        $response = $this->callApi('custom', 'post', $options);
+
+        $data = $response->getJson();
+        $this->setId($data->id);
+
+        return $data;
+    }
+
+    public function startInstallation(string $url = null)
+    {
+        $id = $this->getId();
+
+        if (!$url && !$id) {
+            throw new RequiresId("This endpoint requires an ID. Supply an ID or a valid installation url.");
+        }
+
+        $endpoint = $url ?: "servers/custom/{$id}/start";
+
+        return $this->getPloi()
+            ->makeAPICall($endpoint, 'post')
+            ->getJson();
     }
 
     public function refreshOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
-
-        $this->setEndpoint($this->endpoint . '/' . $this->getId());
-
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/refresh-opcache', 'post');
-
-        return $response->getJson();
+        return $this->callApi('refresh-opcache', 'post')
+            ->getJson();
     }
 
     public function enableOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
-
-        $this->setEndpoint($this->endpoint . '/' . $this->getId());
-
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/enable-opcache', 'post');
-
-        return $response->getJson();
+        return $this->callApi('enable-opcache', 'post')
+            ->getJson();
     }
 
     public function disableOpcache(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
-
-        $this->setEndpoint($this->endpoint . '/' . $this->getId());
-
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/disable-opcache', 'delete');
-
-        return $response->getJson();
+        return $this->callApi('disable-opcache', 'delete')
+            ->getJson();
     }
 
     public function phpVersions(int $id = null): stdClass
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
-        if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
-        }
-
-        $this->setEndpoint($this->endpoint . '/' . $this->getId());
-
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/php/versions', 'get');
-
-        return $response->getJson();
+        return $this->callApi('php/versions')
+            ->getJson();
     }
 
     public function sites($id = null): Site
