@@ -20,11 +20,11 @@ class Server extends Resource
 
     public function buildEndpoint(string $path = null): string
     {
-        if (!$this->getId()) {
-            return 'servers';
-        }
+        $base = 'servers';
 
-        $base = "servers/{$this->getId()}";
+        if ($this->getId()) {
+            $base = "{$base}/{$this->getId()}";
+        }
 
         if (!$path) {
             return $base;

@@ -24,11 +24,15 @@ class ServerTest extends BaseTest
         $server = $this->getPloi()->server();
 
         $this->assertEquals('servers', $server->buildEndpoint());
+        $this->assertEquals('servers/custom', $server->buildEndpoint('custom'));
 
         $server->setId(1);
         $this->assertEquals('servers/1', $server->buildEndpoint());
         $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('endpoint'));
         $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('/endpoint'));
+
+        $server->setId();
+        $this->assertEquals('servers/different-endpoint', $server->buildEndpoint('/different-endpoint'));
     }
 
     /**
