@@ -100,11 +100,13 @@ class Site extends Resource
             throw $exception;
         }
 
+        $data = $response->getData();
+
         // Set the id of the site
-        $this->setId($response->getJson()->data->id);
+        $this->setId($data->id);
 
         // Return the data
-        return $response->getJson();
+        return $data;
     }
 
     public function delete(int $id = null): bool
