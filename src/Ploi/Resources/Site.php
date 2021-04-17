@@ -248,4 +248,9 @@ class Site extends Resource
     {
         return new App($this->getServer(), $this, $id);
     }
+
+    public function environment(): Environment
+    {
+        return new Environment($this->getServer(), $this);
+    }
 }
