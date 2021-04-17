@@ -2,9 +2,8 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
 use Ploi\Ploi;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\RequiresId;
 
 class Server extends Resource
@@ -37,13 +36,13 @@ class Server extends Resource
         return "{$base}/{$path}";
     }
 
-    public function callApi(string $path = null, string $method = 'get', array $options = [])
+    public function callApi(string $path = null, string $method = 'get', array $options = []): Response
     {
         return $this->getPloi()
             ->makeAPICall($this->buildEndpoint($path), $method, $options);
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -52,21 +51,18 @@ class Server extends Resource
         return $this->callApi();
     }
 
-    public function delete(int $id = null)
+    public function delete(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         return $this->callApi(null, 'delete');
     }
 
-    public function logs(int $id = null)
+    public function logs(int $id = null): Response
     {
         $this->setIdOrFail($id);
 
-        return $this->callApi('logs')
-            ->getJson();
+        return $this->callApi('logs');
     }
 
     public function create(
@@ -75,7 +71,7 @@ class Server extends Resource
         $region,
         $plan,
         array $options = []
-    ): stdClass {
+    ): Response {
 
         // Remove the id
         $this->setId(null);
@@ -97,23 +93,16 @@ class Server extends Resource
         ];
 
         // Make the request
-        try {
-            $response = $this->callApi(null, 'post', $options);
-        } catch (NotValid $exception) {
-            // $errors = json_decode($exception->getMessage())->errors;
-            // dd($errors);
-
-            throw $exception;
-        }
+        $response = $this->callApi(null, 'post', $options);
 
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
 
-        // Return the data
-        return $response->getData();
+        // Return the response
+        return $response;
     }
 
-    public function createCustom(string $ip, array $options): stdClass
+    public function createCustom(string $ip, array $options): Response
     {
         $this->setId(null);
         $defaults = [
@@ -129,13 +118,12 @@ class Server extends Resource
 
         $response = $this->callApi('custom', 'post', $options);
 
-        $data = $response->getJson();
-        $this->setId($data->id);
+        $this->setId($response->getData()->id);
 
-        return $data;
+        return $response;
     }
 
-    public function startInstallation(string $url = null)
+    public function startInstallation(string $url = null): Response
     {
         $id = $this->getId();
 
@@ -146,40 +134,35 @@ class Server extends Resource
         $endpoint = $url ?: "servers/custom/{$id}/start";
 
         return $this->getPloi()
-            ->makeAPICall($endpoint, 'post')
-            ->getJson();
+            ->makeAPICall($endpoint, 'post');
     }
 
-    public function refreshOpcache(int $id = null): stdClass
+    public function refreshOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
 
-        return $this->callApi('refresh-opcache', 'post')
-            ->getJson();
+        return $this->callApi('refresh-opcache', 'post');
     }
 
-    public function enableOpcache(int $id = null): stdClass
+    public function enableOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
 
-        return $this->callApi('enable-opcache', 'post')
-            ->getJson();
+        return $this->callApi('enable-opcache', 'post');
     }
 
-    public function disableOpcache(int $id = null): stdClass
+    public function disableOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
 
-        return $this->callApi('disable-opcache', 'delete')
-            ->getJson();
+        return $this->callApi('disable-opcache', 'delete');
     }
 
-    public function phpVersions(int $id = null): stdClass
+    public function phpVersions(int $id = null): Response
     {
         $this->setIdOrFail($id);
 
-        return $this->callApi('php/versions')
-            ->getJson();
+        return $this->callApi('php/versions');
     }
 
     public function sites($id = null): Site
