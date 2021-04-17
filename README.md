@@ -23,23 +23,7 @@ $ploi->setApiToken($token);
 ```
 
 ### Responses
-When calling a resource, it will return an array containing decoded JSON as well as the original response from the Guzzle client.
-
-```json
-[
-    "json" : {
-        "id": 123,
-        "name": "server-name",
-        "ip_address": "XXX.XXX.XXX.XXX",
-        "php_version": 7.1,
-        "mysql_version": 5.7,
-        "sites_count": 3,
-        "status": "Server active",
-        "created_at": "2018-01-01 08:00:00",
-     },
-     "response" : GuzzleHttp\Psr7\Response,
-]
-```
+When calling a resource, it will return a `Ploi\Http\Response` object containing decoded JSON as well as the original response from the Guzzle client.
 
 You can also only retrieve the JSON, use the `getJson()` method to only get the JSON back:
 
@@ -49,27 +33,82 @@ However, when you want to only get the data, use the `getData()` method:
 
 `$ploi->user()->get()->getData()`
 
-## Resources
+### Resources
 
-Resources are what you call to access a feature or function. 
+Resources are what you call to access a feature or function.
+
+You can get all the resources or get a specific one by its ID, for example with servers:
+```php
+// Get all servers
+$ploi->servers()->get();
+
+// Get a specific server with ID 123
+$ploi->servers(123)->get();
+// or
+$ploi->servers()->get(123);
+```
+
+Some actions will require the resource's ID to be set before they can be used:
+```php
+// Throws Ploi\Exceptions\Resource\RequiresId
+$ploi->servers()->delete();
+
+// Will attempt to delete server by ID
+$ploi->servers()->delete(123);
+// or
+$ploi->servers(123)->delete();
+```
 
 ### Servers
 
-
+You create a new server by:
 ```php
-$ploi->server()->get();
+$ploi->servers()->create(
+    $serverName,
+    $providerId,
+    $region,
+    $plan,
+    $options
+);
 ```
 
+Or you can create a custom server with a provider not set up in Ploi
 ```php
-// Get specific server
-$ploi->server(123)->get();
+$ploi->servers()->createCustom($ip, $options);
+```
+After running this request, you will have to add the public key of the Ploi worker to your server.
+This is included in the response with a 1-line command within the `ssh_command` key.
+Once this is done, you can trigger the URL from the response with the `start_installation_url` key or by passing in the server ID.
+
+```php
+$ploi->servers()->startInstallation($installationUrl);
 // or
-$ploi->server()->get(123);
+$ploi->servers(123)->startInstallation();
+```
+
+Other methods for servers:
+```php
+// Get server list
+$ploi->servers()->get();
+
+// Get specific server
+$ploi->servers(123)->get();
+
+// Delete server
+$ploi->servers(123)->delete();
 
 // Get server logs
-$ploi->server(123)->logs()->getJson();
-// or
-$ploi->server()->logs(123)->getJson();
+$ploi->servers(123)->logs();
+
+// Get PHP versions installed on server
+$ploi->servers(123)->phpVersions();
+
+// Enable opcache
+$ploi->servers(123)->enableOpcache();
+// Disable opcache
+$ploi->servers(123)->disableOpcache();
+// Refresh opcache
+$ploi->servers(123)->refreshOpcache();
 ```
 
 ### Sites
