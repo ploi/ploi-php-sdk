@@ -68,7 +68,7 @@ $ploi->servers()->create(
     $providerId,
     $region,
     $plan,
-    $options
+    $options = []
 );
 ```
 
@@ -113,12 +113,38 @@ $ploi->servers(123)->refreshOpcache();
 
 ### Sites
 
+Available methods for sites:
 ```php
+//Create site
+$ploi->servers(123)->sites()->create(
+    $domain,
+    $webDirectory = '/public',
+    $projectDirectory = '/',
+    $systemUser = 'ploi',
+    $systemUserPassword = null
+);
+
 // Get all sites
-$ploi->server(123)->sites()->get();
+$ploi->servers(123)->sites()->get();
 
 // Get specific site
-$ploi->server(123)->sites(123)->get();
+$ploi->servers(123)->sites(123)->get();
+
+// Delete site
+$ploi->servers(123)->sites(123)->delete();
+
+// Get site logs
+$ploi->servers(123)->sites(123)->logs();
+
+// Set PHP version for site to use
+$ploi->servers(123)->sites(123)->phpVersion($phpVersion);
+
+// Enable test domain on site
+$ploi->servers(123)->sites(123)->enableTestDomain();
+// Disable test domain on site
+$ploi->servers(123)->sites(123)->enableTestDomain();
+// Get test domain details for site
+$ploi->servers(123)->sites(123)->testDomain();
 ```
 
 ### Databases
