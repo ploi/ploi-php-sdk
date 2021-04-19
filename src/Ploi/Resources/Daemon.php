@@ -2,8 +2,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 
 class Daemon extends Resource
 {
@@ -29,7 +28,7 @@ class Daemon extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -41,7 +40,7 @@ class Daemon extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $command, string $systemUser, int $processes): stdClass
+    public function create(string $command, string $systemUser, int $processes): Response
     {
         // Remove the id
         $this->setId(null);
@@ -59,23 +58,17 @@ class Daemon extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
         $this->setId($response->getJson()->data->id);
 
         // Return the data
-        return $response->getData();
+        return $response;
     }
 
-    public function restart(int $id = null): stdClass
+    public function restart(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
@@ -83,21 +76,12 @@ class Daemon extends Resource
         $this->setEndpoint($this->getEndpoint() . '/restart');
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
-
-        // Return the data
-        return $response->getData();
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function pause(int $id = null): stdClass
+    public function pause(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
@@ -105,29 +89,18 @@ class Daemon extends Resource
         $this->setEndpoint($this->getEndpoint() . '/toggle-pause');
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
-
-        // Return the data
-        return $response->getData();
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function delete(int $id): stdClass
+    public function delete(int $id = null): Response
     {
         // Remove the id
-        $this->setId($id);
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 }

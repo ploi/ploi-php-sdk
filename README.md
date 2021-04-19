@@ -249,7 +249,30 @@ $ploi->servers(123)->sites(123)->queues(123)->restart();
 
 ### Daemons
 
-//
+Available methods for daemons:
+```php
+// Create daemon
+$ploi->servers(123)->daemons()->create(
+    $command,
+    $systemUser,
+    $processes
+);
+
+// Get all daemons
+$ploi->servers(123)->daemons()->get();
+
+// Get specific daemon
+$ploi->servers(123)->daemons(123)->get();
+
+// Delete daemon
+$ploi->servers(123)->daemons(123)->delete();
+
+// Pause daemon
+$ploi->servers(123)->daemons(123)->pause();
+
+// Restart daemon
+$ploi->servers(123)->daemons(123)->restart();
+```
 
 ### System Users
 
