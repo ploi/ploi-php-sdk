@@ -176,7 +176,24 @@ $ploi->servers(123)->databases(123)->forget();
 
 ### Cronjobs
 
-//
+Available methods for cronjobs:
+```php
+// Create cronjob
+$ploi->servers(123)->cronjobs()->create(
+    $command,
+    $frequency,
+    $user = 'ploi'
+);
+
+// Get all cronjobs
+$ploi->servers(123)->cronjobs()->get();
+
+// Get specific cronjob
+$ploi->servers(123)->cronjobs(123)->get();
+
+// Delete cronjob
+$ploi->servers(123)->cronjobs(123)->delete();
+```
 
 ### Network Rules
 
