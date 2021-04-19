@@ -45,7 +45,7 @@ abstract class Resource
         }
 
         if (!$this->getId()) {
-            throw new RequiresId('ID is required for ' . get_class($this));
+            throw new RequiresId('ID is required for ' . static::class);
         }
 
         return $this;
