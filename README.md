@@ -276,4 +276,20 @@ $ploi->servers(123)->daemons(123)->restart();
 
 ### System Users
 
-//
+Available methods for system users:
+```php
+// Create system user
+$ploi->servers(123)->systemUsers()->create(
+    $name,
+    $sudo = false
+);
+
+// Get all system users
+$ploi->servers(123)->systemUsers()->get();
+
+// Get specific system users
+$ploi->servers(123)->systemUsers(123)->get();
+
+// Delete system user
+$ploi->servers(123)->systemUsers(123)->delete();
+```
