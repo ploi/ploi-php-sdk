@@ -45,7 +45,7 @@ abstract class Resource
         }
 
         if (!$this->getId()) {
-            throw new RequiresId('No server ID set');
+            throw new RequiresId('ID is required for ' . get_class($this));
         }
 
         return $this;
