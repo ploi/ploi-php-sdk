@@ -219,7 +219,33 @@ $ploi->servers(123)->networkRules(123)->delete();
 
 ### Queues
 
-//
+Available methods for queues:
+```php
+// Create queue
+$ploi->servers(123)->sites(123)->queues()->create(
+    $connection = 'database',
+    $queue = 'default',
+    $maximumSeconds = 60,
+    $sleep = 30,
+    $processes = 1,
+    $maximumTries = 1
+);
+
+// Get all queues
+$ploi->servers(123)->sites(123)->queues()->get();
+
+// Get specific queue
+$ploi->servers(123)->sites(123)->queues(123)->get();
+
+// Delete queue
+$ploi->servers(123)->sites(123)->queues(123)->delete();
+
+// Pause queue
+$ploi->servers(123)->sites(123)->queues(123)->pause();
+
+// Restart queue
+$ploi->servers(123)->sites(123)->queues(123)->restart();
+```
 
 ### Daemons
 

@@ -2,8 +2,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 
 class Queue extends Resource
 {
@@ -31,7 +30,7 @@ class Queue extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -50,7 +49,7 @@ class Queue extends Resource
         int $sleep = 30,
         int $processes = 1,
         int $maximumTries = 1
-    ): stdClass {
+    ): Response {
         // Remove the id
         $this->setId(null);
 
@@ -70,25 +69,17 @@ class Queue extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
-        $data = $response->getData();
-
-        $this->setId($data->id);
+        $this->setId($response->getData()->id);
 
         // Return the data
-        return $data;
+        return $response;
     }
 
-    public function restart(int $id = null): stdClass
+    public function restart(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
@@ -96,21 +87,12 @@ class Queue extends Resource
         $this->setEndpoint($this->getEndpoint() . '/restart');
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
-
-        // Return the data
-        return $response->getData();
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function pause(int $id = null): stdClass
+    public function pause(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
@@ -118,29 +100,17 @@ class Queue extends Resource
         $this->setEndpoint($this->getEndpoint() . '/toggle-pause');
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
-
-        // Return the data
-        return $response->getData();
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function delete(int $id): stdClass
+    public function delete(int $id = null): Response
     {
-        // Remove the id
-        $this->setId($id);
+        $this->setIdOrFail($id);
 
         // Build the endpoint
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 }
