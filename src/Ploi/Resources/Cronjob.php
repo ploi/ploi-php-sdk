@@ -3,8 +3,6 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
 
 class Cronjob extends Resource
 {
