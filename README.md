@@ -273,6 +273,26 @@ $ploi->servers(123)->sites(123)->queues(123)->pause();
 $ploi->servers(123)->sites(123)->queues(123)->restart();
 ```
 
+### Certificates
+
+Available methods for certificates:
+```php
+// Create certificate
+$ploi->servers(123)->sites(123)->certificates()->create(
+    $certificate,
+    $type = 'letsencrypt'
+);
+
+// Get all certificates
+$ploi->servers(123)->sites(123)->certificates()->get();
+
+// Get specific certificate
+$ploi->servers(123)->sites(123)->certificates(123)->get();
+
+// Delete certificate
+$ploi->servers(123)->sites(123)->certificates(123)->delete();
+```
+
 ### Daemons
 
 Available methods for daemons:
