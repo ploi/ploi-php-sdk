@@ -174,6 +174,32 @@ $ploi->servers(123)->databases()->acknowledge($databaseName);
 $ploi->servers(123)->databases(123)->forget();
 ```
 
+### Database Backups
+
+Available methods for database backups:
+```php
+// Create database backup
+$ploi->servers(123)->databases(123)->backups()->create(
+    $interval,
+    $type,
+    $table_exclusions = null,
+    $locations = null,
+    $path = null
+);
+
+// Get all database backups
+$ploi->servers(123)->databases(123)->backups()->get();
+
+// Get specific database backup
+$ploi->servers(123)->databases(123)->backups(123)->get();
+
+// Delete database backup
+$ploi->servers(123)->databases(123)->backups(123)->delete();
+
+// Toggle database backup
+$ploi->servers(123)->databases(123)->backups(123)->toggle();
+```
+
 ### Cronjobs
 
 Available methods for cronjobs:
