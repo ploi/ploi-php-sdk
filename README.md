@@ -197,7 +197,25 @@ $ploi->servers(123)->cronjobs(123)->delete();
 
 ### Network Rules
 
-//
+Available methods for network rules:
+```php
+// Create network rule
+$ploi->servers(123)->networkRules()->create(
+    $name,
+    $port,
+    $type = 'tcp',
+    $fromIpAddress
+);
+
+// Get all network rules
+$ploi->servers(123)->networkRules()->get();
+
+// Get specific network rule
+$ploi->servers(123)->networkRules(123)->get();
+
+// Delete network rule
+$ploi->servers(123)->networkRules(123)->delete();
+```
 
 ### Queues
 
