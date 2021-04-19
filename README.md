@@ -149,7 +149,30 @@ $ploi->servers(123)->sites(123)->testDomain();
 
 ### Databases
 
-//
+Available methods for databases:
+```php
+// Create database
+$ploi->servers(123)->databases()->create(
+    $databaseName,
+    $databaseUser,
+    $databaseUserPassword
+);
+
+// Get all databases
+$ploi->servers(123)->databases()->get();
+
+// Get specific database
+$ploi->servers(123)->databases(123)->get();
+
+// Delete database
+$ploi->servers(123)->databases(123)->delete();
+
+// Acknowledge database
+$ploi->servers(123)->databases()->acknowledge($databaseName);
+
+// Forget database
+$ploi->servers(123)->databases(123)->forget();
+```
 
 ### Cronjobs
 

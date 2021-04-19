@@ -2,8 +2,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 
 class Database extends Resource
 {
@@ -33,7 +32,7 @@ class Database extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -45,7 +44,7 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $name, string $user, string $password): stdClass
+    public function create(string $name, string $user, string $password): Response
     {
         // Remove the id
         $this->setId(null);
@@ -63,20 +62,16 @@ class Database extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
 
         // Return the data
-        return $response->getJson()->data;
+        return $response;
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -84,12 +79,10 @@ class Database extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-
-        return $response->getResponse()->getStatusCode() === 200;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function acknowledge(string $name): stdClass
+    public function acknowledge(string $name): Response
     {
         // Remove the id
         $this->setId(null);
@@ -108,20 +101,10 @@ class Database extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
-
-        // Set the id of the site
-        //$this->setId($response->getJson()->data->id);
-
-        // Return the data
-        return $response->getJson()->data;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
     }
 
-    public function forget(int $id): bool
+    public function forget(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -132,9 +115,7 @@ class Database extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-
-        return $response->getResponse()->getStatusCode() === 200;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
     public function backups($id = null): DatabaseBackup
