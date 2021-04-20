@@ -2,8 +2,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 
 class Redirect extends Resource
 {
@@ -31,7 +30,7 @@ class Redirect extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -43,7 +42,7 @@ class Redirect extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $redirectFrom, string $redirectTo, $type = 'redirect'): stdClass
+    public function create(string $redirectFrom, string $redirectTo, $type = 'redirect'): Response
     {
         // Remove the id
         $this->setId(null);
@@ -61,29 +60,21 @@ class Redirect extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
 
         // Return the data
-        return $response->getJson()->data;
+        return $response;
     }
 
-    public function delete(int $id): bool
+    public function delete(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setIdOrFail($id);
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-
-        return $response->getResponse()->getStatusCode() === 200;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 }

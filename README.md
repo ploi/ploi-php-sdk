@@ -339,6 +339,26 @@ $ploi->servers(123)->sites(123)->repository()->get();
 $ploi->servers(123)->sites(123)->repository()->delete();
 ```
 
+### Redirects
+
+```php
+// Create redirect
+$ploi->servers(123)->sites(123)->redirects()->create(
+    $redirectFrom,
+    $redirectTo,
+    $type = 'redirect'
+);
+
+// Get all redirects
+$ploi->servers(123)->sites(123)->redirects()->get();
+
+// Get specific redirect
+$ploi->servers(123)->sites(123)->redirects(123)->get();
+
+// Delete redirect
+$ploi->servers(123)->sites(123)->redirects(123)->delete();
+```
+
 ### Daemons
 
 Available methods for daemons:
