@@ -3,7 +3,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
+use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\Server\Service\InvalidServiceName;
 use Ploi\Exceptions\Resource\Server\Service\RequiresServiceName;
 
@@ -59,7 +59,7 @@ class Service extends Resource
         return $this;
     }
 
-    public function restart(string $serviceName = null): stdClass
+    public function restart(string $serviceName = null): Response
     {
 
         if ($serviceName) {
@@ -72,9 +72,7 @@ class Service extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/restart', 'post');
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/restart', 'post');
     }
 
 }

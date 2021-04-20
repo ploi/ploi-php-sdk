@@ -386,6 +386,12 @@ $ploi->servers(123)->daemons(123)->pause();
 $ploi->servers(123)->daemons(123)->restart();
 ```
 
+### Services
+```php
+// Restart service
+$ploi->servers(123)->services($name)->restart();
+```
+
 ### System Users
 
 Available methods for system users:
