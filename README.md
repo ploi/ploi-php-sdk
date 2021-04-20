@@ -39,7 +39,7 @@ Resources are what you call to access a feature or function.
 
 You can get all the resources or get a specific one by its ID, for example with servers:
 ```php
-// Get all servers
+// List servers
 $ploi->servers()->get();
 
 // Get a specific server with ID 123
@@ -91,7 +91,7 @@ Other methods for servers:
 // Get server list
 $ploi->servers()->get();
 
-// Get specific server
+// Get server
 $ploi->servers(123)->get();
 
 // Delete server
@@ -124,10 +124,10 @@ $ploi->servers(123)->sites()->create(
     $systemUserPassword = null
 );
 
-// Get all sites
+// List sites
 $ploi->servers(123)->sites()->get();
 
-// Get specific site
+// Get site
 $ploi->servers(123)->sites(123)->get();
 
 // Delete site
@@ -158,10 +158,10 @@ $ploi->servers(123)->databases()->create(
     $databaseUserPassword
 );
 
-// Get all databases
+// List databases
 $ploi->servers(123)->databases()->get();
 
-// Get specific database
+// Get database
 $ploi->servers(123)->databases(123)->get();
 
 // Delete database
@@ -187,10 +187,10 @@ $ploi->servers(123)->databases(123)->backups()->create(
     $path = null
 );
 
-// Get all database backups
+// List database backups
 $ploi->servers(123)->databases(123)->backups()->get();
 
-// Get specific database backup
+// Get database backup
 $ploi->servers(123)->databases(123)->backups(123)->get();
 
 // Delete database backup
@@ -211,10 +211,10 @@ $ploi->servers(123)->cronjobs()->create(
     $user = 'ploi'
 );
 
-// Get all cronjobs
+// List cronjobs
 $ploi->servers(123)->cronjobs()->get();
 
-// Get specific cronjob
+// Get cronjob
 $ploi->servers(123)->cronjobs(123)->get();
 
 // Delete cronjob
@@ -233,10 +233,10 @@ $ploi->servers(123)->networkRules()->create(
     $fromIpAddress
 );
 
-// Get all network rules
+// List network rules
 $ploi->servers(123)->networkRules()->get();
 
-// Get specific network rule
+// Get network rule
 $ploi->servers(123)->networkRules(123)->get();
 
 // Delete network rule
@@ -257,10 +257,10 @@ $ploi->servers(123)->sites(123)->queues()->create(
     $maximumTries = 1
 );
 
-// Get all queues
+// List queues
 $ploi->servers(123)->sites(123)->queues()->get();
 
-// Get specific queue
+// Get queue
 $ploi->servers(123)->sites(123)->queues(123)->get();
 
 // Delete queue
@@ -283,10 +283,10 @@ $ploi->servers(123)->sites(123)->certificates()->create(
     $type = 'letsencrypt'
 );
 
-// Get all certificates
+// List certificates
 $ploi->servers(123)->sites(123)->certificates()->get();
 
-// Get specific certificate
+// Get certificate
 $ploi->servers(123)->sites(123)->certificates(123)->get();
 
 // Delete certificate
@@ -349,10 +349,10 @@ $ploi->servers(123)->sites(123)->redirects()->create(
     $type = 'redirect'
 );
 
-// Get all redirects
+// List redirects
 $ploi->servers(123)->sites(123)->redirects()->get();
 
-// Get specific redirect
+// Get redirect
 $ploi->servers(123)->sites(123)->redirects(123)->get();
 
 // Delete redirect
@@ -366,10 +366,10 @@ Available methods for scripts:
 // Create script
 $ploi->scripts()->create($label, $user, $content);
 
-// Get all scripts
+// List scripts
 $ploi->scripts()->get();
 
-// Get specific script
+// Get script
 $ploi->scripts(123)->get();
 
 // Delete script
@@ -390,10 +390,10 @@ $ploi->servers(123)->daemons()->create(
     $processes
 );
 
-// Get all daemons
+// List daemons
 $ploi->servers(123)->daemons()->get();
 
-// Get specific daemon
+// Get daemon
 $ploi->servers(123)->daemons(123)->get();
 
 // Delete daemon
@@ -422,10 +422,10 @@ $ploi->servers(123)->systemUsers()->create(
     $sudo = false
 );
 
-// Get all system users
+// List system users
 $ploi->servers(123)->systemUsers()->get();
 
-// Get specific system users
+// Get system users
 $ploi->servers(123)->systemUsers(123)->get();
 
 // Delete system user
@@ -439,9 +439,9 @@ Available methods for user:
 // Get own user information
 $ploi->user()->get();
 
-// Get all server providers
+// List server providers
 $ploi->user()->serverProviders();
 
-// Get specific server providers
+// Get server providers
 $ploi->user()->serverProviders($providerId);
 ```
