@@ -321,6 +321,24 @@ $ploi->servers(123)->sites(123)->environment()->get();
 $ploi->servers(123)->sites(123)->environment()->update($content);
 ```
 
+### Repositories
+
+Available methods for repositories:
+```php
+// Install repository
+$ploi->servers(123)->sites(123)->repository()->install(
+    $provider,
+    $branch,
+    $name
+);
+
+// Get repository
+$ploi->servers(123)->sites(123)->repository()->get();
+
+// Delete repository
+$ploi->servers(123)->sites(123)->repository()->delete();
+```
+
 ### Daemons
 
 Available methods for daemons:

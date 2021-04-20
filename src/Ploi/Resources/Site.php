@@ -210,9 +210,9 @@ class Site extends Resource
         return new Certificate($this->getServer(), $this, $id);
     }
 
-    public function repository($id = null): Repository
+    public function repository(): Repository
     {
-        return new Repository($this->getServer(), $this, $id);
+        return new Repository($this->getServer(), $this);
     }
 
     public function queues($id = null): Queue

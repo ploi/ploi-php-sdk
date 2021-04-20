@@ -2,11 +2,16 @@
 
 namespace Ploi\Resources;
 
+use Ploi\Http\Response;
+use Ploi\Exceptions\Resource\Server\Site\Repository\InvalidProvider;
+
 class Repository extends Resource
 {
-    public function __construct(Server $server, Site $site, int $id = null)
+    private $allowedProviders = ['bitbucket', 'github', 'gitlab', 'custom'];
+
+    public function __construct(Server $server, Site $site)
     {
-        parent::__construct($server->getPloi(), $id);
+        parent::__construct($server->getPloi());
 
         $this->setServer($server);
         $this->setSite($site);
@@ -18,22 +23,33 @@ class Repository extends Resource
     {
         $this->setEndpoint($this->getServer()->getEndpoint() . '/' . $this->getServer()->getId() . '/sites/' . $this->getSite()->getId() . '/repository');
 
-        if ($this->getId()) {
-            $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
-        }
-
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(): Response
     {
-        if ($id) {
-            $this->setId($id);
+        return $this->getPloi()->makeAPICall($this->getEndpoint());
+    }
+
+    public function install(string $provider, string $branch, string $name): Response
+    {
+        if (!in_array($provider, $this->allowedProviders)) {
+            throw new InvalidProvider;
         }
 
-        // Make sure the endpoint is built
-        $this->buildEndpoint();
+        $options = [
+            'body' => json_encode([
+                'provider' => $provider,
+                'branch' => $branch,
+                'name' => $name
+            ])
+        ];
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
+    }
+
+    public function delete(): Response
+    {
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 }
