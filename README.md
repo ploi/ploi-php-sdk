@@ -293,6 +293,23 @@ $ploi->servers(123)->sites(123)->certificates(123)->get();
 $ploi->servers(123)->sites(123)->certificates(123)->delete();
 ```
 
+### Deployments
+
+Available methods for deployments
+```php
+// Get default deploy script
+$ploi->servers(123)->sites(123)->deployment()->deployScript();
+
+// Update default deploy script
+$ploi->servers(123)->sites(123)->deployment()->updateDeployScript($script = '');
+
+// Deploy a site
+$ploi->servers(123)->sites(123)->deployment()->deploy();
+
+// Deploy a staging site to production
+$ploi->servers(123)->sites(123)->deployment()->deployToProduction();
+```
+
 ### Daemons
 
 Available methods for daemons:

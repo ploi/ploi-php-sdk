@@ -220,9 +220,9 @@ class Site extends Resource
         return new Queue($this->getServer(), $this, $id);
     }
 
-    public function deployment($id = null): Deployment
+    public function deployment(): Deployment
     {
-        return new Deployment($this->getServer(), $this, $id);
+        return new Deployment($this->getServer(), $this);
     }
 
     public function app($id = null): App

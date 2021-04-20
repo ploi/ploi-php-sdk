@@ -2,11 +2,13 @@
 
 namespace Ploi\Resources;
 
+use Ploi\Http\Response;
+
 class Deployment extends Resource
 {
-    public function __construct(Server $server, Site $site, int $id = null)
+    public function __construct(Server $server, Site $site)
     {
-        parent::__construct($server->getPloi(), $id);
+        parent::__construct($server->getPloi());
 
         $this->setServer($server);
         $this->setSite($site);
@@ -18,41 +20,32 @@ class Deployment extends Resource
     {
         $this->setEndpoint($this->getServer()->getEndpoint() . '/' . $this->getServer()->getId() . '/sites/' . $this->getSite()->getId());
 
-        if ($this->getId()) {
-            $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
-        }
-
         return $this;
     }
 
-    public function deploy(int $id = null)
+    public function deploy(): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
         $this->setEndpoint($this->getEndpoint() . '/deploy');
 
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function deployScript(int $id = null)
+    public function deployToProduction(): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
+        $this->setEndpoint($this->getEndpoint() . '/deploy-to-production');
 
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
+    }
+
+    public function deployScript(): Response
+    {
         $this->setEndpoint($this->getEndpoint() . '/deploy/script');
 
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function updateDeployScript($script = '', int $id = null)
+    public function updateDeployScript($script = ''): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
-
         $options = [
             'body' => json_encode([
                 'deploy_script' => $script
