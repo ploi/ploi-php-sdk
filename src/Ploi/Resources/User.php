@@ -3,29 +3,30 @@
 namespace Ploi\Resources;
 
 use Ploi\Ploi;
+use Ploi\Http\Response;
 
 class User extends Resource
 {
     private $endpoint = 'user';
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(Ploi $ploi = null)
     {
-        parent::__construct($ploi, $id);
+        parent::__construct($ploi);
 
         $this->setEndpoint($this->endpoint);
     }
 
-    public function get()
+    public function get(): Response
     {
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function serverProviders($id = null)
+    public function serverProviders(int $providerId = null): Response
     {
         $url = $this->getEndpoint() . '/server-providers';
 
-        if ($id) {
-            $url .= '/' . $id;
+        if ($providerId) {
+            $url .= '/' . $providerId;
         }
 
         return $this->getPloi()->makeAPICall($url);

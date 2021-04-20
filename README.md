@@ -411,3 +411,17 @@ $ploi->servers(123)->systemUsers(123)->get();
 // Delete system user
 $ploi->servers(123)->systemUsers(123)->delete();
 ```
+
+### User
+
+Available methods for user:
+```php
+// Get own user information
+$ploi->user()->get();
+
+// Get all server providers
+$ploi->user()->serverProviders();
+
+// Get specific server providers
+$ploi->user()->serverProviders($providerId);
+```
