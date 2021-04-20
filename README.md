@@ -310,6 +310,17 @@ $ploi->servers(123)->sites(123)->deployment()->deploy();
 $ploi->servers(123)->sites(123)->deployment()->deployToProduction();
 ```
 
+### Environments
+
+Available methods for environments
+```php
+// Get .env for site
+$ploi->servers(123)->sites(123)->environment()->get();
+
+// Update .env for site
+$ploi->servers(123)->sites(123)->environment()->update($content);
+```
+
 ### Daemons
 
 Available methods for daemons:
