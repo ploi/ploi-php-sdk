@@ -359,6 +359,26 @@ $ploi->servers(123)->sites(123)->redirects(123)->get();
 $ploi->servers(123)->sites(123)->redirects(123)->delete();
 ```
 
+### Scripts
+
+Available methods for scripts:
+```php
+// Create script
+$ploi->scripts()->create($label, $user, $content);
+
+// Get all scripts
+$ploi->scripts()->get();
+
+// Get specific script
+$ploi->scripts(123)->get();
+
+// Delete script
+$ploi->scripts(123)->delete();
+
+// Run script
+$ploi->scripts(123)->run($id = null, $serverIds = []);
+```
+
 ### Daemons
 
 Available methods for daemons:

@@ -4,18 +4,12 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
-use Ploi\Exceptions\Resource\Server\Service\InvalidServiceName;
 use Ploi\Exceptions\Resource\Server\Service\RequiresServiceName;
 
 class Service extends Resource
 {
     private $server;
     private $serviceName;
-    private $availableServices = [
-        'mysql',
-        'nginx',
-        'supervisor',
-    ];
 
     public function __construct(Server $server, string $serviceName = null)
     {
@@ -48,10 +42,6 @@ class Service extends Resource
 
     public function setServiceName(string $serviceName): self
     {
-        if (!in_array($serviceName, $this->availableServices)) {
-            throw new InvalidServiceName;
-        }
-
         $this->serviceName = $serviceName;
 
         $this->addHistory('Resource service name set to ' . $serviceName);
