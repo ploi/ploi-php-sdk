@@ -3,8 +3,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
-use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 
 class DatabaseBackup extends Resource
 {
@@ -37,7 +36,7 @@ class DatabaseBackup extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -55,7 +54,7 @@ class DatabaseBackup extends Resource
         string $table_exclusions = null,
         string $locations = null,
         string $path = null
-    ): stdClass
+    ): Response
     {
         // Remove the id
         $this->setId(null);
@@ -74,22 +73,29 @@ class DatabaseBackup extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch
-        (NotValid $exception) {
-            $errors = json_decode($exception->getMessage())->errors;
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
-            dd($errors);
+        $this->setId($response->getJson()->data->id);
 
-            throw $exception;
-        }
+        // Return the response
+        return $response;
+    }
 
-        $data = $response->getData();
+    public function delete(int $id = null): Response
+    {
+        $this->setIdOrFail($id);
 
-        $this->setId($data->id);
+        $this->buildEndpoint();
 
-        // Return the data
-        return $data;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
+    }
+
+    public function toggle(int $id = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/toggle', 'patch');
     }
 }

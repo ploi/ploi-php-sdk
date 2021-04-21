@@ -2,7 +2,7 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
+use Ploi\Http\Response;
 use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
@@ -67,7 +67,7 @@ class Site extends Resource
         string $projectRoot = '/',
         string $systemUser = 'ploi',
         string $systemUserPassword = null
-    ): stdClass {
+    ): Response {
 
         // Remove the id
         $this->setId(null);
@@ -103,11 +103,11 @@ class Site extends Resource
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
 
-        // Return the data
-        return $response->getJson();
+        // Return the response
+        return $response;
     }
 
-    public function delete(int $id = null): bool
+    public function delete(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -115,12 +115,10 @@ class Site extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-
-        return $response->getResponse()->getStatusCode() === 200;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function logs(int $id = null): array
+    public function logs(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -132,17 +130,10 @@ class Site extends Resource
 
         $this->setEndpoint($this->buildEndpoint()->getEndpoint() . '/log');
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint());
-
-        // Wrap the logs if they're not already wrapped
-        if (!is_array($response->getJson()->data)) {
-            return [$response->getJson()->data];
-        }
-
-        return $response->getJson()->data;
+        return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function phpVersion($version = '7.4') :stdClass
+    public function phpVersion($version = '7.4'): Response
     {
         // Set the options
         $options = [
@@ -155,20 +146,16 @@ class Site extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/php-version', 'post', $options);
-        } catch (NotValid $exception) {
-            return json_decode($exception->getMessage());
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/php-version', 'post', $options);
 
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
 
         // Return the data
-        return $response->getJson();
+        return $response;
     }
 
-    public function testDomain(int $id = null): stdClass
+    public function testDomain(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -180,12 +167,10 @@ class Site extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'get');
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'get');
     }
 
-    public function enableTestDomain(int $id = null): stdClass
+    public function enableTestDomain(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -197,12 +182,10 @@ class Site extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'post');
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'post');
     }
 
-    public function disableTestDomain(int $id = null): stdClass
+    public function disableTestDomain(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -214,9 +197,7 @@ class Site extends Resource
 
         $this->buildEndpoint();
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'delete');
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'delete');
     }
 
     public function redirects($id = null): Redirect
@@ -229,9 +210,9 @@ class Site extends Resource
         return new Certificate($this->getServer(), $this, $id);
     }
 
-    public function repository($id = null): Repository
+    public function repository(): Repository
     {
-        return new Repository($this->getServer(), $this, $id);
+        return new Repository($this->getServer(), $this);
     }
 
     public function queues($id = null): Queue
@@ -239,9 +220,9 @@ class Site extends Resource
         return new Queue($this->getServer(), $this, $id);
     }
 
-    public function deployment($id = null): Deployment
+    public function deployment(): Deployment
     {
-        return new Deployment($this->getServer(), $this, $id);
+        return new Deployment($this->getServer(), $this);
     }
 
     public function app($id = null): App

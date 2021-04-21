@@ -2,19 +2,13 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Exceptions\Resource\Script\InvalidUser;
-use stdClass;
 use Ploi\Ploi;
+use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\RequiresId;
 
 class Script extends Resource
 {
     private $endpoint = 'scripts';
-
-    private $availableUsers = [
-        'ploi',
-        'root',
-    ];
 
     public function __construct(Ploi $ploi = null, int $id = null)
     {
@@ -23,7 +17,7 @@ class Script extends Resource
         $this->setEndpoint($this->endpoint);
     }
 
-    public function get(int $id = null): stdClass
+    public function get(int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -33,24 +27,16 @@ class Script extends Resource
             $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
         }
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint());
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
     public function create(
         string $label,
         string $user,
         string $content
-    ): stdClass
+    ): Response
     {
         $this->setId(null);
-
-        if (!in_array($user, $this->availableUsers)) {
-            throw new InvalidUser(
-                'User not valid, available users: ' . implode(', ', $this->availableUsers)
-            );
-        }
 
         $options = [
             'body' => json_encode([
@@ -64,36 +50,26 @@ class Script extends Resource
 
         $this->setId($response->getJson()->data->id);
 
-        return $response->getJson();
+        return $response;
     }
 
-    public function delete(int $id = null): bool
+    public function delete(int $id = null): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
-        if (!$this->getId()) {
-            throw new RequiresId('Script ID is required');
-        }
+        $this->setIdOrFail($id);
 
         $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
-
-        return $response->getResponse()->getStatusCode() === 200;
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function run(int $id = null, array $serverIds = []): stdClass
+    public function run(int $id = null, array $serverIds = []): Response
     {
-        if ($id) {
-            $this->setId($id);
-        }
-        if (!$this->getId()) {
-            throw new RequiresId('Script ID is required');
-        }
+        $this->setIdOrFail($id);
+
         if (!count($serverIds)) {
             throw new RequiresId('Server IDs are required');
         }
+
         $options = [
             'body' => json_encode([
                 'servers' => $serverIds
@@ -102,8 +78,6 @@ class Script extends Resource
 
         $this->setEndpoint($this->getEndpoint() . '/' . $this->getId() . '/run');
 
-        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-
-        return $response->getJson();
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
     }
 }
