@@ -40,7 +40,7 @@ class NetworkRule extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $name, int $port, string $type = 'tcp', string $fromIpAddress): Response
+    public function create(string $name, int $port, string $type = 'tcp', string $fromIpAddress = ''): Response
     {
         // Remove the id
         $this->setId(null);
