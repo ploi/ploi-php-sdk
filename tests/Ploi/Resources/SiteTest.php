@@ -7,7 +7,7 @@ use Tests\BaseTest;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
-use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
+use Ploi\Exceptions\Http\NotValid;
 
 /**
  * Class SiteTest
@@ -39,7 +39,7 @@ class SiteTest extends BaseTest
         $sites = $resource->get();
 
         $this->assertInstanceOf(Response::class, $sites);
-        $this->assertInternalType('array', $sites->getJson()->data);
+        $this->assertIsArray($sites->getJson()->data);
     }
 
     /**
@@ -69,17 +69,16 @@ class SiteTest extends BaseTest
         }
     }
 
-    public function testCreateExampleDotCom()
+    public function testCreateExampleDotCom(): stdClass
     {
         try {
             $response = $this->server->sites()->create('example.com');
 
-            $this->assertInstanceOf(stdClass::class, $response);
-            $this->assertNotEmpty($response->id);
-
-            return $response;
+            $this->assertInstanceOf(Response::class, $response);
+            $this->assertNotEmpty($response->getData()->id);
+            return $response->getData();
         } catch (\Exception $e) {
-            $this->assertInstanceOf(DomainAlreadyExists::class, $e);
+            $this->assertInstanceOf(NotValid::class, $e);
 
             $allSites = $this->server->sites()->get();
             $foundSite = false;
@@ -100,44 +99,21 @@ class SiteTest extends BaseTest
     /**
      * @depends testCreateExampleDotCom
      */
-    public function testCreateDuplicateSite($site)
-    {
-        try {
-            $this->server->sites()->create('example.com');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf(DomainAlreadyExists::class, $e);
-
-            $allSites = $this->server->sites()->get();
-            $foundSite = false;
-            foreach ($allSites->getJson()->data as $site) {
-                if ($foundSite) {
-                    break;
-                }
-
-                if ($site->domain === 'example.com') {
-                    $foundSite = $site;
-                }
-            }
-
-            return $foundSite;
-        }
-    }
-
-    /**
-     * @depends testCreateDuplicateSite
-     */
     public function testDeleteSite($site)
     {
         if (!empty($site)) {
             $deleted = $this->server->sites($site->id)->delete();
-            $this->assertTrue($deleted);
+            $this->assertTrue($deleted->getResponse()->getStatusCode() === 200);
         }
     }
 
     public function testDeleteInvalidSite()
     {
-        $deleted = $this->server->sites(0)->delete();
-        $this->assertFalse($deleted);
+        try {
+            $this->server->sites(1)->delete();
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(NotFound::class, $e);
+        }
 
         try {
             $this->server->sites()->delete(1);
@@ -154,9 +130,12 @@ class SiteTest extends BaseTest
         if (!empty($sites->getJson()->data[0])) {
             $siteId = $sites->getJson()->data[0]->id;
 
-            $logs = $resource->logs($siteId);
+            $response = $resource->logs($siteId);
+            $this->assertInstanceOf(Response::class, $response);
 
-            $this->assertInternalType('array', $logs);
+            $logs = $response->getData();
+            $this->assertIsArray($logs);
+
 
             if (!empty($logs[0])) {
                 $this->assertInstanceOf(stdClass::class, $logs[0]);

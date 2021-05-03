@@ -55,10 +55,10 @@ class ServerTest extends BaseTest
         $this->assertInstanceOf(\stdClass::class, $servers->getJson());
 
         // Test the array response
-        $this->assertInternalType('array', $servers->toArray());
+        $this->assertIsArray($servers->toArray());
 
         // Test to make sure that the data is an array
-        $this->assertInternalType('array', $servers->getJson()->data);
+        $this->assertIsArray($servers->getJson()->data);
     }
 
     /**
@@ -124,7 +124,7 @@ class ServerTest extends BaseTest
             // Get a single server through a new server resource
             $methodTwo = $this->getPloi()->server($serverId)->logs();
 
-            $this->assertInternalType('array', $methodOne->getJson()->data);
+            $this->assertIsArray($methodOne->getJson()->data);
             $this->assertEquals($serverId, $methodOne->getJson()->data[0]->server_id);
             $this->assertEquals($serverId, $methodTwo->getJson()->data[0]->server_id);
         }

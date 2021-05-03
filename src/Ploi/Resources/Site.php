@@ -3,9 +3,7 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
-use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Resource\RequiresId;
-use Ploi\Exceptions\Resource\Server\Site\DomainAlreadyExists;
 
 /**
  * Class Site
@@ -87,18 +85,7 @@ class Site extends Resource
         $this->buildEndpoint();
 
         // Make the request
-        try {
-            $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
-        } catch (NotValid $exception) {
-            $errors = json_decode($exception->getMessage())->errors;
-
-            if (!empty($errors->root_domain)
-                && $errors->root_domain[0] === 'The root domain has already been taken.') {
-                throw new DomainAlreadyExists($domain . ' already exists!');
-            }
-
-            throw $exception;
-        }
+        $response = $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
 
         // Set the id of the site
         $this->setId($response->getJson()->data->id);
