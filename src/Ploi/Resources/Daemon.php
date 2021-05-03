@@ -40,7 +40,7 @@ class Daemon extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $command, string $systemUser, int $processes, string $directory = ''): Response
+    public function create(string $command, string $systemUser, int $processes, ?string $directory = null): Response
     {
         // Remove the id
         $this->setId(null);
