@@ -5,6 +5,7 @@ namespace Tests\Ploi;
 use Exception;
 use Tests\BaseTest;
 use Ploi\Exceptions\Http\NotFound;
+use Ploi\Exceptions\Http\NotAllowed;
 use Ploi\Exceptions\Http\Unauthenticated;
 
 /**
@@ -15,7 +16,7 @@ class PloiTest extends BaseTest
 {
     public function testCanGetAPiToken()
     {
-        $this->assertEquals(getenv('API_TOKEN'), $this->getPloi()->getApiToken());
+        $this->assertEquals($_ENV['API_TOKEN'], $this->getPloi()->getApiToken());
     }
 
     public function testCanSetApiToken()
@@ -29,11 +30,15 @@ class PloiTest extends BaseTest
 
     public function testValidApiMethod()
     {
-        $methods = ['get', 'post', 'patch', 'delete'];
+        $methods = ['get', 'post', 'delete'];
 
         foreach ($methods as $method) {
-            $response = $this->getPloi()->makeAPICall('servers', $method);
-            $this->assertNotInstanceOf(Exception::class, $response);
+            try {
+                $path = $method === 'delete' ? 'servers/1' : 'servers';
+                $this->getPloi()->makeAPICall($path, $method);
+            } catch (Exception $exception) {
+                $this->assertNotInstanceOf(NotAllowed::class, $exception);
+            }
         }
     }
 
@@ -51,7 +56,7 @@ class PloiTest extends BaseTest
     public function testThrows404()
     {
         try {
-            $this->getPloi()->makeAPICall('url', 'get');
+            $this->getPloi()->makeAPICall('servers/servers');
         } catch (NotFound $e) {
             $this->assertInstanceOf(NotFound::class, $e);
         }

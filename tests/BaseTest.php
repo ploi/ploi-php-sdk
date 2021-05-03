@@ -29,7 +29,7 @@ class BaseTest extends TestCase
 
     protected function setup(): void
     {
-        $this->ploi = new Ploi(getenv('API_TOKEN'));
+        $this->ploi = new Ploi($_ENV['API_TOKEN']);
 
         parent::setup();
     }
@@ -40,8 +40,9 @@ class BaseTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         // Load the test environment
-        $dotenv = new \Dotenv\Dotenv(__DIR__);
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
         $dotenv->load();
+        $dotenv->required('API_TOKEN')->notEmpty();
 
         parent::setUpBeforeClass();
     }

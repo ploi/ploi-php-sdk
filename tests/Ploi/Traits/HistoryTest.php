@@ -26,7 +26,7 @@ class HistoryTest extends BaseTest
 
     public function testGetHistory()
     {
-        $this->assertInternalType('array', $this->resource->getHistory());
+        $this->assertIsArray($this->resource->getHistory());
     }
 
     public function testAddHistory()
