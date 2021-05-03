@@ -230,7 +230,8 @@ $ploi->servers(123)->networkRules()->create(
     $name,
     $port,
     $type = 'tcp',
-    $fromIpAddress
+    $fromIpAddress = null,
+    $ruleType = 'allow'
 );
 
 // List network rules
@@ -387,7 +388,8 @@ Available methods for daemons:
 $ploi->servers(123)->daemons()->create(
     $command,
     $systemUser,
-    $processes
+    $processes,
+    $directory = null
 );
 
 // List daemons
