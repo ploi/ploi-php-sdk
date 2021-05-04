@@ -136,4 +136,64 @@ class ServerTest extends BaseTest
             $this->assertInstanceOf(RequiresId::class, $exception);
         }
     }
+
+    public function testServerRestart()
+    {
+        $serverResource = $this->getPloi()
+            ->server();
+
+        // Get all servers and select the first one
+        $allServers = $serverResource->get();
+        $firstServer = $allServers->getJson()->data[0];
+
+        if (!empty($firstServer)) {
+            $serverId = $firstServer->id;
+
+            // Get a single server through a pre-existing server resource
+            $methodOne = $serverResource->restart($serverId);
+
+            // Get a single server through a new server resource
+            $methodTwo = $this->getPloi()->server($serverId)->restart();
+
+            $this->assertTrue($methodOne->getResponse()->getStatusCode() === 200);
+            $this->assertTrue($methodTwo->getResponse()->getStatusCode() === 200);
+        }
+
+        // Check that it throws a RequiresId error
+        try {
+            $this->getPloi()->server()->restart();
+        } catch (\Exception $exception) {
+            $this->assertInstanceOf(RequiresId::class, $exception);
+        }
+    }
+
+    public function testGetServerMonitoring()
+    {
+        $serverResource = $this->getPloi()
+            ->server();
+
+        // Get all servers and select the first one
+        $allServers = $serverResource->get();
+        $firstServer = $allServers->getJson()->data[0];
+
+        if (!empty($firstServer)) {
+            $serverId = $firstServer->id;
+
+            // Get a single server through a pre-existing server resource
+            $methodOne = $serverResource->monitoring($serverId);
+
+            // Get a single server through a new server resource
+            $methodTwo = $this->getPloi()->server($serverId)->monitoring();
+
+            $this->assertIsArray($methodOne->getJson()->data);
+            $this->assertIsArray($methodTwo->getJson()->data);
+        }
+
+        // Check that it throws a RequiresId error
+        try {
+            $this->getPloi()->server()->monitoring();
+        } catch (\Exception $exception) {
+            $this->assertInstanceOf(RequiresId::class, $exception);
+        }
+    }
 }

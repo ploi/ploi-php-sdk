@@ -165,6 +165,20 @@ class Server extends Resource
         return $this->callApi('php/versions');
     }
 
+    public function restart(int $id = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        return $this->callApi('restart', 'post');
+    }
+
+    public function monitoring(int $id = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        return $this->callApi('monitor');
+    }
+
     public function sites($id = null): Site
     {
         return new Site($this, $id);
