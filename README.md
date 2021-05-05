@@ -100,6 +100,12 @@ $ploi->servers(123)->delete();
 // Get server logs
 $ploi->servers(123)->logs();
 
+// Restart server
+$ploi->servers(123)->restart();
+
+// Get server monitoring
+$ploi->servers(123)->monitoring();
+
 // Get PHP versions installed on server
 $ploi->servers(123)->phpVersions();
 
