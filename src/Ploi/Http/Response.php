@@ -98,7 +98,7 @@ class Response
      */
     public function getData()
     {
-        return $this->getJson()->data ?? null;
+        return $this->getJson()->data ?? $this->getJson();
     }
 
     /**
