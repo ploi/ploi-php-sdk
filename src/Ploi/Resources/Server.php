@@ -118,7 +118,7 @@ class Server extends Resource
 
         $response = $this->callApi('custom', 'post', $options);
 
-        $this->setId($response->getData()->id);
+        $this->setId($response->getJson()->id);
 
         return $response;
     }
