@@ -187,6 +187,33 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'delete');
     }
 
+    public function suspend(int $id = null, string $reason = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        $options = [];
+        if ($reason) {
+            $options = [
+                'body' => json_encode([
+                    'reason' => $reason,
+                ]),
+            ];
+        }
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/suspend', 'post', $options);
+    }
+
+    public function resume(int $id = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/resume', 'post');
+    }
+
     public function redirects($id = null): Redirect
     {
         return new Redirect($this->getServer(), $this, $id);
