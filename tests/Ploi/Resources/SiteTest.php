@@ -2,6 +2,7 @@
 
 namespace Tests\Ploi\Resources;
 
+use Ploi\Exceptions\Resource\RequiresId;
 use stdClass;
 use Tests\BaseTest;
 use Ploi\Http\Response;
@@ -139,9 +140,43 @@ class SiteTest extends BaseTest
 
             if (!empty($logs[0])) {
                 $this->assertInstanceOf(stdClass::class, $logs[0]);
-                $this->assertEquals($siteId, $logs[0]->site_id);
-                $this->assertEquals($resource->getServer()->getId(), $logs[0]->server_id);
             }
+        }
+    }
+
+    public function testSuspendSite()
+    {
+        $sites = $this->server->sites()->get();
+
+        if (!empty($sites->getJson()->data[0])) {
+            $siteId = $sites->getJson()->data[0]->id;
+            $response = $this->server->sites($siteId)->suspend(null, 'Testing SDK');
+
+            $this->assertTrue($response->getResponse()->getStatusCode() === 200);
+        }
+
+        try {
+            $this->server->sites()->resume();
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(RequiresId::class, $e);
+        }
+    }
+
+    public function testResumeSite()
+    {
+        $sites = $this->server->sites()->get();
+
+        if (!empty($sites->getJson()->data[0])) {
+            $siteId = $sites->getJson()->data[0]->id;
+            $response = $this->server->sites($siteId)->resume();
+
+            $this->assertTrue($response->getResponse()->getStatusCode() === 200);
+        }
+
+        try {
+            $this->server->sites()->resume();
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(RequiresId::class, $e);
         }
     }
 }

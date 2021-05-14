@@ -151,6 +151,11 @@ $ploi->servers(123)->sites(123)->enableTestDomain();
 $ploi->servers(123)->sites(123)->enableTestDomain();
 // Get test domain details for site
 $ploi->servers(123)->sites(123)->testDomain();
+
+// Suspend site
+$ploi->servers(123)->sites(123)->suspend($id = null, $reason = null);
+// Resume site
+$ploi->servers(123)->sites(123)->resume();
 ```
 
 ### Databases
