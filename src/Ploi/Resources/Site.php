@@ -3,6 +3,7 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
+use Ploi\Traits\HasPagination;
 use Ploi\Exceptions\Resource\RequiresId;
 
 /**
@@ -12,6 +13,8 @@ use Ploi\Exceptions\Resource\RequiresId;
  */
 class Site extends Resource
 {
+    use HasPagination;
+
     private $server;
 
     public function __construct(Server $server, int $id = null)

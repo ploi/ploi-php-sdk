@@ -5,9 +5,12 @@ namespace Ploi\Resources;
 use Ploi\Ploi;
 use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\RequiresId;
+use Ploi\Traits\HasPagination;
 
 class Script extends Resource
 {
+    use HasPagination;
+
     private $endpoint = 'scripts';
 
     public function __construct(Ploi $ploi = null, int $id = null)

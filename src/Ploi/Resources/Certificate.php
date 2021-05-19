@@ -3,9 +3,12 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
+use Ploi\Traits\HasPagination;
 
 class Certificate extends Resource
 {
+    use HasPagination;
+
     private $server;
     private $site;
 

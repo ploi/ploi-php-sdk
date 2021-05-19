@@ -3,9 +3,12 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
+use Ploi\Traits\HasPagination;
 
 class NetworkRule extends Resource
 {
+    use HasPagination;
+
     private $server;
 
     public function __construct(Server $server, int $id = null)

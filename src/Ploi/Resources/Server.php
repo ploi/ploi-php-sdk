@@ -4,10 +4,13 @@ namespace Ploi\Resources;
 
 use Ploi\Ploi;
 use Ploi\Http\Response;
+use Ploi\Traits\HasPagination;
 use Ploi\Exceptions\Resource\RequiresId;
 
 class Server extends Resource
 {
+    use HasPagination;
+
     private $endpoint = 'servers';
 
     public function __construct(Ploi $ploi = null, int $id = null)

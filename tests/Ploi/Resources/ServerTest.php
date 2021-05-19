@@ -61,6 +61,36 @@ class ServerTest extends BaseTest
         $this->assertIsArray($servers->getJson()->data);
     }
 
+    public function testGetPaginatedServers()
+    {
+        $serversPage1 = $this->getPloi()
+            ->server()
+            ->perPage(5)
+            ->page();
+        $serversPage2 = $this->getPloi()
+            ->server()
+            ->page(2, 5);
+
+        // Test that it's a valid response object
+        $this->assertInstanceOf(Response::class, $serversPage1);
+        $this->assertInstanceOf(Response::class, $serversPage2);
+
+        // Test the json object response
+        $this->assertInstanceOf(\stdClass::class, $serversPage1->getJson());
+        $this->assertInstanceOf(\stdClass::class, $serversPage2->getJson());
+
+        // Test the array response
+        $this->assertIsArray($serversPage1->toArray());
+        $this->assertIsArray($serversPage2->toArray());
+
+        // Test responses contain paginated result
+        $this->assertEquals(1, $serversPage1->getJson()->meta->current_page);
+        $this->assertEquals(2, $serversPage2->getJson()->meta->current_page);
+
+        $this->assertEquals(5, $serversPage1->getJson()->meta->per_page);
+        $this->assertEquals(5, $serversPage2->getJson()->meta->per_page);
+    }
+
     /**
      * @throws \Ploi\Exceptions\Http\InternalServerError
      * @throws \Ploi\Exceptions\Http\NotFound
