@@ -43,6 +43,25 @@ class SiteTest extends BaseTest
         $this->assertIsArray($sites->getJson()->data);
     }
 
+    public function testGetPaginatedSites()
+    {
+        $resource = $this->server->sites();
+
+        $sitesPage1 = $resource->perPage(2)->page(1);
+        $sitesPage2 = $resource->page(2, 2);
+
+        $this->assertInstanceOf(Response::class, $sitesPage1);
+        $this->assertInstanceOf(Response::class, $sitesPage2);
+
+        $this->assertIsArray($sitesPage1->getJson()->data);
+        $this->assertIsArray($sitesPage2->getJson()->data);
+
+        $this->assertCount(2, $sitesPage1->getData());
+        $this->assertCount(2, $sitesPage2->getData());
+
+        $this->assertNotEquals($sitesPage1->getData()[0]->id, $sitesPage2->getData()[0]->id);
+    }
+
     /**
      * @throws \Ploi\Exceptions\Http\InternalServerError
      * @throws \Ploi\Exceptions\Http\NotFound

@@ -91,6 +91,11 @@ Other methods for servers:
 // Get server list
 $ploi->servers()->get();
 
+// Paginate servers
+$ploi->servers()->perPage($amountPerPage)->page($pageNumber);
+// or
+$ploi->servers()->page($pageNumber, $amountPerPage);
+
 // Get server
 $ploi->servers(123)->get();
 
@@ -133,6 +138,9 @@ $ploi->servers(123)->sites()->create(
 // List sites
 $ploi->servers(123)->sites()->get();
 
+// Paginate sites
+$ploi->servers(123)->sites()->perPage(15)->page(1);
+
 // Get site
 $ploi->servers(123)->sites(123)->get();
 
@@ -172,6 +180,9 @@ $ploi->servers(123)->databases()->create(
 // List databases
 $ploi->servers(123)->databases()->get();
 
+// Paginate databases
+$ploi->servers(123)->databases()->perPage($amountPerPage)->page($pageNumber);
+
 // Get database
 $ploi->servers(123)->databases(123)->get();
 
@@ -201,6 +212,9 @@ $ploi->servers(123)->databases(123)->backups()->create(
 // List database backups
 $ploi->servers(123)->databases(123)->backups()->get();
 
+// Paginate database backups
+$ploi->servers(123)->databases(123)->backups()->perPage($amountPerPage)->page($pageNumber);
+
 // Get database backup
 $ploi->servers(123)->databases(123)->backups(123)->get();
 
@@ -225,6 +239,9 @@ $ploi->servers(123)->cronjobs()->create(
 // List cronjobs
 $ploi->servers(123)->cronjobs()->get();
 
+// Paginate cronjobs
+$ploi->servers(123)->cronjobs()->perPage($amountPerPage)->page($pageNumber);
+
 // Get cronjob
 $ploi->servers(123)->cronjobs(123)->get();
 
@@ -247,6 +264,9 @@ $ploi->servers(123)->networkRules()->create(
 
 // List network rules
 $ploi->servers(123)->networkRules()->get();
+
+// Paginate network rules
+$ploi->servers(123)->networkRules()->perPage($amountPerPage)->page($pageNumber);
 
 // Get network rule
 $ploi->servers(123)->networkRules(123)->get();
@@ -271,6 +291,9 @@ $ploi->servers(123)->sites(123)->queues()->create(
 
 // List queues
 $ploi->servers(123)->sites(123)->queues()->get();
+
+// Paginate queues
+$ploi->servers(123)->sites(123)->queues()->perPage($amountPerPage)->page($pageNumber);
 
 // Get queue
 $ploi->servers(123)->sites(123)->queues(123)->get();
@@ -297,6 +320,9 @@ $ploi->servers(123)->sites(123)->certificates()->create(
 
 // List certificates
 $ploi->servers(123)->sites(123)->certificates()->get();
+
+// Paginate certificates
+$ploi->servers(123)->sites(123)->certificates()->perPage($amountPerPage)->page($pageNumber);
 
 // Get certificate
 $ploi->servers(123)->sites(123)->certificates(123)->get();
@@ -364,6 +390,9 @@ $ploi->servers(123)->sites(123)->redirects()->create(
 // List redirects
 $ploi->servers(123)->sites(123)->redirects()->get();
 
+// Paginate redirects
+$ploi->servers(123)->sites(123)->redirects()->perPage($amountPerPage)->page($pageNumber);
+
 // Get redirect
 $ploi->servers(123)->sites(123)->redirects(123)->get();
 
@@ -380,6 +409,9 @@ $ploi->scripts()->create($label, $user, $content);
 
 // List scripts
 $ploi->scripts()->get();
+
+// Paginate scripts
+$ploi->scripts()->perPage($amountPerPage)->page($pageNumber);
 
 // Get script
 $ploi->scripts(123)->get();
@@ -405,6 +437,9 @@ $ploi->servers(123)->daemons()->create(
 
 // List daemons
 $ploi->servers(123)->daemons()->get();
+
+// Paginate daemons
+$ploi->servers(123)->daemons()->perPage($amountPerPage)->page($pageNumber);
 
 // Get daemon
 $ploi->servers(123)->daemons(123)->get();
@@ -437,6 +472,9 @@ $ploi->servers(123)->systemUsers()->create(
 
 // List system users
 $ploi->servers(123)->systemUsers()->get();
+
+// Paginate system users
+$ploi->servers(123)->systemUsers()->perPage($amountPerPage)->page($pageNumber);
 
 // Get system users
 $ploi->servers(123)->systemUsers(123)->get();

@@ -4,9 +4,12 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
+use Ploi\Traits\HasPagination;
 
 class DatabaseBackup extends Resource
 {
+    use HasPagination;
+
     private $server;
     private $database;
 
