@@ -65,11 +65,11 @@ class ServerTest extends BaseTest
     {
         $serversPage1 = $this->getPloi()
             ->server()
-            ->perPage(2)
-            ->page(1);
+            ->perPage(5)
+            ->page();
         $serversPage2 = $this->getPloi()
             ->server()
-            ->page(2, 2);
+            ->page(2, 5);
 
         // Test that it's a valid response object
         $this->assertInstanceOf(Response::class, $serversPage1);
@@ -83,12 +83,12 @@ class ServerTest extends BaseTest
         $this->assertIsArray($serversPage1->toArray());
         $this->assertIsArray($serversPage2->toArray());
 
-        // Test each response returns only 2 servers
-        $this->assertCount(2, $serversPage1->getData());
-        $this->assertCount(2, $serversPage2->getData());
+        // Test responses contain paginated result
+        $this->assertEquals(1, $serversPage1->getJson()->meta->current_page);
+        $this->assertEquals(2, $serversPage2->getJson()->meta->current_page);
 
-        // Test first server returned in each response is different
-        $this->assertNotEquals($serversPage1->getData()[0]->id, $serversPage2->getData()[0]->id);
+        $this->assertEquals(5, $serversPage1->getJson()->meta->per_page);
+        $this->assertEquals(5, $serversPage2->getJson()->meta->per_page);
     }
 
     /**

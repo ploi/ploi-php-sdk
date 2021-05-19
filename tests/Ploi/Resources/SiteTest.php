@@ -47,8 +47,8 @@ class SiteTest extends BaseTest
     {
         $resource = $this->server->sites();
 
-        $sitesPage1 = $resource->perPage(2)->page(1);
-        $sitesPage2 = $resource->page(2, 2);
+        $sitesPage1 = $resource->perPage(5)->page();
+        $sitesPage2 = $resource->page(2, 5);
 
         $this->assertInstanceOf(Response::class, $sitesPage1);
         $this->assertInstanceOf(Response::class, $sitesPage2);
@@ -56,10 +56,11 @@ class SiteTest extends BaseTest
         $this->assertIsArray($sitesPage1->getJson()->data);
         $this->assertIsArray($sitesPage2->getJson()->data);
 
-        $this->assertCount(2, $sitesPage1->getData());
-        $this->assertCount(2, $sitesPage2->getData());
+        $this->assertEquals(1, $sitesPage1->getJson()->meta->current_page);
+        $this->assertEquals(2, $sitesPage2->getJson()->meta->current_page);
 
-        $this->assertNotEquals($sitesPage1->getData()[0]->id, $sitesPage2->getData()[0]->id);
+        $this->assertEquals(5, $sitesPage1->getJson()->meta->per_page);
+        $this->assertEquals(5, $sitesPage2->getJson()->meta->per_page);
     }
 
     /**
