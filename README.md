@@ -483,6 +483,23 @@ $ploi->servers(123)->systemUsers(123)->get();
 $ploi->servers(123)->systemUsers(123)->delete();
 ```
 
+### SSH Keys
+
+Available methods for SSH keys:
+```php
+// List SSH keys
+$ploi->servers(123)->sshKeys()->get();
+
+// Paginate SSH keys
+$ploi->servers(123)->sshKeys()->perPage($amountPerPage)->page($pageNumber);
+
+// Get SSH key
+$ploi->servers(123)->sshKeys(123)->get();
+
+// Delete SSH key
+$ploi->servers(123)->sshKeys(123)->delete();
+```
+
 ### User
 
 Available methods for user:

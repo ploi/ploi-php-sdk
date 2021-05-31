@@ -215,4 +215,9 @@ class Server extends Resource
     {
         return new Daemon($this, $id);
     }
+
+    public function sshKeys($id = null): SshKey
+    {
+        return new SshKey($this, $id);
+    }
 }
