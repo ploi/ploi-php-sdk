@@ -400,6 +400,19 @@ $ploi->servers(123)->sites(123)->redirects(123)->get();
 $ploi->servers(123)->sites(123)->redirects(123)->delete();
 ```
 
+### Aliases
+
+```php
+// Create aliases
+$ploi->servers(123)->sites(123)->aliases->create($aliases);
+
+// List aliases
+$ploi->servers(123)->sites(123)->aliases()->get();
+
+// Delete alias
+$ploi->servers(123)->sites(123)->aliases()->delete($alias);
+```
+
 ### Scripts
 
 Available methods for scripts:
