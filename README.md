@@ -156,7 +156,7 @@ $ploi->servers(123)->sites(123)->phpVersion($phpVersion);
 // Enable test domain on site
 $ploi->servers(123)->sites(123)->enableTestDomain();
 // Disable test domain on site
-$ploi->servers(123)->sites(123)->enableTestDomain();
+$ploi->servers(123)->sites(123)->disableTestDomain();
 // Get test domain details for site
 $ploi->servers(123)->sites(123)->testDomain();
 
