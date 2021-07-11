@@ -23,6 +23,7 @@ $ploi->setApiToken($token);
 ```
 
 ### Responses
+
 When calling a resource, it will return a `Ploi\Http\Response` object containing decoded JSON as well as the original response from the Guzzle client.
 
 You can also only retrieve the JSON, use the `getJson()` method to only get the JSON back:
@@ -38,6 +39,7 @@ However, when you want to only get the data, use the `getData()` method:
 Resources are what you call to access a feature or function.
 
 You can get all the resources or get a specific one by its ID, for example with servers:
+
 ```php
 // List servers
 $ploi->servers()->get();
@@ -49,6 +51,7 @@ $ploi->servers()->get(123);
 ```
 
 Some actions will require the resource's ID to be set before they can be used:
+
 ```php
 // Throws Ploi\Exceptions\Resource\RequiresId
 $ploi->servers()->delete();
@@ -62,6 +65,7 @@ $ploi->servers(123)->delete();
 ### Servers
 
 You create a new server by:
+
 ```php
 $ploi->servers()->create(
     $serverName,
@@ -73,9 +77,11 @@ $ploi->servers()->create(
 ```
 
 Or you can create a custom server with a provider not set up in Ploi
+
 ```php
 $ploi->servers()->createCustom($ip, $options);
 ```
+
 After running this request, you will have to add the public key of the Ploi worker to your server.
 This is included in the response with a 1-line command within the `ssh_command` key.
 Once this is done, you can trigger the URL from the response with the `start_installation_url` key or by passing in the server ID.
@@ -87,6 +93,7 @@ $ploi->servers(123)->startInstallation();
 ```
 
 Other methods for servers:
+
 ```php
 // Get server list
 $ploi->servers()->get();
@@ -125,6 +132,7 @@ $ploi->servers(123)->refreshOpcache();
 ### Sites
 
 Available methods for sites:
+
 ```php
 //Create site
 $ploi->servers(123)->sites()->create(
@@ -132,7 +140,8 @@ $ploi->servers(123)->sites()->create(
     $webDirectory = '/public',
     $projectDirectory = '/',
     $systemUser = 'ploi',
-    $systemUserPassword = null
+    $systemUserPassword = null,
+    $webserver_template = null
 );
 
 // List sites
@@ -169,6 +178,7 @@ $ploi->servers(123)->sites(123)->resume();
 ### Databases
 
 Available methods for databases:
+
 ```php
 // Create database
 $ploi->servers(123)->databases()->create(
@@ -199,6 +209,7 @@ $ploi->servers(123)->databases(123)->forget();
 ### Database Backups
 
 Available methods for database backups:
+
 ```php
 // Create database backup
 $ploi->servers(123)->databases(123)->backups()->create(
@@ -228,6 +239,7 @@ $ploi->servers(123)->databases(123)->backups(123)->toggle();
 ### Cronjobs
 
 Available methods for cronjobs:
+
 ```php
 // Create cronjob
 $ploi->servers(123)->cronjobs()->create(
@@ -252,6 +264,7 @@ $ploi->servers(123)->cronjobs(123)->delete();
 ### Network Rules
 
 Available methods for network rules:
+
 ```php
 // Create network rule
 $ploi->servers(123)->networkRules()->create(
@@ -278,6 +291,7 @@ $ploi->servers(123)->networkRules(123)->delete();
 ### Queues
 
 Available methods for queues:
+
 ```php
 // Create queue
 $ploi->servers(123)->sites(123)->queues()->create(
@@ -311,6 +325,7 @@ $ploi->servers(123)->sites(123)->queues(123)->restart();
 ### Certificates
 
 Available methods for certificates:
+
 ```php
 // Create certificate
 $ploi->servers(123)->sites(123)->certificates()->create(
@@ -334,6 +349,7 @@ $ploi->servers(123)->sites(123)->certificates(123)->delete();
 ### Deployments
 
 Available methods for deployments
+
 ```php
 // Get default deploy script
 $ploi->servers(123)->sites(123)->deployment()->deployScript();
@@ -351,6 +367,7 @@ $ploi->servers(123)->sites(123)->deployment()->deployToProduction();
 ### Environments
 
 Available methods for environments
+
 ```php
 // Get .env for site
 $ploi->servers(123)->sites(123)->environment()->get();
@@ -362,6 +379,7 @@ $ploi->servers(123)->sites(123)->environment()->update($content);
 ### Repositories
 
 Available methods for repositories:
+
 ```php
 // Install repository
 $ploi->servers(123)->sites(123)->repository()->install(
@@ -416,6 +434,7 @@ $ploi->servers(123)->sites(123)->aliases()->delete($alias);
 ### Scripts
 
 Available methods for scripts:
+
 ```php
 // Create script
 $ploi->scripts()->create($label, $user, $content);
@@ -439,6 +458,7 @@ $ploi->scripts(123)->run($id = null, $serverIds = []);
 ### Daemons
 
 Available methods for daemons:
+
 ```php
 // Create daemon
 $ploi->servers(123)->daemons()->create(
@@ -468,6 +488,7 @@ $ploi->servers(123)->daemons(123)->restart();
 ```
 
 ### Services
+
 ```php
 // Restart service
 $ploi->servers(123)->services($name)->restart();
@@ -476,6 +497,7 @@ $ploi->servers(123)->services($name)->restart();
 ### System Users
 
 Available methods for system users:
+
 ```php
 // Create system user
 $ploi->servers(123)->systemUsers()->create(
@@ -499,6 +521,7 @@ $ploi->servers(123)->systemUsers(123)->delete();
 ### SSH Keys
 
 Available methods for SSH keys:
+
 ```php
 // List SSH keys
 $ploi->servers(123)->sshKeys()->get();
@@ -516,6 +539,7 @@ $ploi->servers(123)->sshKeys(123)->delete();
 ### User
 
 Available methods for user:
+
 ```php
 // Get own user information
 $ploi->user()->get();
