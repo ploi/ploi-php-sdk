@@ -133,7 +133,7 @@ $ploi->servers(123)->sites()->create(
     $projectDirectory = '/',
     $systemUser = 'ploi',
     $systemUserPassword = null,
-    $webserver_template = null
+    $webserverTemplate = null
 );
 
 // List sites
