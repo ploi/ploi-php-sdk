@@ -405,13 +405,26 @@ $ploi->servers(123)->sites(123)->redirects(123)->delete();
 
 ```php
 // Create aliases
-$ploi->servers(123)->sites(123)->aliases->create($aliases);
+$ploi->servers(123)->sites(123)->aliases()->create($aliases);
 
 // List aliases
 $ploi->servers(123)->sites(123)->aliases()->get();
 
 // Delete alias
 $ploi->servers(123)->sites(123)->aliases()->delete($alias);
+```
+
+### FastCGI Cache
+
+```php
+// Enable FastCGI cache
+$ploi->servers(123)->sites(123)->fastCgi()->enable();
+
+// Disable FastCGI cache
+$ploi->servers(123)->sites(123)->fastCgi()->disable();
+
+// Flush FastCGI cache
+$ploi->servers(123)->sites(123)->fastCgi()->flush();
 ```
 
 ### Scripts
