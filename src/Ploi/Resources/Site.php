@@ -263,4 +263,9 @@ class Site extends Resource
     {
         return new FastCgi($this->getServer(), $this);
     }
+
+    public function authUser(?int $id = null): AuthUser
+    {
+        return new AuthUser($this->getServer(), $this, $id);
+    }
 }
