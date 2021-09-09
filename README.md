@@ -332,6 +332,29 @@ $ploi->servers(123)->sites(123)->certificates(123)->get();
 $ploi->servers(123)->sites(123)->certificates(123)->delete();
 ```
 
+### Auth Users
+
+Available methods for auth users:
+```php
+// Create auth user
+$ploi->servers(123)->sites(123)->authUser()->create(
+    $name,
+    $password
+);
+
+// List auth users
+$ploi->servers(123)->sites(123)->authUser()->get();
+
+// Paginate auth users
+$ploi->servers(123)->sites(123)->authUser()->perPage($amountPerPage)->page($pageNumber);
+
+// Get auth user
+$ploi->servers(123)->sites(123)->authUser(123)->get();
+
+// Delete auth user
+$ploi->servers(123)->sites(123)->authUser(123)->delete();
+```
+
 ### Deployments
 
 Available methods for deployments
