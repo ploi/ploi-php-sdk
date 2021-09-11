@@ -563,3 +563,38 @@ $ploi->user()->serverProviders();
 // Get server providers
 $ploi->user()->serverProviders($providerId);
 ```
+
+### Status Pages
+
+Available methods for status pages:
+```php
+// List status pages
+$ploi->statusPage()->get();
+
+// Paginate status pages
+$ploi->statusPage()->perPage($amountPerPage)->page($pageNumber);
+
+// Get status page
+$ploi->statusPage(123)->get();
+```
+
+### Status Page Incidents
+
+Available methods for status page incidents:
+```php
+// Create incident
+$ploi->statusPage(123)->incident()->create(
+    $title,
+    $description,
+    $severity
+);
+
+// List incidents
+$ploi->statusPage(123)->incident()->get();
+
+// Paginate incidents
+$ploi->statusPage(123)->incident()->perPage($amountPerPage)->page($pageNumber);
+
+// Delete incident
+$ploi->statusPage(123)->incident(123)->delete();
+```

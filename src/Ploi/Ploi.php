@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Ploi\Http\Response;
 use Ploi\Resources\Script;
+use Ploi\Resources\StatusPage;
 use Ploi\Resources\User;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
@@ -157,6 +158,11 @@ class Ploi
     public function scripts(int $id = null): Script
     {
         return new Script($this, $id);
+    }
+
+    public function statusPage(?int $id = null): StatusPage
+    {
+        return new StatusPage($this, $id);
     }
 
     public function user()
