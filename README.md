@@ -450,6 +450,16 @@ $ploi->servers(123)->sites(123)->fastCgi()->disable();
 $ploi->servers(123)->sites(123)->fastCgi()->flush();
 ```
 
+### Robot Access
+
+```php
+// Allow robot access
+$ploi->servers(123)->sites(123)->robots()->allow();
+
+// Block robot access
+$ploi->servers(123)->sites(123)->robots()->block();
+```
+
 ### Scripts
 
 Available methods for scripts:

@@ -268,4 +268,9 @@ class Site extends Resource
     {
         return new AuthUser($this->getServer(), $this, $id);
     }
+
+    public function robots(): Robot
+    {
+        return new Robot($this->getServer(), $this);
+    }
 }
