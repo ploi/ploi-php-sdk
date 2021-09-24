@@ -140,6 +140,9 @@ class Server extends Resource
             ->makeAPICall($endpoint, 'post');
     }
 
+    /**
+     * @deprecated Will be removed in future versions, use server()->opcache()->refresh() instead.
+     */
     public function refreshOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
@@ -147,6 +150,9 @@ class Server extends Resource
         return $this->callApi('refresh-opcache', 'post');
     }
 
+    /**
+     * @deprecated Will be removed in future versions, use server()->opcache()->enable() instead.
+     */
     public function enableOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
@@ -154,6 +160,9 @@ class Server extends Resource
         return $this->callApi('enable-opcache', 'post');
     }
 
+    /**
+     * @deprecated Will be removed in future versions, use server()->opcache()->disable() instead.
+     */
     public function disableOpcache(int $id = null): Response
     {
         $this->setIdOrFail($id);
@@ -219,5 +228,10 @@ class Server extends Resource
     public function sshKeys($id = null): SshKey
     {
         return new SshKey($this, $id);
+    }
+
+    public function opcache($id = null): Opcache
+    {
+        return new Opcache($this, $id);
     }
 }
