@@ -115,11 +115,13 @@ $ploi->servers(123)->monitoring();
 $ploi->servers(123)->phpVersions();
 
 // Enable opcache
-$ploi->servers(123)->enableOpcache();
+$ploi->servers(123)->opcache()->enable();
+
 // Disable opcache
-$ploi->servers(123)->disableOpcache();
+$ploi->servers(123)->opcache()->disable();
+
 // Refresh opcache
-$ploi->servers(123)->refreshOpcache();
+$ploi->servers(123)->opcache()->refresh();
 ```
 
 ### Sites
@@ -448,6 +450,16 @@ $ploi->servers(123)->sites(123)->fastCgi()->disable();
 
 // Flush FastCGI cache
 $ploi->servers(123)->sites(123)->fastCgi()->flush();
+```
+
+### Robot Access
+
+```php
+// Allow robot access
+$ploi->servers(123)->sites(123)->robots()->allow();
+
+// Block robot access
+$ploi->servers(123)->sites(123)->robots()->block();
 ```
 
 ### Scripts
