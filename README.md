@@ -562,6 +562,30 @@ $ploi->servers(123)->sshKeys(123)->get();
 $ploi->servers(123)->sshKeys(123)->delete();
 ```
 
+### Insights
+```php
+// List insights
+$ploi->servers(123)->insights()->get();
+
+// Paginate insights
+$ploi->servers(123)->insights()->perPage($amountPerPage)->page($pageNumber);
+
+// Get insight
+$ploi->servers(123)->insights(123)->get();
+
+// Get insight detail
+$ploi->servers(123)->insights(123)->detail();
+
+// Automatically fix insight
+$ploi->servers(123)->insights(123)->automaticallyFix();
+
+// Ignore insight
+$ploi->servers(123)->insights(123)->ignore();
+
+// Delete insight
+$ploi->servers(123)->insights(123)->delete();
+```
+
 ### User
 
 Available methods for user:
