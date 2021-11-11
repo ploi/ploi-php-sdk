@@ -234,4 +234,9 @@ class Server extends Resource
     {
         return new Opcache($this, $id);
     }
+
+    public function insights($id = null): Insight
+    {
+        return new Insight($this, $id);
+    }
 }
