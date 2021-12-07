@@ -47,7 +47,7 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $name, string $user, string $password): Response
+    public function create(string $name, string $user, string $password, $description = null, $siteId = null): Response
     {
         // Remove the id
         $this->setId(null);
@@ -58,6 +58,8 @@ class Database extends Resource
                 'name' => $name,
                 'user' => $user,
                 'password' => $password,
+                'description' => $description,
+                'site_id' => $siteId,
             ]),
         ];
 
