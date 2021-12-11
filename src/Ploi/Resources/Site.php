@@ -69,7 +69,7 @@ class Site extends Resource
         string $systemUser = 'ploi',
         string $systemUserPassword = null,
         string $webserverTemplate = null,
-        string $projectType = 'Laravel'
+        string $projectType = null
     ): Response {
 
         // Remove the id
