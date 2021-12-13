@@ -68,7 +68,8 @@ class Site extends Resource
         string $projectRoot = '/',
         string $systemUser = 'ploi',
         string $systemUserPassword = null,
-        string $webserverTemplate = null
+        string $webserverTemplate = null,
+        string $projectType = null
     ): Response {
 
         // Remove the id
@@ -82,7 +83,8 @@ class Site extends Resource
                 'project_root' => $projectRoot,
                 'system_user' => $systemUser,
                 'system_user_password' => $systemUserPassword,
-                'webserver_template' => $webserverTemplate
+                'webserver_template' => $webserverTemplate,
+                'project_type' => $projectType
             ]),
         ];
 
