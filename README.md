@@ -135,7 +135,8 @@ $ploi->servers(123)->sites()->create(
     $projectDirectory = '/',
     $systemUser = 'ploi',
     $systemUserPassword = null,
-    $webserverTemplate = null
+    $webserverTemplate = null,
+    $projectType = null
 );
 
 // List sites
@@ -177,7 +178,9 @@ Available methods for databases:
 $ploi->servers(123)->databases()->create(
     $databaseName,
     $databaseUser,
-    $databaseUserPassword
+    $databaseUserPassword,
+    $description = null,
+    $siteId = null
 );
 
 // List databases
@@ -450,6 +453,25 @@ $ploi->servers(123)->sites(123)->fastCgi()->disable();
 
 // Flush FastCGI cache
 $ploi->servers(123)->sites(123)->fastCgi()->flush();
+```
+
+### Tenants
+
+```php
+// Create tenant
+$ploi->servers(123)->sites(123)->tenants()->create($tenants);
+
+// List tenants
+$ploi->servers(123)->sites(123)->tenants()->get();
+
+// Delete tenant
+$ploi->servers(123)->sites(123)->tenants()->delete($tenant);
+
+// Request tenant certificate
+$ploi->servers(123)->sites(123)->tenants()->requestCertificate($tenant);
+
+// Revoke tenant certificate
+$ploi->servers(123)->sites(123)->tenants()->revokeCertificate($tenant);
 ```
 
 ### Robot Access

@@ -275,4 +275,9 @@ class Site extends Resource
     {
         return new Robot($this->getServer(), $this);
     }
+
+    public function tenants(): Tenant
+    {
+        return new Tenant($this);
+    }
 }
