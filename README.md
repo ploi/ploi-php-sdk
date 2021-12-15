@@ -455,6 +455,25 @@ $ploi->servers(123)->sites(123)->fastCgi()->disable();
 $ploi->servers(123)->sites(123)->fastCgi()->flush();
 ```
 
+### Tenants
+
+```php
+// Create tenant
+$ploi->servers(123)->sites(123)->tenants()->create($tenants);
+
+// List tenants
+$ploi->servers(123)->sites(123)->tenants()->get();
+
+// Delete tenant
+$ploi->servers(123)->sites(123)->tenants()->delete($tenant);
+
+// Request tenant certificate
+$ploi->servers(123)->sites(123)->tenants()->requestCertificate($tenant);
+
+// Revoke tenant certificate
+$ploi->servers(123)->sites(123)->tenants()->revokeCertificate($tenant);
+```
+
 ### Robot Access
 
 ```php
