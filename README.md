@@ -135,7 +135,8 @@ $ploi->servers(123)->sites()->create(
     $projectDirectory = '/',
     $systemUser = 'ploi',
     $systemUserPassword = null,
-    $webserverTemplate = null
+    $webserverTemplate = null,
+    $projectType = null
 );
 
 // List sites
@@ -177,7 +178,9 @@ Available methods for databases:
 $ploi->servers(123)->databases()->create(
     $databaseName,
     $databaseUser,
-    $databaseUserPassword
+    $databaseUserPassword,
+    $description = null,
+    $siteId = null
 );
 
 // List databases
