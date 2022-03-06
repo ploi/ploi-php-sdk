@@ -151,6 +151,9 @@ $ploi->servers(123)->sites(123)->get();
 // Delete site
 $ploi->servers(123)->sites(123)->delete();
 
+// Update site
+$ploi->servers(123)->sites(123)->update($rootDomain);
+
 // Get site logs
 $ploi->servers(123)->sites(123)->logs();
 
