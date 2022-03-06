@@ -404,6 +404,9 @@ $ploi->servers(123)->sites(123)->repository()->get();
 
 // Delete repository
 $ploi->servers(123)->sites(123)->repository()->delete();
+
+// Toggle quick deploy on repository
+$ploi->servers(123)->sites(123)->repository()->toggleQuickDeploy();
 ```
 
 ### Redirects
