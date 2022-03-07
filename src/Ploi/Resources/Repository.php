@@ -45,4 +45,9 @@ class Repository extends Resource
     {
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
+
+    public function toggleQuickDeploy(): Response
+    {
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/quick-deploy', 'post');
+    }
 }
