@@ -101,6 +101,21 @@ class Site extends Resource
         return $response;
     }
 
+    public function update(string $rootDomain): Response
+    {
+        $this->setIdOrFail();
+
+        $options = [
+            'body' => json_encode([
+                'root_domain' => $rootDomain,
+            ])
+        ];
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint(), 'patch', $options);
+    }
+
     public function delete(int $id = null): Response
     {
         if ($id) {
