@@ -123,6 +123,21 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
+    public function duplicate(string $name, string $user = null, string $password = null): Response
+    {
+        $this->setIdOrFail();
+
+        $options = [
+            'body' => json_encode([
+                'name' => $name,
+                'user' => $user,
+                'password' => $password,
+            ]),
+        ];
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/duplicate', 'post', $options);
+    }
+
     public function backups($id = null): DatabaseBackup
     {
         return new DatabaseBackup($this->getServer(),$this,$id);

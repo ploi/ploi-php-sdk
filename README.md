@@ -203,6 +203,9 @@ $ploi->servers(123)->databases()->acknowledge($databaseName);
 
 // Forget database
 $ploi->servers(123)->databases(123)->forget();
+
+// Duplicate database
+$ploi->servers(123)->databases(123)->duplicate($name, $user = null, $password = null);
 ```
 
 ### Database Backups
