@@ -237,6 +237,29 @@ $ploi->servers(123)->databases(123)->backups(123)->delete();
 $ploi->servers(123)->databases(123)->backups(123)->toggle();
 ```
 
+### Database Users
+
+Available methods for database users:
+```php
+// Create database user
+$ploi->servers(123)->databases(123)->users()->create(
+    $user,
+    $password,
+);
+
+// List database users
+$ploi->servers(123)->databases(123)->users()->get();
+
+// Paginate database users
+$ploi->servers(123)->databases(123)->users()->perPage($amountPerPage)->page($pageNumber);
+
+// Get database user
+$ploi->servers(123)->databases(123)->users(123)->get();
+
+// Delete database user
+$ploi->servers(123)->databases(123)->users(123)->delete();
+```
+
 ### Cronjobs
 
 Available methods for cronjobs:
