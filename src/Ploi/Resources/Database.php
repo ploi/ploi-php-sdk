@@ -142,4 +142,9 @@ class Database extends Resource
     {
         return new DatabaseBackup($this->getServer(),$this,$id);
     }
+
+    public function users(?int $id = null): DatabaseUser
+    {
+        return new DatabaseUser($this->getServer(), $this, $id);
+    }
 }
