@@ -12,6 +12,7 @@ use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\NotValid;
 use Ploi\Exceptions\Http\NotAllowed;
+use Ploi\Resources\WebserverTemplate;
 use Psr\Http\Message\ResponseInterface;
 use Ploi\Exceptions\Http\TooManyAttempts;
 use Ploi\Exceptions\Http\Unauthenticated;
@@ -168,5 +169,10 @@ class Ploi
     public function user()
     {
         return new User($this);
+    }
+
+    public function webserverTemplates(?int $id = null): WebserverTemplate
+    {
+        return new WebserverTemplate($this, $id);
     }
 }
