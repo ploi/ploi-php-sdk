@@ -688,3 +688,17 @@ $ploi->statusPage(123)->incident()->perPage($amountPerPage)->page($pageNumber);
 // Delete incident
 $ploi->statusPage(123)->incident(123)->delete();
 ```
+
+### Webserver Templates
+
+Available methods for webserver templates:
+```php
+// List webserver templates
+$ploi->webserverTemplates()->get();
+
+// Paginate webserver templates
+$ploi->webserverTemplates()->perPage($amountPerPage)->page($pageNumber);
+
+// Get webserver template
+$ploi->webserverTemplates(123)->get();
+```
