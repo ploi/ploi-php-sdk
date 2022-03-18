@@ -29,6 +29,8 @@ class WebserverTemplate extends Resource
             $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
         }
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (! $id) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 }

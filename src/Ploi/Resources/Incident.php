@@ -53,7 +53,9 @@ class Incident extends Resource
 
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (! $id) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
     public function create(string $title, string $description, string $severity): Response

@@ -42,7 +42,9 @@ class Certificate extends Resource
         // Make sure the endpoint is built
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (! $id) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
     public function create(string $certificate, string $type = 'letsencrypt'): Response

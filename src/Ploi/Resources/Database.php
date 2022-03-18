@@ -44,7 +44,9 @@ class Database extends Resource
         // Make sure the endpoint is built
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (! $id) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
     public function create(string $name, string $user, string $password, $description = null, $siteId = null): Response

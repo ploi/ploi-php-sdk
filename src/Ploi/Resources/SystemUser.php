@@ -40,7 +40,9 @@ class SystemUser extends Resource
         // Make sure the endpoint is built
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (! $id) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
     public function create(string $name, bool $sudo = false): Response

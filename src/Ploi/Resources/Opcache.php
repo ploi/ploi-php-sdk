@@ -3,13 +3,12 @@
 namespace Ploi\Resources;
 
 use Ploi\Http\Response;
-use Ploi\Traits\HasPagination;
 
 class Opcache extends Resource
 {
     private $server;
 
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
