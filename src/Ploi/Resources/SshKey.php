@@ -41,7 +41,7 @@ class SshKey extends Resource
 
         $this->buildEndpoint();
 
-        return (! $this->getId()) 
+        return (is_null($this->getId())) 
             ? $this->page()
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
