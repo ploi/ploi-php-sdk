@@ -54,7 +54,7 @@ class Server extends Resource
         // This method do not need the special callApi() method on pagination 
         // Since its a the simple get of the servers using the $this->endpoint url
 
-        return (! $id) 
+        return (! $this->getId()) 
             ? $this->page()
             : $this->callApi(); 
     }

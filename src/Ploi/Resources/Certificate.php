@@ -42,7 +42,7 @@ class Certificate extends Resource
         // Make sure the endpoint is built
         $this->buildEndpoint();
 
-        return (! $id) 
+        return (! $this->getId()) 
             ? $this->page()
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }

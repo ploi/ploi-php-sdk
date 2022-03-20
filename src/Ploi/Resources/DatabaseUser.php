@@ -40,7 +40,7 @@ class DatabaseUser extends Resource
 
         $this->buildEndpoint();
 
-        return (! $id) 
+        return (! $this->getId()) 
             ? $this->page()
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }

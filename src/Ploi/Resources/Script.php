@@ -30,7 +30,7 @@ class Script extends Resource
             $this->setEndpoint($this->getEndpoint() . '/' . $this->getId());
         }
 
-        return (! $id) 
+        return (! $this->getId()) 
             ? $this->page()
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
