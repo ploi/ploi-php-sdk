@@ -22,7 +22,7 @@ class Server extends Resource
 
     public function buildEndpoint(string $path = null): string
     {
-        $base = 'servers';
+        $base = $this->endpoint;
 
         if ($this->getId()) {
             $base = "{$base}/{$this->getId()}";
@@ -51,7 +51,12 @@ class Server extends Resource
             $this->setId($id);
         }
 
-        return $this->callApi();
+        // This method do not need the special callApi() method on pagination 
+        // Since its a the simple get of the servers using the $this->endpoint url
+
+        return (is_null($this->getId())) 
+            ? $this->page()
+            : $this->callApi(); 
     }
 
     public function delete(int $id = null): Response

@@ -42,7 +42,9 @@ class Redirect extends Resource
         // Make sure the endpoint is built
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (is_null($this->getId()))
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
     public function create(string $redirectFrom, string $redirectTo, $type = 'redirect'): Response

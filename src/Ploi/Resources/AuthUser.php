@@ -44,7 +44,9 @@ class AuthUser extends Resource
 
         $this->buildEndpoint();
 
-        return $this->getPloi()->makeAPICall($this->getEndpoint());
+        return (is_null($this->getId())) 
+            ? $this->page()
+            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
     public function create(string $name, string $password): Response
