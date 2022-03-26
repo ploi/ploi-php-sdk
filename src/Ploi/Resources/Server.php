@@ -244,4 +244,9 @@ class Server extends Resource
     {
         return new Insight($this, $id);
     }
+
+    public function loadBalancer(): LoadBalancer
+    {
+        return new LoadBalancer($this);
+    }
 }
