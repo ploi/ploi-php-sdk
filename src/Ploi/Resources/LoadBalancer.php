@@ -17,7 +17,7 @@ class LoadBalancer extends Resource
 
     public function buildEndpoint(): self
     {
-        $this->setEndpoint($this->getServer()->getEndpoint() . '/load-balancer');
+        $this->setEndpoint($this->getServer()->buildEndpoint() . '/load-balancer');
 
         return $this;
     }
