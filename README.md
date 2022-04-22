@@ -366,6 +366,18 @@ $ploi->servers(123)->sites(123)->certificates(123)->get();
 $ploi->servers(123)->sites(123)->certificates(123)->delete();
 ```
 
+### Load Balancers
+
+Available methods for load balancers
+```php
+// Request certificate
+$ploi->servers(123)->loadBalancer()->requestCertificate($domain);
+
+// Revoke certificate
+$ploi->servers(123)->loadBalancer()->revokeCertificate($domain);
+
+```
+
 ### Auth Users
 
 Available methods for auth users:
