@@ -171,6 +171,9 @@ $ploi->servers(123)->sites(123)->testDomain();
 $ploi->servers(123)->sites(123)->suspend($id = null, $reason = null);
 // Resume site
 $ploi->servers(123)->sites(123)->resume();
+
+// Get Laravel Horizon statistics
+$ploi->servers(123)->sites(123)->horizonStatistics($type);
 ```
 
 ### Databases
