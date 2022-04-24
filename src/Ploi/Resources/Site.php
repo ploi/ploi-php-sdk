@@ -302,4 +302,9 @@ class Site extends Resource
     {
         return new Monitors($this, $id);
     }
+
+    public function nginxConfiguration(): NginxConfiguration
+    {
+        return new NginxConfiguration($this);
+    }
 }
