@@ -366,6 +366,17 @@ $ploi->servers(123)->sites(123)->certificates(123)->get();
 $ploi->servers(123)->sites(123)->certificates(123)->delete();
 ```
 
+### NGINX Configuration
+
+Available methods for NGINX configuration:
+```php
+// Get NGINX configuration
+$ploi->servers(123)->sites(123)->nginxConfiguration()->get();
+
+// Update NGINX configuration
+$ploi->servers(123)->sites(123)->nginxConfiguration()->update($configuration);
+```
+
 ### Load Balancers
 
 Available methods for load balancers

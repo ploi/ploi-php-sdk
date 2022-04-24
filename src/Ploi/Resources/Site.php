@@ -297,4 +297,9 @@ class Site extends Resource
     {
         return new Tenant($this);
     }
+
+    public function nginxConfiguration(): NginxConfiguration
+    {
+        return new NginxConfiguration($this);
+    }
 }
