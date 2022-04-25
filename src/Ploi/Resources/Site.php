@@ -238,7 +238,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/resume', 'post');
     }
 
-    public function horizonStatistics(string $type): Response
+    public function horizonStatistics(string $type = 'stats'): Response
     {
         $this->buildEndpoint();
 
