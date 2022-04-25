@@ -297,4 +297,9 @@ class Site extends Resource
     {
         return new Tenant($this);
     }
+
+    public function monitors(?int $id = null): Monitors
+    {
+        return new Monitors($this, $id);
+    }
 }

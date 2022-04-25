@@ -528,6 +528,22 @@ $ploi->servers(123)->sites(123)->robots()->allow();
 $ploi->servers(123)->sites(123)->robots()->block();
 ```
 
+### Monitors
+
+```php
+// List monitors
+$ploi->servers(123)->sites(123)->monitors()->get();
+
+// Paginate monitors
+$ploi->servers(123)->sites(123)->monitors()->perPage($amountPerPage)->page($pageNumber);
+
+// Get specific monitor
+$ploi->servers(123)->sites(123)->monitors(123)->get();
+
+// Get uptime responses
+$ploi->servers(123)->sites(123)->monitors(123)->uptimeResponses();
+```
+
 ### Scripts
 
 Available methods for scripts:
