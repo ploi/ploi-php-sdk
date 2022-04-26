@@ -238,6 +238,13 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/resume', 'post');
     }
 
+    public function horizonStatistics(string $type = 'stats'): Response
+    {
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/laravel/horizon/' . $type);
+    }
+
     public function redirects($id = null): Redirect
     {
         return new Redirect($this->getServer(), $this, $id);
