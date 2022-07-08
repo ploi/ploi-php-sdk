@@ -645,6 +645,13 @@ $ploi->servers(123)->systemUsers(123)->delete();
 
 Available methods for SSH keys:
 ```php
+// Create SSH key
+$ploi->servers(123)->sshKeys()->create(
+    $name = 'ssh key name',
+    $key = 'ssh key here',
+    $systemUser = 'ploi'
+);
+
 // List SSH keys
 $ploi->servers(123)->sshKeys()->get();
 
