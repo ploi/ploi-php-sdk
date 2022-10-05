@@ -5,6 +5,7 @@ namespace Ploi;
 use Exception;
 use GuzzleHttp\Client;
 use Ploi\Http\Response;
+use Ploi\Resources\Project;
 use Ploi\Resources\Script;
 use Ploi\Resources\StatusPage;
 use Ploi\Resources\User;
@@ -156,6 +157,16 @@ class Ploi
         return $this->server($id);
     }
 
+    public function project(int $id = null): Project
+    {
+        return new Project($this, $id);
+    }
+
+    public function projects(int $id = null): Project
+    {
+        return $this->project($id);
+    }
+
     public function scripts(int $id = null): Script
     {
         return new Script($this, $id);
@@ -166,7 +177,7 @@ class Ploi
         return new StatusPage($this, $id);
     }
 
-    public function user()
+    public function user(): User
     {
         return new User($this);
     }
