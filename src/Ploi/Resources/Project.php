@@ -108,8 +108,6 @@ class Project extends Resource
             ]),
         ];
 
-        $this->buildEndpoint();
-
         return $this->callApi(null, 'patch', $options);
     }
 }
