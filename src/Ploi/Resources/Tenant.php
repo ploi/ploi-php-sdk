@@ -44,11 +44,12 @@ class Tenant extends Resource
         return $this->getPloi()->makeAPICall($url, 'delete');
     }
 
-    public function requestCertificate(string $tenant, string $webhook): Response
+    public function requestCertificate(string $tenant, string $webhook = null, string $domains = ''): Response
     {
         $options = [
             'body' => json_encode([
                 'webhook' => $webhook,
+                'domains' => $domains
             ])
         ];
 
