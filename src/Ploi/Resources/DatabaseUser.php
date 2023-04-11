@@ -40,12 +40,12 @@ class DatabaseUser extends Resource
 
         $this->buildEndpoint();
 
-        return (is_null($this->getId())) 
+        return (is_null($this->getId()))
             ? $this->page()
-            : $this->getPloi()->makeAPICall($this->getEndpoint()); 
+            : $this->getPloi()->makeAPICall($this->getEndpoint());
     }
 
-    public function create(string $user, string $password): Response
+    public function create(string $user, string $password, bool $remote = false, string $remoteIp = '%', bool $readOnly = false): Response
     {
         $this->setId(null);
 
@@ -53,6 +53,9 @@ class DatabaseUser extends Resource
             'body' => json_encode([
                 'user' => $user,
                 'password' => $password,
+                'remote' => $remote,
+                'remote_ip' => $remoteIp,
+                'readonly' => $readOnly
             ]),
         ];
 
