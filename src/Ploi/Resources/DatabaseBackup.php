@@ -58,7 +58,8 @@ class DatabaseBackup extends Resource
         string $type,
         string $table_exclusions = null,
         string $locations = null,
-        string $path = null
+        string $path = null,
+        int $keep_backup_amount = null
     ): Response
     {
         // Remove the id
@@ -71,7 +72,8 @@ class DatabaseBackup extends Resource
                 'type' => $type,
                 'table_exclusions' => $table_exclusions,
                 'locations' => $locations,
-                'path' => $path
+                'path' => $path,
+                'keep_backup_amount' => $keep_backup_amount
             ]),
         ];
 
