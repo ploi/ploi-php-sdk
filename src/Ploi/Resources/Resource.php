@@ -5,10 +5,11 @@ namespace Ploi\Resources;
 use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Ploi;
 use Ploi\Traits\HasHistory;
+use Ploi\Traits\HasSearch;
 
 abstract class Resource
 {
-    use HasHistory;
+    use HasHistory, HasSearch;
 
     private $ploi;
     private $action;
