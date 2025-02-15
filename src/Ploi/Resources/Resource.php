@@ -19,7 +19,7 @@ abstract class Resource
     private $server;
     private $site;
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         if ($ploi) {
             $this->setPloi($ploi);
@@ -30,7 +30,7 @@ abstract class Resource
         }
     }
 
-    public function setId(int $id = null): self
+    public function setId(?int $id = null): self
     {
         $this->id = $id;
 
@@ -39,7 +39,7 @@ abstract class Resource
         return $this;
     }
 
-    public function setIdOrFail(int $id = null): self
+    public function setIdOrFail(?int $id = null): self
     {
         if ($id) {
             $this->setId($id);

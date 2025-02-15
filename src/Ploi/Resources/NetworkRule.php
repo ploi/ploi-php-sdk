@@ -9,9 +9,7 @@ class NetworkRule extends Resource
 {
     use HasPagination;
 
-    private $server;
-
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -31,7 +29,7 @@ class NetworkRule extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -73,7 +71,7 @@ class NetworkRule extends Resource
         return $response;
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         // Remove the id
         $this->setIdOrFail($id);

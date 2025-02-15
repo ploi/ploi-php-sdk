@@ -4,21 +4,21 @@ namespace Ploi;
 
 use Exception;
 use GuzzleHttp\Client;
+use Ploi\Exceptions\Http\InternalServerError;
+use Ploi\Exceptions\Http\NotAllowed;
+use Ploi\Exceptions\Http\NotFound;
+use Ploi\Exceptions\Http\NotValid;
+use Ploi\Exceptions\Http\PerformingMaintenance;
+use Ploi\Exceptions\Http\TooManyAttempts;
+use Ploi\Exceptions\Http\Unauthenticated;
 use Ploi\Http\Response;
 use Ploi\Resources\Project;
 use Ploi\Resources\Script;
+use Ploi\Resources\Server;
 use Ploi\Resources\StatusPage;
 use Ploi\Resources\User;
-use Ploi\Resources\Server;
-use Ploi\Exceptions\Http\NotFound;
-use Ploi\Exceptions\Http\NotValid;
-use Ploi\Exceptions\Http\NotAllowed;
 use Ploi\Resources\WebserverTemplate;
 use Psr\Http\Message\ResponseInterface;
-use Ploi\Exceptions\Http\TooManyAttempts;
-use Ploi\Exceptions\Http\Unauthenticated;
-use Ploi\Exceptions\Http\InternalServerError;
-use Ploi\Exceptions\Http\PerformingMaintenance;
 
 /**
  * Class Ploi
@@ -53,7 +53,7 @@ class Ploi
      *
      * @param string|null $token
      */
-    public function __construct(string $token = null)
+    public function __construct(?string $token = null)
     {
         if ($token) {
             $this->setApiToken($token);
@@ -147,27 +147,27 @@ class Ploi
      * @param int|null $id
      * @return Server
      */
-    public function server(int $id = null): Server
+    public function server(?int $id = null): Server
     {
         return new Server($this, $id);
     }
 
-    public function servers(int $id = null): Server
+    public function servers(?int $id = null): Server
     {
         return $this->server($id);
     }
 
-    public function project(int $id = null): Project
+    public function project(?int $id = null): Project
     {
         return new Project($this, $id);
     }
 
-    public function projects(int $id = null): Project
+    public function projects(?int $id = null): Project
     {
         return $this->project($id);
     }
 
-    public function scripts(int $id = null): Script
+    public function scripts(?int $id = null): Script
     {
         return new Script($this, $id);
     }

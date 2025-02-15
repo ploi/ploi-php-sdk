@@ -11,9 +11,7 @@ class SshKey extends Resource
 {
     use HasPagination;
 
-    private $server;
-
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 

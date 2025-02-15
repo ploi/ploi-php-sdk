@@ -2,12 +2,8 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Http\Response;
-
 class Opcache extends Resource
 {
-    private $server;
-
     public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);

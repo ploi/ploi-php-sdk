@@ -2,9 +2,9 @@
 
 namespace Ploi\Resources;
 
+use Ploi\Exceptions\Resource\RequiresId;
 use Ploi\Http\Response;
 use Ploi\Traits\HasPagination;
-use Ploi\Exceptions\Resource\RequiresId;
 
 /**
  * Class Site
@@ -17,7 +17,7 @@ class Site extends Resource
 
     private $server;
 
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -27,7 +27,7 @@ class Site extends Resource
         $this->buildEndpoint();
     }
 
-    public function get(int $id = null)
+    public function get(?int $id = null)
     {
         if ($id) {
             $this->setId($id);
@@ -69,9 +69,9 @@ class Site extends Resource
         string $webDirectory = '/public',
         string $projectRoot = '/',
         string $systemUser = 'ploi',
-        string $systemUserPassword = null,
-        string $webserverTemplate = null,
-        string $projectType = null
+        ?string $systemUserPassword = null,
+        ?string $webserverTemplate = null,
+        ?string $projectType = null
     ): Response {
 
         // Remove the id
@@ -118,7 +118,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'patch', $options);
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -129,7 +129,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function logs(int $id = null): Response
+    public function logs(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -166,7 +166,7 @@ class Site extends Resource
         return $response;
     }
 
-    public function testDomain(int $id = null): Response
+    public function testDomain(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -181,7 +181,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'get');
     }
 
-    public function enableTestDomain(int $id = null): Response
+    public function enableTestDomain(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -196,7 +196,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'post');
     }
 
-    public function disableTestDomain(int $id = null): Response
+    public function disableTestDomain(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -211,7 +211,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/test-domain', 'delete');
     }
 
-    public function suspend(int $id = null, string $reason = null): Response
+    public function suspend(?int $id = null, ?string $reason = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -229,7 +229,7 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/suspend', 'post', $options);
     }
 
-    public function resume(int $id = null): Response
+    public function resume(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 

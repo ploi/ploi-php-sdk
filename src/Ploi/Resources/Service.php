@@ -3,15 +3,14 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\Server\Service\RequiresServiceName;
+use Ploi\Http\Response;
 
 class Service extends Resource
 {
-    private $server;
     private $serviceName;
 
-    public function __construct(Server $server, string $serviceName = null)
+    public function __construct(Server $server, ?string $serviceName = null)
     {
         parent::__construct($server->getPloi());
 
@@ -49,7 +48,7 @@ class Service extends Resource
         return $this;
     }
 
-    public function restart(string $serviceName = null): Response
+    public function restart(?string $serviceName = null): Response
     {
 
         if ($serviceName) {

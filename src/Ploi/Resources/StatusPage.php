@@ -10,7 +10,7 @@ class StatusPage extends Resource
 {
     use HasPagination;
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
