@@ -5,6 +5,7 @@ namespace Ploi;
 use Exception;
 use GuzzleHttp\Client;
 use Ploi\Http\Response;
+use Ploi\Resources\FileBackup;
 use Ploi\Resources\Project;
 use Ploi\Resources\Script;
 use Ploi\Resources\StatusPage;
@@ -185,5 +186,27 @@ class Ploi
     public function webserverTemplates(?int $id = null): WebserverTemplate
     {
         return new WebserverTemplate($this, $id);
+    }
+
+    /**
+     * Returns a file backup resource
+     *
+     * @param int|null $id
+     * @return FileBackup
+     */
+    public function fileBackup(?int $id = null): FileBackup
+    {
+        return new FileBackup($this, $id);
+    }
+
+    /**
+     * Returns a file backup resource
+     *
+     * @param int|null $id
+     * @return FileBackup
+     */
+    public function fileBackups(?int $id = null): FileBackup
+    {
+        return $this->fileBackup($id);
     }
 }
