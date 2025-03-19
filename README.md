@@ -240,6 +240,39 @@ $ploi->servers(123)->databases(123)->backups(123)->delete();
 $ploi->servers(123)->databases(123)->backups(123)->toggle();
 ```
 
+### File Backups
+
+Available methods for file backups:
+```php
+// List site file backups
+$ploi->fileBackups()->get();
+
+// Paginate file backups
+$ploi->fileBackups()->perPage($amountPerPage)->page($pageNumber);
+
+// Get specific file backup
+$ploi->fileBackups(123)->get();
+
+// Create file backup
+$ploi->fileBackups()->create(
+    $backup_configuration,
+    $server,
+    $sites,
+    $interval,
+    $path,
+    $locations = null,
+    $keep_backup_amount = null,
+    $custom_name = null,
+    $password = null
+);
+
+// Run file backup
+$ploi->fileBackups(123)->run();
+
+// Delete file backup
+$ploi->fileBackups(123)->delete();
+```
+
 ### Database Users
 
 Available methods for database users:

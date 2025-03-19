@@ -4,3 +4,4 @@ composer.lock
 .env
 .phpunit.result.cache
 .prettierignore
+.DS_Store
