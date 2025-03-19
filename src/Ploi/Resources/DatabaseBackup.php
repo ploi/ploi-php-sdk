@@ -10,10 +10,7 @@ class DatabaseBackup extends Resource
 {
     use HasPagination;
 
-    private $server;
-    private $database;
-
-    public function __construct(Server $server, Database $database, int $id = null)
+    public function __construct(Server $server, Database $database, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -39,7 +36,7 @@ class DatabaseBackup extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -56,9 +53,9 @@ class DatabaseBackup extends Resource
     public function create(
         int $interval,
         string $type,
-        string $table_exclusions = null,
-        string $locations = null,
-        string $path = null
+        ?string $table_exclusions = null,
+        ?string $locations = null,
+        ?string $path = null
     ): Response
     {
         // Remove the id
@@ -86,7 +83,7 @@ class DatabaseBackup extends Resource
         return $response;
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -95,7 +92,7 @@ class DatabaseBackup extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function toggle(int $id = null): Response
+    public function toggle(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 

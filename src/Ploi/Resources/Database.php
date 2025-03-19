@@ -9,9 +9,7 @@ class Database extends Resource
 {
     use HasPagination;
 
-    private $server;
-
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -35,7 +33,7 @@ class Database extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -78,7 +76,7 @@ class Database extends Resource
         return $response;
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -111,7 +109,7 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post', $options);
     }
 
-    public function forget(int $id = null): Response
+    public function forget(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -125,7 +123,7 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function duplicate(string $name, string $user = null, string $password = null): Response
+    public function duplicate(string $name, ?string $user = null, ?string $password = null): Response
     {
         $this->setIdOrFail();
 

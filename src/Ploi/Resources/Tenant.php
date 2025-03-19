@@ -38,13 +38,13 @@ class Tenant extends Resource
         return $this->getPloi()->makeApiCall($this->getEndpoint(), 'post', $options);
     }
 
-    public function delete(string $tenant = null): Response
+    public function delete(?string $tenant = null): Response
     {
         $url = "{$this->getEndpoint()}/{$tenant}";
         return $this->getPloi()->makeAPICall($url, 'delete');
     }
 
-    public function requestCertificate(string $tenant, string $webhook = null, string $domains = ''): Response
+    public function requestCertificate(string $tenant, ?string $webhook = null, string $domains = ''): Response
     {
         $options = [
             'body' => json_encode([

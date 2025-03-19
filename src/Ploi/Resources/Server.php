@@ -2,10 +2,10 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Ploi;
-use Ploi\Http\Response;
-use Ploi\Traits\HasPagination;
 use Ploi\Exceptions\Resource\RequiresId;
+use Ploi\Http\Response;
+use Ploi\Ploi;
+use Ploi\Traits\HasPagination;
 
 class Server extends Resource
 {
@@ -13,14 +13,14 @@ class Server extends Resource
 
     private $endpoint = 'servers';
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
         $this->setEndpoint($this->endpoint);
     }
 
-    public function buildEndpoint(string $path = null): string
+    public function buildEndpoint(?string $path = null): string
     {
         $base = $this->endpoint;
 
@@ -39,13 +39,13 @@ class Server extends Resource
         return "{$base}/{$path}";
     }
 
-    public function callApi(string $path = null, string $method = 'get', array $options = []): Response
+    public function callApi(?string $path = null, string $method = 'get', array $options = []): Response
     {
         return $this->getPloi()
             ->makeAPICall($this->buildEndpoint($path), $method, $options);
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -59,14 +59,14 @@ class Server extends Resource
             : $this->callApi(); 
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
         return $this->callApi(null, 'delete');
     }
 
-    public function logs(int $id = null): Response
+    public function logs(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -131,7 +131,7 @@ class Server extends Resource
         return $response;
     }
 
-    public function startInstallation(string $url = null): Response
+    public function startInstallation(?string $url = null): Response
     {
         $id = $this->getId();
 
@@ -148,7 +148,7 @@ class Server extends Resource
     /**
      * @deprecated Will be removed in future versions, use server()->opcache()->refresh() instead.
      */
-    public function refreshOpcache(int $id = null): Response
+    public function refreshOpcache(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -158,7 +158,7 @@ class Server extends Resource
     /**
      * @deprecated Will be removed in future versions, use server()->opcache()->enable() instead.
      */
-    public function enableOpcache(int $id = null): Response
+    public function enableOpcache(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -168,28 +168,28 @@ class Server extends Resource
     /**
      * @deprecated Will be removed in future versions, use server()->opcache()->disable() instead.
      */
-    public function disableOpcache(int $id = null): Response
+    public function disableOpcache(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
         return $this->callApi('disable-opcache', 'delete');
     }
 
-    public function phpVersions(int $id = null): Response
+    public function phpVersions(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
         return $this->callApi('php/versions');
     }
 
-    public function restart(int $id = null): Response
+    public function restart(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
         return $this->callApi('restart', 'post');
     }
 
-    public function monitoring(int $id = null): Response
+    public function monitoring(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -201,46 +201,46 @@ class Server extends Resource
         return new Site($this, $id);
     }
 
-    public function services(string $serviceName = null): Service
+    public function services(?string $serviceName = null): Service
     {
         return new Service($this, $serviceName);
     }
 
-    public function databases($id = null): Database
+    public function databases(?int $id = null): Database
     {
         return new Database($this, $id);
     }
-    public function cronjobs($id = null): Cronjob
+    public function cronjobs(?int $id = null): Cronjob
     {
         return new Cronjob($this, $id);
     }
 
-    public function networkRules($id = null): NetworkRule
+    public function networkRules(?int $id = null): NetworkRule
     {
         return new NetworkRule($this, $id);
     }
 
-    public function systemUsers($id = null): SystemUser
+    public function systemUsers(?int $id = null): SystemUser
     {
         return new SystemUser($this, $id);
     }
 
-    public function daemons($id = null): Daemon
+    public function daemons(?int $id = null): Daemon
     {
         return new Daemon($this, $id);
     }
 
-    public function sshKeys($id = null): SshKey
+    public function sshKeys(?int $id = null): SshKey
     {
         return new SshKey($this, $id);
     }
 
-    public function opcache($id = null): Opcache
+    public function opcache(?int $id = null): Opcache
     {
         return new Opcache($this, $id);
     }
 
-    public function insights($id = null): Insight
+    public function insights(?int $id = null): Insight
     {
         return new Insight($this, $id);
     }

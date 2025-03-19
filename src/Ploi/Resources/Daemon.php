@@ -9,9 +9,7 @@ class Daemon extends Resource
 {
     use HasPagination;
 
-    private $server;
-
-    public function __construct(Server $server, int $id = null)
+    public function __construct(Server $server, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -31,7 +29,7 @@ class Daemon extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -72,7 +70,7 @@ class Daemon extends Resource
         return $response;
     }
 
-    public function restart(int $id = null): Response
+    public function restart(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -85,7 +83,7 @@ class Daemon extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function pause(int $id = null): Response
+    public function pause(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -98,7 +96,7 @@ class Daemon extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         // Remove the id
         $this->setIdOrFail($id);

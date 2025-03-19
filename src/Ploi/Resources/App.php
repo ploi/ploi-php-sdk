@@ -2,15 +2,12 @@
 
 namespace Ploi\Resources;
 
-use stdClass;
 use Ploi\Exceptions\Http\NotValid;
+use stdClass;
 
 class App extends Resource
 {
-    private $server;
-    private $site;
-
-    public function __construct(Server $server, Site $site, int $id = null)
+    public function __construct(Server $server, Site $site, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -31,7 +28,7 @@ class App extends Resource
         return $this;
     }
 
-    public function get(int $id = null)
+    public function get(?int $id = null)
     {
         if ($id) {
             $this->setId($id);

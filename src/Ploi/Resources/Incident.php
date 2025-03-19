@@ -11,7 +11,7 @@ class Incident extends Resource
 
     private $statusPage;
 
-    public function __construct(StatusPage $statusPage, int $id = null)
+    public function __construct(StatusPage $statusPage, ?int $id = null)
     {
         parent::__construct($statusPage->getPloi(), $id);
 

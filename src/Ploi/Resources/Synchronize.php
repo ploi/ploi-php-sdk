@@ -8,7 +8,7 @@ class Synchronize extends Resource
 {
     private $endpoint = 'synchronize';
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
