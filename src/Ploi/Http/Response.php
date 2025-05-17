@@ -2,8 +2,8 @@
 
 namespace Ploi\Http;
 
-use stdClass;
 use Psr\Http\Message\ResponseInterface;
+use stdClass;
 
 /**
  * Class Response
@@ -74,7 +74,7 @@ class Response
      * @param stdClass|null $json
      * @return self
      */
-    public function setJson(stdClass $json = null): self
+    public function setJson(?stdClass $json = null): self
     {
         $this->json = $json;
 

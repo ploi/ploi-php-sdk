@@ -2,9 +2,9 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Ploi;
-use Ploi\Http\Response;
 use Ploi\Exceptions\Resource\RequiresId;
+use Ploi\Http\Response;
+use Ploi\Ploi;
 use Ploi\Traits\HasPagination;
 
 class Script extends Resource
@@ -13,14 +13,14 @@ class Script extends Resource
 
     private $endpoint = 'scripts';
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
         $this->setEndpoint($this->endpoint);
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -58,7 +58,7 @@ class Script extends Resource
         return $response;
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -67,7 +67,7 @@ class Script extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'delete');
     }
 
-    public function run(int $id = null, array $serverIds = []): Response
+    public function run(?int $id = null, array $serverIds = []): Response
     {
         $this->setIdOrFail($id);
 

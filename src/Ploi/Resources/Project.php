@@ -2,8 +2,8 @@
 
 namespace Ploi\Resources;
 
-use Ploi\Ploi;
 use Ploi\Http\Response;
+use Ploi\Ploi;
 use Ploi\Traits\HasPagination;
 
 class Project extends Resource
@@ -12,14 +12,14 @@ class Project extends Resource
 
     private $endpoint = 'projects';
 
-    public function __construct(Ploi $ploi = null, int $id = null)
+    public function __construct(?Ploi $ploi = null, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
         $this->setEndpoint($this->endpoint);
     }
 
-    public function buildEndpoint(string $path = null): string
+    public function buildEndpoint(?string $path = null): string
     {
         $base = $this->endpoint;
 
@@ -38,13 +38,13 @@ class Project extends Resource
         return "{$base}/{$path}";
     }
 
-    public function callApi(string $path = null, string $method = 'get', array $options = []): Response
+    public function callApi(?string $path = null, string $method = 'get', array $options = []): Response
     {
         return $this->getPloi()
             ->makeAPICall($this->buildEndpoint($path), $method, $options);
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -58,7 +58,7 @@ class Project extends Resource
             : $this->callApi();
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 

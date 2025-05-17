@@ -8,11 +8,8 @@ use Ploi\Traits\HasPagination;
 class Queue extends Resource
 {
     use HasPagination;
-    
-    private $server;
-    private $site;
 
-    public function __construct(Server $server, Site $site, int $id = null)
+    public function __construct(Server $server, Site $site, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -33,7 +30,7 @@ class Queue extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -82,7 +79,7 @@ class Queue extends Resource
         return $response;
     }
 
-    public function restart(int $id = null): Response
+    public function restart(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -95,7 +92,7 @@ class Queue extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function pause(int $id = null): Response
+    public function pause(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -108,7 +105,7 @@ class Queue extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint(), 'post');
     }
 
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 

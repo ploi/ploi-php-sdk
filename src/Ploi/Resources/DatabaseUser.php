@@ -10,9 +10,7 @@ class DatabaseUser extends Resource
 
     use HasPagination;
 
-    private $database;
-
-    public function __construct(Server $server, Database $database, int $id = null)
+    public function __construct(Server $server, Database $database, ?int $id = null)
     {
         parent::__construct($server->getPloi(), $id);
 
@@ -32,7 +30,7 @@ class DatabaseUser extends Resource
         return $this;
     }
 
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
