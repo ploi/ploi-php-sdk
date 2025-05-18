@@ -1,3 +1,5 @@
+includes:
+	- phpstan-ignore.php
 parameters:
 	level: 5
 	paths:
