@@ -114,6 +114,12 @@ $ploi->servers(123)->monitoring();
 // Get PHP versions installed on server
 $ploi->servers(123)->phpVersions();
 
+// Install a PHP version on server
+$ploi->servers(123)->installPhpVersion('8.3');
+
+// Switch PHP CLI version on server
+$ploi->servers(123)->switchPhpCliVersion('8.3');
+
 // Enable opcache
 $ploi->servers(123)->opcache()->enable();
 

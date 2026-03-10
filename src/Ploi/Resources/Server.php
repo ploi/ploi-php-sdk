@@ -183,6 +183,32 @@ class Server extends Resource
         return $this->callApi('php/versions');
     }
 
+    public function installPhpVersion(string $version): Response
+    {
+        $this->setIdOrFail();
+
+        $options = [
+            'body' => json_encode([
+                'version' => $version,
+            ]),
+        ];
+
+        return $this->callApi('php/install', 'post', $options);
+    }
+
+    public function switchPhpCliVersion(string $version): Response
+    {
+        $this->setIdOrFail();
+
+        $options = [
+            'body' => json_encode([
+                'version' => $version,
+            ]),
+        ];
+
+        return $this->callApi('php/cli-version', 'post', $options);
+    }
+
     public function restart(?int $id = null): Response
     {
         $this->setIdOrFail($id);
