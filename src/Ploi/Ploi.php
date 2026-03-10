@@ -125,19 +125,19 @@ class Ploi
 
         switch ($response->getStatusCode()) {
             case 401:
-                throw new Unauthenticated($response->getBody());
+                throw new Unauthenticated((string) $response->getBody());
             case 404:
-                throw new NotFound($response->getBody());
+                throw new NotFound((string) $response->getBody());
             case 405:
-                throw new NotAllowed($response->getBody());
+                throw new NotAllowed((string) $response->getBody());
             case 422:
-                throw new NotValid($response->getBody());
+                throw new NotValid((string) $response->getBody());
             case 429:
-                throw new TooManyAttempts($response->getBody());
+                throw new TooManyAttempts((string) $response->getBody());
             case 500:
-                throw new InternalServerError($response->getBody());
+                throw new InternalServerError((string) $response->getBody());
             case 503:
-                throw new PerformingMaintenance($response->getBody());
+                throw new PerformingMaintenance((string) $response->getBody());
         }
 
         return new Response($response);

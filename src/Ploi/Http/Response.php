@@ -64,7 +64,7 @@ class Response
      */
     private function decodeJson(): self
     {
-        $json = json_decode($this->getResponse()->getBody());
+        $json = json_decode((string) $this->getResponse()->getBody());
 
         return $this->setJson($json);
     }
