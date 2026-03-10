@@ -68,11 +68,11 @@ class Site extends Resource
     public function create(
         string $domain,
         string $webDirectory = '/public',
-        string $projectRoot = '/',
-        string $systemUser = 'ploi',
-        ?string $systemUserPassword = null,
-        ?string $webserverTemplate = null,
-        ?string $projectType = null
+        ?string $projectRoot = null,
+        ?string $systemUser = null,
+        ?int $webserverTemplate = null,
+        ?string $projectType = null,
+        ?string $webhookUrl = null
     ): Response {
 
         // Remove the id
@@ -85,9 +85,9 @@ class Site extends Resource
                 'web_directory' => $webDirectory,
                 'project_root' => $projectRoot,
                 'system_user' => $systemUser,
-                'system_user_password' => $systemUserPassword,
                 'webserver_template' => $webserverTemplate,
-                'project_type' => $projectType
+                'project_type' => $projectType,
+                'webhook_url' => $webhookUrl,
             ]),
         ];
 
@@ -244,6 +244,31 @@ class Site extends Resource
         $this->buildEndpoint();
 
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/laravel/horizon/' . $type);
+    }
+
+    public function clone(int $cloneToServer, ?string $domain = null): Response
+    {
+        $this->setIdOrFail();
+
+        $options = [
+            'body' => json_encode([
+                'clone_to_server' => $cloneToServer,
+                'domain' => $domain,
+            ]),
+        ];
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/clone', 'post', $options);
+    }
+
+    public function resetPermissions(?int $id = null): Response
+    {
+        $this->setIdOrFail($id);
+
+        $this->buildEndpoint();
+
+        return $this->getPloi()->makeAPICall($this->getEndpoint() . '/permission-reset', 'post');
     }
 
     public function redirects($id = null): Redirect

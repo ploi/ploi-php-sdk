@@ -128,15 +128,15 @@ $ploi->servers(123)->opcache()->refresh();
 
 Available methods for sites:
 ```php
-//Create site
+// Create site
 $ploi->servers(123)->sites()->create(
     $domain,
     $webDirectory = '/public',
-    $projectDirectory = '/',
-    $systemUser = 'ploi',
-    $systemUserPassword = null,
-    $webserverTemplate = null,
-    $projectType = null
+    $projectRoot = null,
+    $systemUser = null,
+    $webserverTemplate = null, // integer, webserver template ID
+    $projectType = null, // e.g. 'laravel', 'wordpress', 'nodejs', 'statamic', etc.
+    $webhookUrl = null
 );
 
 // List sites
@@ -159,6 +159,12 @@ $ploi->servers(123)->sites(123)->logs();
 
 // Set PHP version for site to use
 $ploi->servers(123)->sites(123)->phpVersion($phpVersion);
+
+// Clone site to another server
+$ploi->servers(123)->sites(123)->clone($cloneToServerId, $domain = null);
+
+// Reset file permissions
+$ploi->servers(123)->sites(123)->resetPermissions();
 
 // Enable test domain on site
 $ploi->servers(123)->sites(123)->enableTestDomain();
@@ -216,12 +222,17 @@ $ploi->servers(123)->databases(123)->duplicate($name, $user = null, $password = 
 Available methods for database backups:
 ```php
 // Create database backup
+// Server and database IDs are automatically passed from the chain
 $ploi->servers(123)->databases(123)->backups()->create(
-    $interval,
-    $type,
+    $interval, // 0=nightly, or minutes: 10, 20, 30, 40, 50, 60, 120, 240, 480, 720, 1440
+    $backupConfiguration, // ID of your backup configuration from your Ploi profile
+    $databases = null, // array of database IDs, defaults to the chained database
     $table_exclusions = null,
-    $locations = null,
-    $path = null
+    $locations = null, // for google-drive driver
+    $path = null, // for local driver
+    $keep_backup_amount = null,
+    $custom_name = null,
+    $password = null // password for ZIP archive
 );
 
 // List database backups
