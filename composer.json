@@ -26,20 +26,18 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": {
-            "Ploi": "src/"
+        "psr-4": {
+            "Ploi\\": "src/Ploi/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "Ploi": "src/"
-        },
         "psr-4": {
+            "Ploi\\": "src/Ploi/",
             "Tests\\": "tests/"
         }
     },
     "scripts": {
-        "standards": "./vendor/bin/phpcs --standard=PSR2 --colors src",
+        "standards": "./vendor/bin/phpcs --standard=PSR12 --colors src",
         "test": "./vendor/bin/phpunit tests"
     }
 }

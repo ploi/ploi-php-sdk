@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace Ploi\Exceptions\Resource\Server\Service;
 
