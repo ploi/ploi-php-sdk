@@ -50,12 +50,13 @@ class AuthUser extends Resource
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
-    public function create(string $name, string $password): Response
+    public function create(string $name, string $password, ?string $path = null): Response
     {
         $options = [
             'body' => json_encode([
                 'name' => $name,
                 'password' => $password,
+                'path' => $path,
             ]),
         ];
 

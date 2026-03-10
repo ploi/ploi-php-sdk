@@ -443,7 +443,8 @@ Available methods for auth users:
 // Create auth user
 $ploi->servers(123)->sites(123)->authUser()->create(
     $name,
-    $password
+    $password,
+    $path = null // e.g. '/wp-admin' to protect a specific path
 );
 
 // List auth users
