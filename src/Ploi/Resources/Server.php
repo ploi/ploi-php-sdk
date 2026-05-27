@@ -223,7 +223,7 @@ class Server extends Resource
         return $this->callApi('monitor');
     }
 
-    public function sites($id = null): Site
+    public function sites(?int $id = null): Site
     {
         return new Site($this, $id);
     }

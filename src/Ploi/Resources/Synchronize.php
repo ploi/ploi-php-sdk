@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Ploi\Resources;
 
+use Ploi\Http\Response;
 use Ploi\Ploi;
 
 class Synchronize extends Resource
@@ -16,7 +17,7 @@ class Synchronize extends Resource
         $this->setEndpoint($this->endpoint);
     }
 
-    public function servers()
+    public function servers(): Response
     {
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/servers');
     }

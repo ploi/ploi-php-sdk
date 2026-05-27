@@ -10,7 +10,7 @@ class FileBackup extends Resource
 {
     use HasPagination;
 
-    public function __construct(\Ploi\Ploi $ploi, int $id = null)
+    public function __construct(\Ploi\Ploi $ploi, ?int $id = null)
     {
         parent::__construct($ploi, $id);
 
@@ -38,7 +38,7 @@ class FileBackup extends Resource
      * @param int|null $id
      * @return Response
      */
-    public function get(int $id = null): Response
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -72,10 +72,10 @@ class FileBackup extends Resource
         array $sites,
         int $interval,
         array $path,
-        string $locations = null,
-        int $keep_backup_amount = null,
-        string $custom_name = null,
-        string $password = null
+        ?string $locations = null,
+        ?int $keep_backup_amount = null,
+        ?string $custom_name = null,
+        ?string $password = null
     ): Response {
         // Remove the id
         $this->setId(null);
@@ -107,7 +107,7 @@ class FileBackup extends Resource
      * @param int|null $id
      * @return Response
      */
-    public function run(int $id = null): Response
+    public function run(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 
@@ -123,7 +123,7 @@ class FileBackup extends Resource
      * @param int|null $id
      * @return Response
      */
-    public function delete(int $id = null): Response
+    public function delete(?int $id = null): Response
     {
         $this->setIdOrFail($id);
 

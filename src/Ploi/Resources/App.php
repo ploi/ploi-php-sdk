@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ploi\Resources;
 
 use Ploi\Exceptions\Http\NotValid;
+use Ploi\Http\Response;
 use stdClass;
 
 class App extends Resource
@@ -29,7 +30,7 @@ class App extends Resource
         return $this;
     }
 
-    public function get(?int $id = null)
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);

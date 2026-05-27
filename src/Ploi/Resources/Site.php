@@ -28,7 +28,7 @@ class Site extends Resource
         $this->buildEndpoint();
     }
 
-    public function get(?int $id = null)
+    public function get(?int $id = null): Response
     {
         if ($id) {
             $this->setId($id);
@@ -271,12 +271,12 @@ class Site extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/permission-reset', 'post');
     }
 
-    public function redirects($id = null): Redirect
+    public function redirects(?int $id = null): Redirect
     {
         return new Redirect($this->getServer(), $this, $id);
     }
 
-    public function certificates($id = null): Certificate
+    public function certificates(?int $id = null): Certificate
     {
         return new Certificate($this->getServer(), $this, $id);
     }
@@ -286,7 +286,7 @@ class Site extends Resource
         return new Repository($this->getServer(), $this);
     }
 
-    public function queues($id = null): Queue
+    public function queues(?int $id = null): Queue
     {
         return new Queue($this->getServer(), $this, $id);
     }
@@ -296,7 +296,7 @@ class Site extends Resource
         return new Deployment($this->getServer(), $this);
     }
 
-    public function app($id = null): App
+    public function app(?int $id = null): App
     {
         return new App($this->getServer(), $this, $id);
     }
