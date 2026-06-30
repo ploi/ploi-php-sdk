@@ -54,7 +54,8 @@ class DatabaseBackup extends Resource
         ?string $path = null,
         ?int $keep_backup_amount = null,
         ?string $custom_name = null,
-        ?string $password = null
+        ?string $password = null,
+        ?bool $deleteOnFail = null
     ): Response {
         $this->setId(null);
 
@@ -70,6 +71,7 @@ class DatabaseBackup extends Resource
                 'keep_backup_amount' => $keep_backup_amount,
                 'custom_name' => $custom_name,
                 'password' => $password,
+                'deleteOnFail' => $deleteOnFail,
             ]),
         ];
 
