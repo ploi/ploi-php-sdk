@@ -48,7 +48,7 @@ class Database extends Resource
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
-    public function create(string $name, string $user, string $password, $description = null, $siteId = null): Response
+    public function create(string $name, string $user, string $password, ?string $description = null, ?int $siteId = null): Response
     {
         // Remove the id
         $this->setId(null);
@@ -139,9 +139,9 @@ class Database extends Resource
         return $this->getPloi()->makeAPICall($this->getEndpoint() . '/duplicate', 'post', $options);
     }
 
-    public function backups($id = null): DatabaseBackup
+    public function backups(?int $id = null): DatabaseBackup
     {
-        return new DatabaseBackup($this->getServer(),$this,$id);
+        return new DatabaseBackup($this->getServer(), $this, $id);
     }
 
     public function users(?int $id = null): DatabaseUser
