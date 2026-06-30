@@ -238,7 +238,8 @@ $ploi->servers(123)->databases(123)->backups()->create(
     $path = null, // for local driver
     $keep_backup_amount = null,
     $custom_name = null,
-    $password = null // password for ZIP archive
+    $password = null, // password for ZIP archive
+    $deleteOnFail = null // delete the local backup file when the backup fails
 );
 
 // List database backups
@@ -280,7 +281,8 @@ $ploi->fileBackups()->create(
     $locations = null,
     $keep_backup_amount = null,
     $custom_name = null,
-    $password = null
+    $password = null,
+    $deleteOnFail = null // delete the local backup file when the backup fails
 );
 
 // Run file backup

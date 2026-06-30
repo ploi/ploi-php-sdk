@@ -72,11 +72,12 @@ class FileBackup extends Resource
         array $sites,
         int $interval,
         array $path,
-        ?string $locations = null,
-        ?int $keep_backup_amount = null,
-        ?string $custom_name = null,
-        ?string $password = null
-    ): Response {
+          ?string $locations = null,
+          ?int $keep_backup_amount = null,
+          ?string $custom_name = null,
+          ?string $password = null,
+          ?bool $deleteOnFail = null
+      ): Response {
         // Remove the id
         $this->setId(null);
 
@@ -91,7 +92,8 @@ class FileBackup extends Resource
                 'locations' => $locations,
                 'keep_backup_amount' => $keep_backup_amount,
                 'custom_name' => $custom_name,
-                'password' => $password
+                'password' => $password,
+                'deleteOnFail' => $deleteOnFail
             ]),
         ];
 
