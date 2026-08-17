@@ -128,6 +128,13 @@ $ploi->servers(123)->opcache()->disable();
 
 // Refresh opcache
 $ploi->servers(123)->opcache()->refresh();
+
+// Run a one-off script on a server
+$response = $ploi->servers(123)->runOneOffScript('npm install -g pm2', $user = 'deployer');
+$executionId = $response->getData()->id;
+
+// Poll one-off script execution status and output
+$ploi->servers(123)->getScriptExecution($executionId);
 ```
 
 ### Sites
@@ -632,6 +639,12 @@ $ploi->scripts(123)->delete();
 
 // Run script
 $ploi->scripts(123)->run($id = null, $serverIds = []);
+
+// Run a one-off script on a server (no reusable script resource needed)
+$ploi->servers(123)->runOneOffScript($content, $user = null);
+
+// Get one-off script execution status
+$ploi->servers(123)->getScriptExecution($executionId);
 ```
 
 ### Daemons

@@ -216,6 +216,28 @@ class Server extends Resource
         return $this->callApi('restart', 'post');
     }
 
+    public function runOneOffScript(string $content, ?string $user = null): Response
+    {
+        $this->setIdOrFail();
+
+        $body = ['content' => $content];
+
+        if ($user !== null) {
+            $body['user'] = $user;
+        }
+
+        return $this->callApi('scripts/run', 'post', [
+            'body' => json_encode($body),
+        ]);
+    }
+
+    public function getScriptExecution(string $executionId): Response
+    {
+        $this->setIdOrFail();
+
+        return $this->callApi("scripts/run/{$executionId}");
+    }
+
     public function monitoring(?int $id = null): Response
     {
         $this->setIdOrFail($id);
