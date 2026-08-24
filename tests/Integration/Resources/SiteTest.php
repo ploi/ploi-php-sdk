@@ -102,18 +102,16 @@ class SiteTest extends TestCase
             $this->assertInstanceOf(NotValid::class, $e);
 
             $allSites = $this->server->sites()->get();
-            $foundSite = false;
-            foreach ($allSites->getJson()->data as $site) {
-                if ($foundSite) {
-                    break;
-                }
 
+            foreach ($allSites->getJson()->data as $site) {
                 if ($site->domain === 'example.com') {
                     $this->server->sites($site->id)->delete();
 
-                    $this->testCreateExampleDotCom();
+                    return $this->testCreateExampleDotCom();
                 }
             }
+
+            $this->fail('Could not create example.com and found no existing site to remove');
         }
     }
 

@@ -59,7 +59,7 @@ class ServerTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $servers->getJson());
 
         // Test the array response
-        $this->assertIsArray($servers->toArray());
+        $this->assertSame(['json', 'response'], array_keys($servers->toArray()));
 
         // Test to make sure that the data is an array
         $this->assertIsArray($servers->getJson()->data);
@@ -84,8 +84,8 @@ class ServerTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $serversPage2->getJson());
 
         // Test the array response
-        $this->assertIsArray($serversPage1->toArray());
-        $this->assertIsArray($serversPage2->toArray());
+        $this->assertSame(['json', 'response'], array_keys($serversPage1->toArray()));
+        $this->assertSame(['json', 'response'], array_keys($serversPage2->toArray()));
 
         // Test responses contain paginated result
         $this->assertEquals(1, $serversPage1->getJson()->meta->current_page);

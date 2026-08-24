@@ -98,10 +98,9 @@ class SshKeyTest extends TestCase
      */
     public function testDeleteSshKey(stdClass $sshKey)
     {
-        if (!empty($sshKey)) {
-            $deleted = $this->server->sshKeys($sshKey->id)->delete();
-            $this->assertTrue($deleted->getResponse()->getStatusCode() === 200);
-        }
+        $deleted = $this->server->sshKeys($sshKey->id)->delete();
+
+        $this->assertTrue($deleted->getResponse()->getStatusCode() === 200);
     }
 
     public function testDeleteInvalidSshKey()

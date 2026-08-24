@@ -23,7 +23,8 @@ class HistoryTest extends TestCase
 
     public function testGetHistory(): void
     {
-        $this->assertIsArray($this->resource->getHistory());
+        // Constructing a resource already records the Ploi instance being set
+        $this->assertNotEmpty($this->resource->getHistory());
     }
 
     public function testAddHistory(): void

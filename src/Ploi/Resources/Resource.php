@@ -31,6 +31,9 @@ abstract class Resource
         }
     }
 
+    /**
+     * @return static
+     */
     public function setId(?int $id = null): self
     {
         $this->id = $id;
@@ -40,6 +43,9 @@ abstract class Resource
         return $this;
     }
 
+    /**
+     * @return static
+     */
     public function setIdOrFail(?int $id = null): self
     {
         if ($id) {
