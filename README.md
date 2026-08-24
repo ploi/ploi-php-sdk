@@ -129,12 +129,12 @@ $ploi->servers(123)->opcache()->disable();
 // Refresh opcache
 $ploi->servers(123)->opcache()->refresh();
 
-// Run a one-off script on a server
+// Run a one-off script on a server, $content is max 7500 characters and $user defaults to "ploi"
 $response = $ploi->servers(123)->runOneOffScript('npm install -g pm2', $user = 'deployer');
 $executionId = $response->getData()->id;
 
 // Poll one-off script execution status and output
-$ploi->servers(123)->getScriptExecution($executionId);
+$ploi->servers(123)->scriptExecution($executionId);
 ```
 
 ### Sites
@@ -644,7 +644,7 @@ $ploi->scripts(123)->run($id = null, $serverIds = []);
 $ploi->servers(123)->runOneOffScript($content, $user = null);
 
 // Get one-off script execution status
-$ploi->servers(123)->getScriptExecution($executionId);
+$ploi->servers(123)->scriptExecution($executionId);
 ```
 
 ### Daemons

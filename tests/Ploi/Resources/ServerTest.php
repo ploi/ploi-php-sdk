@@ -31,6 +31,10 @@ class ServerTest extends BaseTest
         $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('endpoint'));
         $this->assertEquals('servers/1/endpoint', $server->buildEndpoint('/endpoint'));
 
+        $execution = '3f4c9e9a-8b4e-4f0e-9d3b-2f6f2c1a7d42';
+        $this->assertEquals('servers/1/scripts/run', $server->buildEndpoint('scripts/run'));
+        $this->assertEquals("servers/1/scripts/run/{$execution}", $server->buildEndpoint("scripts/run/{$execution}"));
+
         $server->setId();
         $this->assertEquals('servers/different-endpoint', $server->buildEndpoint('/different-endpoint'));
     }
