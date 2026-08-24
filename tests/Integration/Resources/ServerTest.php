@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Resource\RequiresId;
@@ -10,9 +10,9 @@ use Ploi\Exceptions\Resource\RequiresId;
 /**
  * Class ServerTest
  *
- * @package Tests\Ploi\Resources
+ * @package Tests\Integration\Resources
  */
-class ServerTest extends BaseTest
+class ServerTest extends TestCase
 {
     public function testInstanceOfServer()
     {

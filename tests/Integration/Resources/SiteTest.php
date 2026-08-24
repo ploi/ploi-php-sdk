@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
 use Ploi\Exceptions\Resource\RequiresId;
 use stdClass;
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
@@ -13,9 +13,9 @@ use Ploi\Exceptions\Http\NotValid;
 /**
  * Class SiteTest
  *
- * @package Tests\Ploi\Resources
+ * @package Tests\Integration\Resources
  */
-class SiteTest extends BaseTest
+class SiteTest extends TestCase
 {
     /**
      * @var Server

@@ -1,16 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests;
+namespace Tests\Integration;
 
 use Ploi\Ploi;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
- * Class BaseTest
- * @package Tests
+ * Base class for tests that hit the live Ploi API.
+ *
+ * These need tests/.env with a valid API_TOKEN and are excluded from the
+ * default test suite, see phpunit.xml.
  */
-class BaseTest extends TestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     /**
      * @var Ploi
@@ -40,18 +42,10 @@ class BaseTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         // Load the test environment
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
         $dotenv->load();
         $dotenv->required('API_TOKEN')->notEmpty();
 
         parent::setUpBeforeClass();
-    }
-
-    /**
-     * Base test to make sure it's running
-     */
-    public function testTrue()
-    {
-        $this->assertTrue(true);
     }
 }

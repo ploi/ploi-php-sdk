@@ -1,18 +1,17 @@
 <?php
 
-namespace Tests\Ploi;
+namespace Tests\Integration;
 
 use Exception;
-use Tests\BaseTest;
 use Ploi\Exceptions\Http\NotFound;
 use Ploi\Exceptions\Http\NotAllowed;
 use Ploi\Exceptions\Http\Unauthenticated;
 
 /**
  * Class PloiTest
- * @package Tests\Ploi
+ * @package Tests\Integration
  */
-class PloiTest extends BaseTest
+class PloiTest extends TestCase
 {
     public function testCanGetAPiToken()
     {
