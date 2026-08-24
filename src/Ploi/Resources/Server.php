@@ -231,7 +231,7 @@ class Server extends Resource
         ]);
     }
 
-    public function getScriptExecution(string $executionId): Response
+    public function scriptExecution(string $executionId): Response
     {
         $this->setIdOrFail();
 
