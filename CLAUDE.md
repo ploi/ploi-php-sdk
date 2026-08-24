@@ -12,15 +12,21 @@ PHP SDK for the Ploi.io server management API. Wraps the REST API with a fluent,
 # Install dependencies
 composer install
 
-# Run tests (requires tests/.env with API_TOKEN - see tests/.env.sample)
+# Run the mocked unit suite (no network, no credentials) - this is what CI runs
 composer test
-# or: vendor/bin/phpunit tests
+# or: vendor/bin/phpunit --testsuite unit
+
+# Run the live-API suite (requires tests/.env with API_TOKEN - see tests/.env.sample)
+composer test:integration
+
+# Run both
+composer test:all
 
 # Run a single test file
-vendor/bin/phpunit tests/Ploi/Resources/ServerTest.php
+vendor/bin/phpunit tests/Unit/Resources/ServerTest.php
 
 # Run a single test method
-vendor/bin/phpunit --filter testGetAllServers tests/Ploi/Resources/ServerTest.php
+vendor/bin/phpunit --filter testListsServers
 
 # Code standards (PSR-2)
 composer standards
@@ -58,7 +64,11 @@ Ploi → [Project, Script, StatusPage, User, WebserverTemplate, FileBackup]
 
 ## Testing
 
-Tests extend `Tests\BaseTest` which loads `tests/.env` via phpdotenv and initializes a `Ploi` client with a real API token. Tests hit the live API - there are no mocks.
+Two suites, split by whether they touch the network.
+
+**`tests/Unit/`** - the default suite and the one CI runs. Tests extend `Tests\Unit\TestCase`, which builds a real `Ploi` client but injects a Guzzle `MockHandler` through `Ploi::setHandler()`. Because the client itself is still built by production code, the base URI, headers and `http_errors` setting under test are the ones users get. Helpers: `queue()` to push a JSON response, `assertRequest($method, $path, $body)` to assert the verb, full URI and decoded body of a recorded request.
+
+**`tests/Integration/`** - hits the live API. Tests extend `Tests\Integration\TestCase`, which loads `tests/.env` via phpdotenv and needs a real API token. Excluded from the default suite; these create, restart and delete real resources.
 
 ## Code Style
 

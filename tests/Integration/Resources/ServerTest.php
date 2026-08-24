@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Resource\RequiresId;
@@ -10,9 +10,9 @@ use Ploi\Exceptions\Resource\RequiresId;
 /**
  * Class ServerTest
  *
- * @package Tests\Ploi\Resources
+ * @package Tests\Integration\Resources
  */
-class ServerTest extends BaseTest
+class ServerTest extends TestCase
 {
     public function testInstanceOfServer()
     {
@@ -59,7 +59,7 @@ class ServerTest extends BaseTest
         $this->assertInstanceOf(\stdClass::class, $servers->getJson());
 
         // Test the array response
-        $this->assertIsArray($servers->toArray());
+        $this->assertSame(['json', 'response'], array_keys($servers->toArray()));
 
         // Test to make sure that the data is an array
         $this->assertIsArray($servers->getJson()->data);
@@ -84,8 +84,8 @@ class ServerTest extends BaseTest
         $this->assertInstanceOf(\stdClass::class, $serversPage2->getJson());
 
         // Test the array response
-        $this->assertIsArray($serversPage1->toArray());
-        $this->assertIsArray($serversPage2->toArray());
+        $this->assertSame(['json', 'response'], array_keys($serversPage1->toArray()));
+        $this->assertSame(['json', 'response'], array_keys($serversPage2->toArray()));
 
         // Test responses contain paginated result
         $this->assertEquals(1, $serversPage1->getJson()->meta->current_page);

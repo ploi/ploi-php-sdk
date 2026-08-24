@@ -22,6 +22,15 @@ $ploi = new \Ploi\Ploi();
 $ploi->setApiToken($token);
 ```
 
+If you need to hook into the HTTP layer, pass your own Guzzle handler. This is how you add middleware such as retries or logging, and how the test suite plugs in a mock handler:
+
+```php
+$stack = \GuzzleHttp\HandlerStack::create();
+$stack->push($yourMiddleware);
+
+$ploi->setHandler($stack);
+```
+
 ### Responses
 When calling a resource, it will return a `Ploi\Http\Response` object containing decoded JSON as well as the original response from the Guzzle client.
 
@@ -816,4 +825,27 @@ $ploi->webserverTemplates()->perPage($amountPerPage)->page($pageNumber);
 
 // Get webserver template
 $ploi->webserverTemplates(123)->get();
+```
+
+## Testing
+
+There are two suites.
+
+The **unit** suite is what runs by default and in CI. It uses a Guzzle mock handler, so it never touches the network and needs no credentials:
+
+```bash
+composer test
+```
+
+The **integration** suite talks to the live Ploi API and needs `tests/.env` with a valid token (see `tests/.env.sample`). It creates, restarts and deletes real resources, so point it at an account you are happy to have it act on:
+
+```bash
+cp tests/.env.sample tests/.env   # then fill in API_TOKEN
+composer test:integration
+```
+
+To run both:
+
+```bash
+composer test:all
 ```

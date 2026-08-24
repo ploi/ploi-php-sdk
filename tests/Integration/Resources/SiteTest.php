@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
 use Ploi\Exceptions\Resource\RequiresId;
 use stdClass;
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
@@ -13,9 +13,9 @@ use Ploi\Exceptions\Http\NotValid;
 /**
  * Class SiteTest
  *
- * @package Tests\Ploi\Resources
+ * @package Tests\Integration\Resources
  */
-class SiteTest extends BaseTest
+class SiteTest extends TestCase
 {
     /**
      * @var Server
@@ -102,18 +102,16 @@ class SiteTest extends BaseTest
             $this->assertInstanceOf(NotValid::class, $e);
 
             $allSites = $this->server->sites()->get();
-            $foundSite = false;
-            foreach ($allSites->getJson()->data as $site) {
-                if ($foundSite) {
-                    break;
-                }
 
+            foreach ($allSites->getJson()->data as $site) {
                 if ($site->domain === 'example.com') {
                     $this->server->sites($site->id)->delete();
 
-                    $this->testCreateExampleDotCom();
+                    return $this->testCreateExampleDotCom();
                 }
             }
+
+            $this->fail('Could not create example.com and found no existing site to remove');
         }
     }
 

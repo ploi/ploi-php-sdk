@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
 use stdClass;
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Http\Response;
 use Ploi\Resources\Server;
 use Ploi\Exceptions\Http\NotFound;
@@ -11,9 +11,9 @@ use Ploi\Exceptions\Http\NotFound;
 /**
  * Class SshKeyTest
  *
- * @package Tests\Ploi\Resources
+ * @package Tests\Integration\Resources
  */
-class SshKeyTest extends BaseTest
+class SshKeyTest extends TestCase
 {
     /**
      * @var Server
@@ -98,10 +98,9 @@ class SshKeyTest extends BaseTest
      */
     public function testDeleteSshKey(stdClass $sshKey)
     {
-        if (!empty($sshKey)) {
-            $deleted = $this->server->sshKeys($sshKey->id)->delete();
-            $this->assertTrue($deleted->getResponse()->getStatusCode() === 200);
-        }
+        $deleted = $this->server->sshKeys($sshKey->id)->delete();
+
+        $this->assertTrue($deleted->getResponse()->getStatusCode() === 200);
     }
 
     public function testDeleteInvalidSshKey()

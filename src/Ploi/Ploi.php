@@ -51,6 +51,13 @@ class Ploi
     private $apiToken;
 
     /**
+     * Optional Guzzle handler, used to plug in middleware or a mock handler
+     *
+     * @var callable|null
+     */
+    private $handler;
+
+    /**
      * Ploi constructor.
      *
      * @param string|null $token
@@ -71,8 +78,7 @@ class Ploi
         // Set the token
         $this->apiToken = $token;
 
-        // Generate a new Guzzle client
-        $this->guzzle = new Client([
+        $config = [
             'base_uri'    => $this->url,
             'http_errors' => false,
             'headers'     => [
@@ -80,7 +86,33 @@ class Ploi
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/json',
             ],
-        ]);
+        ];
+
+        if ($this->handler) {
+            $config['handler'] = $this->handler;
+        }
+
+        // Generate a new Guzzle client
+        $this->guzzle = new Client($config);
+
+        return $this;
+    }
+
+    /**
+     * Sets a custom Guzzle handler, for example to add middleware or to
+     * plug in a mock handler in tests. Passing null restores the default.
+     *
+     * @param callable|null $handler
+     * @return self
+     */
+    public function setHandler(?callable $handler): self
+    {
+        $this->handler = $handler;
+
+        // Rebuild the client so it picks up the handler
+        if ($this->apiToken !== null) {
+            $this->setApiToken($this->apiToken);
+        }
 
         return $this;
     }

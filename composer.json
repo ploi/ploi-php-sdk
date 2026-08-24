@@ -38,6 +38,8 @@
     },
     "scripts": {
         "standards": "./vendor/bin/phpcs --standard=PSR12 --colors src",
-        "test": "./vendor/bin/phpunit tests"
+        "test": "./vendor/bin/phpunit --testsuite unit",
+        "test:integration": "./vendor/bin/phpunit --testsuite integration",
+        "test:all": "./vendor/bin/phpunit --testsuite unit,integration"
     }
 }

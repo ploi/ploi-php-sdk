@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Tests\Ploi\Resources;
+namespace Tests\Integration\Resources;
 
 
-use Tests\BaseTest;
+use Tests\Integration\TestCase;
 use Ploi\Resources\Site;
 
-class AliasTest extends BaseTest
+class AliasTest extends TestCase
 {
 
     /**
