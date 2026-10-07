@@ -44,7 +44,7 @@ class Cronjob extends Resource
             : $this->getPloi()->makeAPICall($this->getEndpoint()); 
     }
 
-    public function create(string $command, string $frequency, string $user = 'ploi'): Response
+    public function create(string $command, string $frequency, string $user = 'ploi', ?int $siteId = null): Response
     {
         // Remove the id
         $this->setId(null);
@@ -55,6 +55,7 @@ class Cronjob extends Resource
                 'command' => $command,
                 'frequency' => $frequency,
                 'user' => $user,
+                'site_id' => $siteId,
             ]),
         ];
 

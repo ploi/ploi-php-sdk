@@ -339,7 +339,8 @@ Available methods for cronjobs:
 $ploi->servers(123)->cronjobs()->create(
     $command,
     $frequency,
-    $user = 'ploi'
+    $user = 'ploi',
+    $siteId = null
 );
 
 // List cronjobs

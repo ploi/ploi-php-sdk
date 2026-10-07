@@ -221,9 +221,10 @@ $ploi->server(123)->daemons(789)->restart();
 
 ```php
 $ploi->server(123)->cronjobs()->create(
-    command: 'php /home/ploi/example.com/artisan schedule:run',
+    command: 'php8.4 /home/ploi/example.com/artisan schedule:run',
     frequency: '* * * * *',
-    user: 'ploi'
+    user: 'ploi',
+    siteId: 456 // optional, also lists the cron job under that site's cronjobs
 );
 ```
 

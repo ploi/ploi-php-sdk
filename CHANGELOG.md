@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `DatabaseBackup::create()` and `FileBackup::create()` now accept an optional trailing `?bool $deleteOnFail = null` argument, which maps to the API's `deleteOnFail` field ("delete the local backup file when the backup fails"). Existing calls are unaffected.
+- `Cronjob::create()` now accepts an optional trailing `?int $siteId = null` argument, which maps to the API's `site_id` field and assigns the cron job to a site of the server, so it also shows up under that site's cronjobs. Existing calls are unaffected.
 
 ## [2.0.0] - 2026-03-10
 
